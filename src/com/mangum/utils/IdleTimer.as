@@ -8,21 +8,25 @@
 	public class IdleTimer extends MovieClip{
 		
 		private var inactiveTime:int = 1000;
-	    private var _idleTime:int = 12;
-	    private var _pauseTime:int = 30;
+	    private var _idleTime:int;
+//	    private var _pauseTime:int = 30;
 		private var t:Timer = new Timer(inactiveTime);
 		private var tCount:Number = 0;
 		
-		public function IdleTimer(stage:Stage){
+		public function IdleTimer(stage:Stage,idleTime:int = 30){
+			_idleTime = idleTime;
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			t.addEventListener(TimerEvent.TIMER, onTimer);
 //			t.start();		
 		}
 		
+		public function begin():void{
+			t.start();
+		}
+		
 		private function onMouseDown(e:MouseEvent):void {
 //			dispatchEvent(new Event("cancelIdle"));
 			t.reset();
-			_idleTime = 12;
 			t.start();
 			tCount = 0;	
 		}
@@ -38,7 +42,7 @@
 			dispatchEvent(new Event("handleInteractivity"));
 			t.reset();
 			tCount = 0;	
-			_idleTime = _pauseTime;
+//			_idleTime = _pauseTime;
 			t.stop();
 		}
 		
@@ -53,13 +57,13 @@
 	       _idleTime = idleTime;
 		} 
 		
-		public function get pauseTime():int {
-	       return _pauseTime;
-		}	
-		
-		public function set pauseTime(idleTime:int):void {
-	       _pauseTime = pauseTime;
-		} 
+//		public function get pauseTime():int {
+//	       return _pauseTime;
+//		}	
+//		
+//		public function set pauseTime(idleTime:int):void {
+//	       _pauseTime = pauseTime;
+//		} 
 	}
 }
 

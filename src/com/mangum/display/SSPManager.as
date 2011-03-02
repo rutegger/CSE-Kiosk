@@ -41,14 +41,25 @@ package com.mangum.display{
 			mkSSP();
 		}
 		
-
+		public function show(bool:Boolean):void{
+//			trace("show "+bool);
+			var val:Number = (bool) ? 1 : 0;
+			var speed:Number  = (bool) ? TRANSITION_SPEED : TRANSITION_SPEED/3;
+			TweenLite.to(ssp, speed, {alpha:val});	
+			
+			if(bool){
+				ssp.playMedia();
+			}else{
+				ssp.pauseMedia();
+			}
+		}
 		
 		private function mkSSP():void{
 			ssp = new SlideShowPro();	
 //			ssp.pauseMedia();
 			ssp.setData(_path,"Director");
 			ssp.width = _stage.stageWidth;
-			ssp.height = _stage.stageHeight+100;
+			ssp.height = _stage.stageHeight;
 			ssp.contentScale = "Proportional";
 			ssp.directorLargeQuality = 100;
 			ssp.transitionStyle = "Cross Fade";
@@ -89,8 +100,7 @@ package com.mangum.display{
 //			cseLogo.filters = [glow];
 			cseLogo.blendMode = "screen";
 
-		}
-		
+		}		
 
 	   private function onVideoEvent(event:SSPVideoEvent):void {
 //			if (event.type=="videoStart") {				
@@ -108,18 +118,7 @@ package com.mangum.display{
 	
 		}
 		
-		public function show(bool:Boolean):void{
-			trace("show "+bool);
-			var val:Number = (bool) ? 1 : 0;
-			var speed:Number  = (bool) ? TRANSITION_SPEED : TRANSITION_SPEED/3;
-			TweenLite.to(ssp, speed, {alpha:val});	
-			
-			if(bool){
-				ssp.playMedia();
-			}else{
-				ssp.pauseMedia();
-			}
-		}
+		
 		
 
 	}
