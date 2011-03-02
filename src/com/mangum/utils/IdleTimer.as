@@ -57,13 +57,6 @@
 	       _idleTime = idleTime;
 		} 
 		
-//		public function get pauseTime():int {
-//	       return _pauseTime;
-//		}	
-//		
-//		public function set pauseTime(idleTime:int):void {
-//	       _pauseTime = pauseTime;
-//		} 
 	}
 }
 
