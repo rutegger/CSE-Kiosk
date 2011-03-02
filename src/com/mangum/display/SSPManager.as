@@ -41,6 +41,8 @@ package com.mangum.display{
 			mkSSP();
 		}
 		
+
+		
 		private function mkSSP():void{
 			ssp = new SlideShowPro();	
 //			ssp.pauseMedia();

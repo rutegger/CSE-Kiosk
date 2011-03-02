@@ -36,7 +36,11 @@ package com.mangum.display{
 		
 		private function onSelected(e:ActionEvent):void{
 			main.playVideo(e.msg);		
-		}	
+		}
+		
+		public function pauseMovie():void{
+			main.pause();
+		}
 		
 		private function doFavoritesReady(evt:VideoFeedEvent):void{
 			_wsFeed.removeEventListener(VideoFeedEvent.USER_FAVORITES_DATA_RECEIVED, doFavoritesReady);

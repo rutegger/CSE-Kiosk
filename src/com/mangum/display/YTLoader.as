@@ -47,6 +47,10 @@ package com.mangum.display{
 			
 		}
 		
+		public function pause():void{
+			player.pauseVideo()
+		}
+		
 		private function onIOError(e:IOErrorEvent):void{
 //			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
 			trace("io error: "+e);

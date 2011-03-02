@@ -7,6 +7,7 @@ package{
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.display.StageDisplayState;
 
 
 	
@@ -14,10 +15,8 @@ package{
 	
 	public class Main extends Sprite{
 		
-		[Embed(source="assets/YT.swf")]
-		private var AssetClass:Class;
-		
 		private var sspm:SSPManager = new SSPManager(stage, "http://ficp.engr.utexas.edu/ssp/images.php?album=34");	
+		private var ytManager:YTManager = new YTManager();
 		private var idleTimer:IdleTimer;
 		
 		public function Main(){
@@ -26,8 +25,8 @@ package{
 		
 		private function init():void{
 //			this.stage.nativeWindow.visible = true;
-//			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;		
-			
+			stage.displayState = StageDisplayState.FULL_SCREEN;	
+	
 			// SlideshowPro
 			addChild(sspm);			
 
@@ -36,15 +35,13 @@ package{
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);
 			addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 			
-			//YouTube
-			var ytManager:YTManager = new YTManager();
-			addChild(ytManager);
-//			var yt:Sprite = new AssetClass();
-//			addChild(yt);			
+			//YouTube			
+			addChild(ytManager);	
 		}		
 		
 		private function handleInteractivity(e:Event):void{	
 			sspm.show(true);
+			ytManager.pauseMovie()
 		}
 		
 		private function onClick(e:MouseEvent):void{
