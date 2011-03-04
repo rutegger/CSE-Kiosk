@@ -35,10 +35,10 @@ package{
 			addChild(sspm);	
 			
 			// timeout
-			idleTimer = new IdleTimer(stage, 20);	
+			idleTimer = new IdleTimer(stage, 45);	
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);
 			addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
-			idleTimer.begin();
+//			idleTimer.begin();
 		}		
 		
 		private function handleInteractivity(e:Event):void{	

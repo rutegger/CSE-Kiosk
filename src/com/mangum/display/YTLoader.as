@@ -133,7 +133,7 @@ package com.mangum.display{
 		}
 		
 		private function onEnter(e:Event):void{
-			trace("*******> "+_id+": "+player.getDuration(), player.getCurrentTime());
+//			trace("*******> "+_id+": "+player.getDuration(), player.getCurrentTime());
 			if(player.getDuration()!= 0 && player.getDuration() - 1 < player.getCurrentTime()){
 				trace("done!");	
 				player.seekTo(0);

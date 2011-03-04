@@ -28,6 +28,7 @@ package com.mangum.display{
 		private var ssp:SlideShowPro;
 		private var _stage:Stage;
 		private var _path:String;
+		private var resume:Sprite = new Resume();
 		
 		private const TRANSITION_SPEED:Number = 3;
 		
@@ -39,6 +40,7 @@ package com.mangum.display{
 			_stage = stage;
 			_path = path;
 			mkSSP();
+			mkResumeBtn();
 		}
 		
 		public function show(bool:Boolean):void{
@@ -49,9 +51,19 @@ package com.mangum.display{
 			
 			if(bool){
 				ssp.playMedia();
+//				addChild(resume);
 			}else{
 				ssp.pauseMedia();
+//				removeResume();
 			}
+		}
+		
+		private function mkResumeBtn():void{
+			addChild(resume);
+		}
+		
+		private function removeResume():void{
+			removeChild(resume);
 		}
 		
 		private function mkSSP():void{
@@ -60,7 +72,7 @@ package com.mangum.display{
 			ssp.setData(_path,"Director");
 			ssp.width = _stage.stageWidth;
 			ssp.height = _stage.stageHeight;
-			ssp.contentScale = "Proportional";
+			ssp.contentScale = "Crop to Fit All";
 			ssp.directorLargeQuality = 100;
 			ssp.transitionStyle = "Cross Fade";
 			ssp.transitionLength = 3;
@@ -97,9 +109,8 @@ package com.mangum.display{
 			glow.quality = BitmapFilterQuality.HIGH; 
 			glow.strength = .5;
 			
-//			cseLogo.filters = [glow];
+			cseLogo.filters = [glow];
 			cseLogo.blendMode = "screen";
-
 		}		
 
 	   private function onVideoEvent(event:SSPVideoEvent):void {
