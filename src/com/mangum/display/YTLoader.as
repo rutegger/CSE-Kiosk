@@ -1,5 +1,5 @@
 package com.mangum.display{
-
+	
 	import ca.newcommerce.youtube.DataTracer;
 	import ca.newcommerce.youtube.events.VideoDataEvent;
 	import ca.newcommerce.youtube.webservice.YouTubeFeedClient;
@@ -15,7 +15,7 @@ package com.mangum.display{
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
 	import flash.system.Security;
-
+	
 	
 	public class YTLoader extends MovieClip{
 		
@@ -25,10 +25,11 @@ package com.mangum.display{
 		private var _w:Number;
 		private var _h:Number;
 		private var _thumb:Boolean;
-		private var _bool:Boolean = true;		
+		private var _bool:Boolean = true;	
+		private var blocker:Sprite = new BlockerMC();
 		
 		public function YTLoader(id:String, w:Number, h:Number, thumb:Boolean){
-//		trace("YTLoader constructor id: "+id);
+			//		trace("YTLoader constructor id: "+id);
 			_id = id;
 			_w = w;
 			_h = h;
@@ -36,11 +37,11 @@ package com.mangum.display{
 			
 			Security.allowInsecureDomain("*");
 			Security.allowDomain("*");
-	
+			
 			var url:String = (thumb) ? "http://www.youtube.com/apiplayer?version=3" : "http://www.youtube.com/v/"+_id+"?version=3";
 			
 			var myRequest:URLRequest = new URLRequest(url);						
-		
+			
 			loader.load(myRequest);			
 			loader.contentLoaderInfo.addEventListener(Event.INIT, onLoaderInit);								
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError,false,0,true);
@@ -48,11 +49,11 @@ package com.mangum.display{
 		}
 		
 		public function pause():void{
-			player.pauseVideo()
+			player.pauseVideo();
 		}
 		
 		private function onIOError(e:IOErrorEvent):void{
-//			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
+			//			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
 			trace("io error: "+e);
 			var myRequest:URLRequest = new URLRequest("http://www.youtube.com/apiplayer?version=3");		
 			loader.load(myRequest);			
@@ -60,9 +61,9 @@ package com.mangum.display{
 		}		
 		
 		protected function doVideoInfoReady(evt:VideoDataEvent):void {
-//			_wsFeed.removeEventListener(VideoDataEvent.VIDEO_INFO_RECEIVED, doVideoInfoReady);	
+			//			_wsFeed.removeEventListener(VideoDataEvent.VIDEO_INFO_RECEIVED, doVideoInfoReady);	
 			var data:Object = DataTracer.traceVideo(evt.video);
-//			trace(data.actualId+" title: " + data.title);
+			//			trace(data.actualId+" title: " + data.title);
 		}
 		
 		
@@ -81,68 +82,68 @@ package com.mangum.display{
 			loader.content.removeEventListener("onReady", onPlayerReady);
 			// Event.data contains the event parameter, which is the Player API ID 
 			// trace("player ready:", Object(event).data);
-				
+			
 			// Once this event has been dispatched by the player, we can use
 			// cueVideoById, loadVideoById, cueVideoByUrl and loadVideoByUrl
 			// to load a particular YouTube video.
 			player = loader.content;
 			player.cueVideoById(_id,10);
 			player.setSize(_w, _h);		
-
 			
-//			trace("******* "+_id+" quality level: "+player.getAvailableQualityLevels());
+			
+			//			trace("******* "+_id+" quality level: "+player.getAvailableQualityLevels());
 			
 			//	player.loadVideoById(_vid); 
 			//	player.setPlaybackQuality("hd720");
 			//	player.cueVideoById(videoId:String, startSeconds:Number, suggestedQuality:String):Void
 			//	player.cueVideoByUrl('http://www.youtube.com/user/CockrellSchool#p/c/C7FAB0C2D25EC82D');
-	
+			
 			if (_thumb){
 				mkButton();	
 			} else {
-//				playVideo(_id);
 				player.cueVideoById(_id);
-//				trace("xxxxxx> "+_id+": "+player.getDuration(), player.getCurrentTime());
+				addChild(blocker);
+				blocker.x = _w - blocker.width;
+				blocker.y = _h - blocker.height-1;
+				
+				//				trace("xxxxxx> "+_id+": "+player.getDuration(), player.getCurrentTime());
 			}
 		}				
 		
 		private function onPlayerError(event:Event):void {
-//			trace("player error:", Object(event).data);
+			//			trace("player error:", Object(event).data);
 		}
 		
 		private function onPlayerStateChange(event:Event):void {
-			trace("player state:", Object(event).data);	
+			//			trace("player state:", Object(event).data);	
 			if(Object(event).data == 1){
 				this.addEventListener(Event.ENTER_FRAME, onEnter, false, 0, true);
 			} else if(Object(event).data == 2){
 				this.removeEventListener(Event.ENTER_FRAME, onEnter);
-			}
-				
-			
+			}			
 		}
 		
 		private function onVideoPlaybackQualityChange(event:Event):void {
-//			trace("video quality:", Object(event).data);
+			//			trace("video quality:", Object(event).data);
 		}				
 		
 		private function onClicked(e:Event):void{
-//			var s:Sprite = Sprite(e.currentTarget)
-//			s.alpha = .5;
-//			trace("player.getDuration(): "+player.getVideoUrls());
+			//			var s:Sprite = Sprite(e.currentTarget)
+			//			s.alpha = .5;
+			//			trace("player.getDuration(): "+player.getVideoUrls());
 			dispatchEvent(new ActionEvent(_id, "selected", true));			
 		}
 		
 		private function onEnter(e:Event):void{
-//			trace("*******> "+_id+": "+player.getDuration(), player.getCurrentTime());
+			//			trace("*******> "+_id+": "+player.getDuration(), player.getCurrentTime());
 			if(player.getDuration()!= 0 && player.getDuration() - 1 < player.getCurrentTime()){
-				trace("done!");	
 				player.seekTo(0);
 				player.pauseVideo();
 				this.removeEventListener(Event.ENTER_FRAME, onEnter);
 			} 
 		}
 		
-				
+		
 		/* PRIVATE METHODS */
 		
 		private function setSize(_w:Number):void{
@@ -180,16 +181,16 @@ package com.mangum.display{
 		public function get w():Number {
 			return _w;
 		}
-				
+		
 		public function get h():Number {
 			return _h;
 		}
-				
+		
 		public function get id():String {
 			return _id;
 		}
 	}
-		
-		
+	
+	
 	
 }

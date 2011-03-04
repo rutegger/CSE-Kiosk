@@ -3,15 +3,15 @@ package{
 	import com.mangum.display.SSPManager;
 	import com.mangum.display.YTManager;
 	import com.mangum.utils.IdleTimer;
+	import com.mangum.text.Messenger;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.display.StageDisplayState;
 	import flash.display.DisplayObject;
-
 	
-	[SWF(width='1920', height='1080', backgroundColor='#0000000', frameRate='24')]
+	[SWF(width='1680', height='1050', backgroundColor='#0000000', frameRate='24')]
 	
 	public class Main extends Sprite{
 		
@@ -19,17 +19,21 @@ package{
 		private var ytManager:YTManager = new YTManager();
 		private var idleTimer:IdleTimer;
 		
-		public function Main(){
-			init();			
+		public function Main(){	
+			init();
+			
+			//for testing:
+			var msg:Messenger = new Messenger("V .02",100);
+			addChild(msg);
 		}
 		
-		private function init():void{
-//			this.stage.nativeWindow.visible = true;
-			stage.displayState = StageDisplayState.FULL_SCREEN;	
 		
+		private function init():void{
+			stage.displayState = StageDisplayState.FULL_SCREEN;	
+			
 			//YouTube			
 			addChild(ytManager);
-//			showItem(ytManager,false);
+			//			showItem(ytManager,false);
 			
 			// SlideshowPro
 			addChild(sspm);	
@@ -38,7 +42,6 @@ package{
 			idleTimer = new IdleTimer(stage, 45);	
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);
 			addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
-//			idleTimer.begin();
 		}		
 		
 		private function handleInteractivity(e:Event):void{	

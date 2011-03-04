@@ -26,10 +26,11 @@ package com.mangum.display{
 		private var count:int = 0;
 		protected var _wsFeed:YouTubeFeedClient = YouTubeFeedClient.getInstance();
 		
+		
 		public function YTManager(){		
 			_wsFeed.getUserFavorites("cockrellSchool");
 			_wsFeed.addEventListener(VideoFeedEvent.USER_FAVORITES_DATA_RECEIVED, doFavoritesReady,false,0,true);
-//			stage.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
+			//			stage.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		}
 		
 		/* EVENT HANDLERS */
@@ -81,9 +82,9 @@ package com.mangum.display{
 		}
 		
 		private function mkMovie(arr:Array):void{
-			//			trace("********************** makeMov ****************");
 			main = new YTLoader(arr[0].id,850,508,false);  
 			addChild(main);
+			
 			main.x = stage.stageWidth/2 - 850/2;
 			main.y = (stage.stageHeight/3) - (main.h/3);		
 		}
