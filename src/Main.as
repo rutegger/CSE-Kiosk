@@ -15,7 +15,7 @@ package{
 	
 	public class Main extends Sprite{
 		
-		private var sspm:SSPManager = new SSPManager(stage, "http://ficp.engr.utexas.edu/ssp/images.php?album=34");	
+		private var sspm:SSPManager = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
 		private var ytManager:YTManager = new YTManager();
 		private var idleTimer:IdleTimer;
 		
@@ -29,7 +29,7 @@ package{
 		
 		
 		private function init():void{
-			stage.displayState = StageDisplayState.FULL_SCREEN;	
+//			stage.displayState = StageDisplayState.FULL_SCREEN;	
 			
 			//YouTube			
 			addChild(ytManager);
