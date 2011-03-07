@@ -37,6 +37,7 @@ package{
 			
 			// SlideshowPro
 			addChild(sspm);	
+
 			
 			// timeout
 			idleTimer = new IdleTimer(stage, 45);	

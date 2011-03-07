@@ -81,9 +81,9 @@ package com.mangum.display{
 			ssp = new SlideShowPro();	
 			//			ssp.pauseMedia();
 			ssp.setData(_path,"Director");
-			ssp.width = _stage.stageWidth;
-			ssp.height = _stage.stageHeight;
-			ssp.contentScale = "Crop to Fit All";
+			ssp.width = 1680;
+			ssp.height = 1050;
+//			ssp.contentScale = "Crop to Fit All";
 			ssp.directorLargeQuality = 100;
 			ssp.transitionStyle = "Cross Fade";
 			ssp.transitionLength = 3;
