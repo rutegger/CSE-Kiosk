@@ -2,14 +2,16 @@ package{
 	
 	import com.mangum.display.SSPManager;
 	import com.mangum.display.YTManager;
-	import com.mangum.utils.IdleTimer;
 	import com.mangum.text.Messenger;
+	import com.mangum.utils.IdleTimer;
 	
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.display.StageDisplayState;
-	import flash.display.DisplayObject;
+	import flash.ui.Mouse;
+	import flash.ui.MouseCursor;
 	
 	[SWF(width='1680', height='1050', backgroundColor='#0000000', frameRate='24')]
 	
@@ -29,11 +31,18 @@ package{
 		
 		
 		private function init():void{
+			
 //			stage.displayState = StageDisplayState.FULL_SCREEN;	
+			
+			//hide cursor - klugy, but Mouse.hidu() alone doesn't work
+//			addEventListener(MouseEvent.CLICK, onMouse, false, 0, true);
+//			addEventListener(MouseEvent.MOUSE_MOVE, onMouse, false, 0, true);
+//			addEventListener(MouseEvent.MOUSE_DOWN, onMouse, false, 0, true);
+//			addEventListener(MouseEvent.MOUSE_OVER, onMouse, false, 0, true);
 			
 			//YouTube			
 			addChild(ytManager);
-			//			showItem(ytManager,false);
+//			showItem(ytManager,false);
 			
 			// SlideshowPro
 			addChild(sspm);	
@@ -44,6 +53,10 @@ package{
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);
 			addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		}		
+		
+		private function onMouse(e:MouseEvent):void{
+			Mouse.hide();
+		}
 		
 		private function handleInteractivity(e:Event):void{	
 			sspm.show(true);
