@@ -41,7 +41,7 @@ package com.mangum.display{
 		
 		public static function bottomRight(stage:Stage, o:Object):void {
 			o.x = stage.stageWidth - o.width
-			o.y = stage.stageHeight-(o.height-20);			
+			o.y = stage.stageHeight-(o.height);			
 //			TweenLite.to(o, 0.75, {x:xVal, y:yVal, motionBlur:{strength:0.5, quality:2}, ease:Cubic.easeOut});	
 		}
 		
