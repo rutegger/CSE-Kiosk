@@ -34,7 +34,7 @@ package com.mangum.display{
 				shape.graphics.drawRect(0,0,_w,_h);
 				shape.graphics.endFill();
 				
-				shape.alpha = 0 // hide button				
+				shape.alpha = .7 // hide button				
 				
 				addChild(hitAreaContainer);
 				

@@ -20,6 +20,7 @@ package com.mangum.display{
 	import flash.filters.GlowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.events.Event;
 	
 	import net.slideshowpro.slideshowpro.*;
 	
@@ -47,7 +48,7 @@ package com.mangum.display{
 		public function show(bool:Boolean):void{
 			var val:Number = (bool) ? 1 : 0;
 			var speed:Number  = (bool) ? TRANSITION_SPEED : TRANSITION_SPEED/3;
-			TweenLite.to(ssp, speed, {alpha:val,onComplete:onAlpha0});	
+			TweenLite.to(ssp, speed, {alpha:val,onComplete:onAlphaTweenComplete, onCompleteParams:[bool]});		
 			
 			if(bool){
 				trace("playMedia");
@@ -62,8 +63,8 @@ package com.mangum.display{
 			}
 		}
 		
-		private function onAlpha0():void{
-			//			trace("onAlpha0 ssp.pauseMedia();");
+		private function onAlphaTweenComplete(bool:Boolean):void{
+			if(!bool) dispatchEvent(new Event("onFadeOutSSP")); 
 		}
 		
 		private function mkResumeBtn():void{
