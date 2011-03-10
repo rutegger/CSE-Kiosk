@@ -4,6 +4,8 @@
 	import flash.display.Stage;
 	import flash.events.*;
 	import flash.utils.*;
+	
+	import com.mangum.events.ActionEvent;
 
 	public class IdleTimer extends MovieClip{
 		
@@ -33,7 +35,9 @@
 		
 		private function onTimer(e:TimerEvent):void {
 			tCount++;
-//			trace(tCount);
+			trace(tCount);
+			dispatchEvent(new ActionEvent(String(tCount), "tic", true));
+			
 			if(tCount >= _idleTime){
 				handleInactivity();
 			}

@@ -45,31 +45,37 @@ package com.mangum.display{
 			mkResumeBtn();
 		}
 		
-		public function show(bool:Boolean):void{
-			var val:Number = (bool) ? 1 : 0;
-			var speed:Number  = (bool) ? TRANSITION_SPEED : TRANSITION_SPEED/3;
-			TweenLite.to(ssp, speed, {alpha:val,onComplete:onAlphaTweenComplete, onCompleteParams:[bool]});		
-			
+		public function show(bool:Boolean):void{			
 			if(bool){
-				trace("playMedia");
 				ssp.playMedia();
 				addChild(resume);
 				_playing = true;
+				TweenLite.to(resume, 1, {y:500, ease:Bounce.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
 			}else{
-				trace("pauseMedia");
 				ssp.pauseMedia();
-				removeResume();
+//				removeResume();				
+				TweenLite.to(resume, 1, {y:-500, ease:Bounce.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
 				_playing = false;
 			}
 		}
 		
+		private function onResumeTweenComplete(bool:Boolean):void{
+			var val:Number = (bool) ? 1 : 0;
+			var speed:Number  = (bool) ? TRANSITION_SPEED : TRANSITION_SPEED/3;
+			TweenLite.to(ssp, speed, {alpha:val,onComplete:onAlphaTweenComplete, onCompleteParams:[bool]});
+			TweenLite.to(resume, speed, {alpha:val});		
+		}
+		
 		private function onAlphaTweenComplete(bool:Boolean):void{
 			if(!bool) dispatchEvent(new Event("onFadeOutSSP")); 
+			TweenLite.to(resume, 2, {alpha:1});
 		}
 		
 		private function mkResumeBtn():void{
 			resume.name = "resume";
 			addChild(resume);
+			Positioner.center(_stage,resume);
+//			resume.x = (_stage.stageHeight / 2) - (resume.height / 2);			
 		}
 		
 		private function removeResume():void{	
@@ -146,9 +152,6 @@ package com.mangum.display{
 				ssp.playMedia();
 			}
 		}
-		
-		
-		
 		
 	}
 	

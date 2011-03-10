@@ -10,22 +10,22 @@ package com.mangum.display{
 			
 		public function Positioner(){}
 		
-		public static function center(o:Object):void {
-			o.x = (o.stage.stageWidth / 2) - (o.width / 2);
-			o.y = o.stage.stageHeight;
-			var yVal:Number = (o.stage.stageHeight / 2) - (o.height / 2);			
-			TweenLite.to(o, 0.5, {y:yVal, motionBlur:{strength:0.5, quality:2}, ease:Cubic.easeInOut});
+		public static function center(stage:Stage, o:Object):void {
+			o.x = (stage.stageWidth / 2) - (o.width / 2);
+			o.y = (stage.stageHeight / 2) - (o.height / 2);
+			
+//			var yVal:Number = (stage.stageHeight / 2) - (o.height / 2);			
+//			TweenLite.to(o, 0.5, {y:yVal, motionBlur:{strength:0.5, quality:2}, ease:Cubic.easeInOut});
 		}
 		
-		public static function topCenter(o:Object):void {
-			var xVal:Number = (o.stage.stageWidth / 2) - (o.width / 2);
-			TweenLite.to(o, 0.5, {x:xVal, y:-100, motionBlur:{strength:0.5, quality:2}, ease:Cubic.easeOut});
+		public static function topCenter(stage:Stage,o:Object):void {
+			o.x = stage.stageWidth - (o.width / 2);
+			o.y = 10;			
 		}
 		
-		public static function centerRight(o:Object):void {
-			var xVal:Number = o.stage.stageWidth + o.width;
-			var yVal:Number = o.stage.stageHeight/2 - o.height/2;
-			TweenLite.to(o, 0.75, {x:xVal, y:yVal, motionBlur:{strength:0.5, quality:2}, ease:Cubic.easeOut});	
+		public static function centerRight(stage:Stage,o:Object):void {			
+			o.x = stage.stageWidth - (o.width / 2);
+			o.y = 10;
 		}
 		
 		public static function topLeft(o:Object):void {
