@@ -1,5 +1,6 @@
 package{
 	
+	import com.mangum.display.*;
 	import com.mangum.display.Nav;
 	import com.mangum.display.Positioner;
 	import com.mangum.display.SSPManager;
@@ -20,16 +21,18 @@ package{
 	
 	public class Main extends Sprite{
 		
+		private var bg:Background = new Background();
 		private var sspm:SSPManager = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
 		private var ytManager:YTManager = new YTManager();
 		private var idleTimer:IdleTimer;
 		private var content:MovieClip = new MovieClip();
 		
+		
 		public function Main(){	
 			init();
 			
 			//for testing:
-			var msg:Messenger = new Messenger("V .02",100);
+			var msg:Messenger = new Messenger("V .03",100);
 			addChild(msg);
 
 		}
@@ -39,22 +42,21 @@ package{
 			
 //			stage.displayState = StageDisplayState.FULL_SCREEN;	
 			
-			//hide cursor - klugy, but Mouse.hidu() alone doesn't work
+			// Hide cursor - klugy, but Mouse.hidu() alone doesn't work
 //			addEventListener(MouseEvent.CLICK, onMouse, false, 0, true);
 //			addEventListener(MouseEvent.MOUSE_MOVE, onMouse, false, 0, true);
 //			addEventListener(MouseEvent.MOUSE_DOWN, onMouse, false, 0, true);
 //			addEventListener(MouseEvent.MOUSE_OVER, onMouse, false, 0, true);
 			
-			
+			addChild(bg);
 			
 			addChild(content);
 			content.name = "content";
 			
 			//Nav
-			var arr:Array = new Array();
-			arr.push({item:"yt"});
-			arr.push({item:"item2"});
-			arr.push({item:"item3"});			
+			var arr:Array = [{id:"yt",title:"YouTube Videos"},
+							 {id:"energy",title:"Water & Energy Nexus"},
+							 {id:"satellite",title:"Student Satellite"}];			
 			var n:Nav = new Nav(arr);
 			content.addChild(n);
 			n.x = (stage.stageWidth / 2) - (n.width / 2);
@@ -68,11 +70,10 @@ package{
 			sspm.name = "sspm";
 			
 			// timeout
-			idleTimer = new IdleTimer(stage, 10);	
+			idleTimer = new IdleTimer(stage, 30);	
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);
 			sspm.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);			
 			sspm.addEventListener("onFadeOutSSP", onFadeOutSSP, false, 0, true);
-			
 		}			
 		
 		private function onFadeOutSSP(e:Event):void{			
@@ -84,7 +85,7 @@ package{
 		}
 		
 		private function handleInteractivity(e:Event):void{	
-			trace("handleInt");
+//			trace("handleInt");
 			ytManager.pauseMovie();
 			removeChild(content);
 			addChild(sspm);
@@ -92,12 +93,10 @@ package{
 		}
 		
 		private function onClick(e:MouseEvent):void{
-			trace("onClick");
+//			trace("onClick");
 			sspm.show(false);
 			addChild(content);
 		}
-		
-		
 		
 	}
 	

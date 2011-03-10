@@ -33,7 +33,7 @@
 		
 		private function onTimer(e:TimerEvent):void {
 			tCount++;
-			trace(tCount);
+//			trace(tCount);
 			if(tCount >= _idleTime){
 				handleInactivity();
 			}
