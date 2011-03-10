@@ -21,7 +21,7 @@ package{
 	
 	public class Main extends Sprite{
 		
-		private var bg:Background = new Background();
+		
 		private var sspm:SSPManager = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
 		private var ytManager:YTManager = new YTManager();
 		private var idleTimer:IdleTimer;
@@ -48,12 +48,17 @@ package{
 //			addEventListener(MouseEvent.MOUSE_DOWN, onMouse, false, 0, true);
 //			addEventListener(MouseEvent.MOUSE_OVER, onMouse, false, 0, true);
 			
+			// ********* Kiosk Background ********* 
+			
+			var bg:Background = new Background();
 			addChild(bg);
+			
+			// ********* Main Content Holder ********* 
 			
 			addChild(content);
 			content.name = "content";
 			
-			//Nav
+			// ********* Navigation ********* 
 			var arr:Array = [{id:"yt",title:"YouTube Videos"},
 							 {id:"energy",title:"Water & Energy Nexus"},
 							 {id:"satellite",title:"Student Satellite"}];			
@@ -62,14 +67,14 @@ package{
 			n.x = (stage.stageWidth / 2) - (n.width / 2);
 			n.y = 50;			
 			
-			//YouTube			
+			// ********* YouTube ********* 		
 			content.addChild(ytManager);
 		
-			// SlideshowPro
+			// ********* SlideshowPro *********
 			addChild(sspm);
 			sspm.name = "sspm";
 			
-			// timeout
+			// ********* Timeout *********
 			idleTimer = new IdleTimer(stage, 30);	
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);
 			sspm.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);			
