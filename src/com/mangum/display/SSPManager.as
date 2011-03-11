@@ -53,7 +53,7 @@ package com.mangum.display{
 				TweenLite.to(resume, 1, {y:500, ease:Elastic.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
 			}else{ 
 				ssp.pauseMedia();		
-				TweenLite.to(resume, 1.5, {y:-500, ease:Quad.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
+				TweenLite.to(resume, .5, {y:-300, ease:Quad.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
 				_playing = false;
 			}
 		}

@@ -10,11 +10,18 @@ package com.mangum.text {
 	import flash.display.Sprite;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
+	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	import flash.text.AntiAliasType;
 	
 	public class Messenger extends Sprite {
+				
+		[Embed(source="/../assets/fonts/UniversLT57Condensed.ttf", fontFamily="Univers57Cond",embedAsCFF="false")] 		
+//		private var myFont:Font = new Helvetica();
+		
+		public var bar:String;
 		
 		private var _label:TextField;
 		private var _labelText:String; 
@@ -44,13 +51,16 @@ package com.mangum.text {
 		/* PRIVATE METHODS */
 		private function configureLabel(width:Number):void {
 			_label = new TextField();
+			_label.embedFonts = true;
+			_label.antiAliasType = AntiAliasType.ADVANCED;
 			_label.autoSize = TextFieldAutoSize.LEFT;
 			_label.background = false;
 			_label.border = false;
 			_label.selectable = false;
-			
+	
 			format = new TextFormat();
-			format.font = "Helvetica";
+//			format.font = myFont.fontName;
+			format.font = "Univers57Cond";
 			format.color = 0xFFFFFF;
 			format.size = 10;
 			format.bold = true;
