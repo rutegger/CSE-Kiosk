@@ -31,7 +31,7 @@ package{
 		public function Main(){	
 			init();
 			
-			//for testing:
+			// **** for testing:
 			var ver:Messenger = new Messenger("V .03",60);
 			addChild(ver);
 			clock = new Messenger(String(idleTimer.idleTime),100);
@@ -53,13 +53,9 @@ package{
 		
 		private function init():void{
 			
-//			stage.displayState = StageDisplayState.FULL_SCREEN;	
+//			stage.displayState = StageDisplayState.FULL_SCREEN;			
 			
-			// Hide cursor - klugy, but Mouse.hidu() alone doesn't work
-			addEventListener(MouseEvent.CLICK, onMouse, false, 0, true);
-			addEventListener(MouseEvent.MOUSE_MOVE, onMouse, false, 0, true);
-			addEventListener(MouseEvent.MOUSE_DOWN, onMouse, false, 0, true);
-			addEventListener(MouseEvent.MOUSE_OVER, onMouse, false, 0, true);
+			hideCursor();			
 			
 			// ********* Kiosk Background ********* 
 			
@@ -86,39 +82,50 @@ package{
 			// ********* SlideshowPro *********
 			addChild(sspm);
 			sspm.name = "sspm";
-			
-			// ********* Timeout *********
-			idleTimer = new IdleTimer(stage, 15);	
-			idleTimer.addEventListener("handleInteractivity", handleInteractivity);
-			
-			
 			sspm.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);			
 			sspm.addEventListener("onFadeOutSSP", onFadeOutSSP, false, 0, true);
+			sspm.addEventListener("onFadeInSSP", onFadeInSSP, false, 0, true);
+			
+			// ********* Timeout *********
+			idleTimer = new IdleTimer(stage, 20);	
+			idleTimer.addEventListener("handleInteractivity", handleInteractivity);					
 		}			
 		
-		private function onFadeOutSSP(e:Event):void{			
+		private function onFadeOutSSP(e:Event):void{	
+			trace("onFadeOutSSP");
 			removeChild(sspm);
+				
+		}
+		
+		private function onFadeInSSP(e:Event):void{	
+			trace("onFadeInSSP");
+			if (this.getChildByName("content") != null) {
+				removeChild(content);
+			}		
 		}
 		
 		private function onMouse(e:MouseEvent):void{
 			Mouse.hide();
 		}
 		
-		private function handleInteractivity(e:Event):void{	
-//			trace("handleInt");
+		private function handleInteractivity(e:Event):void{	// user interaction timeout
 			ytManager.pauseMovie();
-			removeChild(content);
 			addChild(sspm);
 			sspm.show(true);
 		}
 		
-		private function onClick(e:MouseEvent):void{
-//			trace("onClick");
+		private function onClick(e:MouseEvent):void{ // user clicks screen
 			sspm.show(false);
-			if (this.getChildByName("content") == null) {
-				addChild(content);
-			}
-			
+			if (this.getChildByName("content") == null)addChild(content);			
+			setChildIndex(sspm,numChildren-1);// put sspm on top
+		}
+		
+		private function hideCursor():void{
+			// Hide cursor - klugy, but Mouse.hidu() alone doesn't work
+			addEventListener(MouseEvent.CLICK, onMouse, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_MOVE, onMouse, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_DOWN, onMouse, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_OVER, onMouse, false, 0, true);
 		}
 		
 	}

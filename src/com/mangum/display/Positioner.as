@@ -19,7 +19,7 @@ package com.mangum.display{
 		}
 		
 		public static function topCenter(stage:Stage,o:Object):void {
-			o.x = stage.stageWidth - (o.width / 2);
+			o.x = stage.stageWidth - (o.width / 2) - 20;
 			o.y = 10;			
 		}
 		

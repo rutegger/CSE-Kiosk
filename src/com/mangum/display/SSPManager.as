@@ -46,15 +46,14 @@ package com.mangum.display{
 		}
 		
 		public function show(bool:Boolean):void{			
-			if(bool){
+			if(bool){ // resume ssp
 				ssp.playMedia();
 				addChild(resume);
 				_playing = true;
-				TweenLite.to(resume, 1, {y:500, ease:Bounce.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
-			}else{
-				ssp.pauseMedia();
-//				removeResume();				
-				TweenLite.to(resume, 1, {y:-500, ease:Bounce.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
+				TweenLite.to(resume, 1, {y:500, ease:Elastic.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
+			}else{ 
+				ssp.pauseMedia();		
+				TweenLite.to(resume, 1.5, {y:-500, ease:Quad.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
 				_playing = false;
 			}
 		}
@@ -62,13 +61,16 @@ package com.mangum.display{
 		private function onResumeTweenComplete(bool:Boolean):void{
 			var val:Number = (bool) ? 1 : 0;
 			var speed:Number  = (bool) ? TRANSITION_SPEED : TRANSITION_SPEED/3;
-			TweenLite.to(ssp, speed, {alpha:val,onComplete:onAlphaTweenComplete, onCompleteParams:[bool]});
-			TweenLite.to(resume, speed, {alpha:val});		
+			TweenLite.to(ssp, speed, {alpha:val,onComplete:onAlphaTweenComplete, onCompleteParams:[bool]});	
 		}
 		
 		private function onAlphaTweenComplete(bool:Boolean):void{
-			if(!bool) dispatchEvent(new Event("onFadeOutSSP")); 
-			TweenLite.to(resume, 2, {alpha:1});
+			if(!bool){
+				dispatchEvent(new Event("onFadeOutSSP")); 
+			} else {
+				dispatchEvent(new Event("onFadeInSSP"));
+			}
+			
 		}
 		
 		private function mkResumeBtn():void{

@@ -50,7 +50,7 @@ package com.mangum.text {
 			_label.selectable = false;
 			
 			format = new TextFormat();
-			format.font = "Arial";
+			format.font = "Helvetica";
 			format.color = 0xFFFFFF;
 			format.size = 10;
 			format.bold = true;
