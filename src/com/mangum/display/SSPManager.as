@@ -147,7 +147,7 @@ package com.mangum.display{
 		private function onModePlaybackEvent(event:SSPModePlaybackEvent):void {
 			trace("event.mode: "+event.mode);	
 			if(event.mode == "Manual"){
-				//					ssp.pauseMedia();
+				//	ssp.pauseMedia();
 				trace(ssp);
 				trace("pauseMedia");
 			}else{

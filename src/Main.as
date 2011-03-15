@@ -22,8 +22,8 @@ package{
 	
 	public class Main extends Sprite{		
 		
-		private var sspm:SSPManager = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
-		private var ytManager:YTManager = new YTManager();
+		private var sspm:SSPManager; 
+		private var ytManager:YTManager;
 		private var idleTimer:IdleTimer;
 		private var content:MovieClip = new MovieClip();
 		private var clock:Messenger;
@@ -55,7 +55,7 @@ package{
 			
 //			stage.displayState = StageDisplayState.FULL_SCREEN;			
 			
-			hideCursor();			
+//			hideCursor();			
 			
 			// ********* Kiosk Background ********* 
 			
@@ -76,10 +76,16 @@ package{
 			n.x = (stage.stageWidth / 2) - (n.width / 2);
 			n.y = 50;			
 			
-			// ********* YouTube ********* 		
+			// ********* YouTube ********* 
+			
+			ytManager = new YTManager(640,380);
 			content.addChild(ytManager);
+			ytManager.x = 100;
+			ytManager.y = 100;
+			
 		
 			// ********* SlideshowPro *********
+			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
 			addChild(sspm);
 			sspm.name = "sspm";
 			sspm.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);			

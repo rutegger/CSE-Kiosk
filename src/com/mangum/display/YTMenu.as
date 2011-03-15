@@ -16,21 +16,23 @@ package com.mangum.display{
 		private var movArr:Array = new Array();
 		private var _width:Number;
 		private var _height:Number;
+		private var _boxSize:Number
 		private var navBg:Sprite = new NavBg();
 		private var gutter:Number = 30;		
 		
-		public function YTMenu(arr:Array,width:Number=200){	
+		public function YTMenu(arr:Array,width:Number=200,boxSize:Number=500){	
 			var height:Number=width*.5;
-			mkMenu(arr,width,height);
+			_boxSize = boxSize;
+			mkMenu(arr,width,height,boxSize);
 			this.addEventListener("selected", onSelected);
 //		    this.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		}
 		
 		/* EVENT HANDLERS */
 		
-		private function onClick(e:MouseEvent):Number{
-			return e.localX;
-		}
+//		private function onClick(e:MouseEvent):Number{
+//			return e.localX;
+//		}
 		
 		private function onSelected(e:ActionEvent):void{
 //			trace(e.msg);
@@ -47,15 +49,15 @@ package com.mangum.display{
 		
 		/* PRIVATE METHODS */
 	
-		private function mkMenu(arr:Array,w:Number,h:Number):void{
+		private function mkMenu(arr:Array,w:Number,h:Number,b:Number):void{
 			cont = new MovieClip();
 			addChild(cont);
 //			cont.addChild(navBg);
 //			navBg.x = -gutter/2;
-			createThumbs(arr,w,h);
+			createThumbs(arr,w,h,b);
 		}
 		
-		private function createThumbs(arr:Array,w:Number,h:Number):void{		
+		private function createThumbs(arr:Array,w:Number,h:Number,b:Number):void{		
 			var xCount:Number = 0;
 			var len:uint = arr.length;	
 			var multiplier:Number = w * arr.length;
@@ -67,6 +69,8 @@ package com.mangum.display{
 
 				yt.x = xCount;
 				yt.y += 15;	
+				
+				trace("curr width: "+xCount);
 				
 				//so we can access later
 				movArr[i] = yt;						
@@ -91,6 +95,8 @@ package com.mangum.display{
 			addChild(msg);
 			msg.x = pos;
 			msg.y = height+gutter/1.5;
+			
+//			msg.setSize(20);
 		}
 		
 		

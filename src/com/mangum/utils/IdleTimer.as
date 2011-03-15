@@ -35,7 +35,7 @@
 		
 		private function onTimer(e:TimerEvent):void {
 			tCount++;
-			trace(tCount);
+//			trace(tCount);
 			dispatchEvent(new ActionEvent(String(tCount), "tic", true));
 			
 			if(tCount >= _idleTime){

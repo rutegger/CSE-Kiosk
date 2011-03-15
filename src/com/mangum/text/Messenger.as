@@ -62,7 +62,7 @@ package com.mangum.text {
 //			format.font = myFont.fontName;
 			format.font = "Univers57Cond";
 			format.color = 0xFFFFFF;
-			format.size = 10;
+			format.size = 14;
 			format.bold = true;
 			format.underline = false;
 			format.kerning = true;
