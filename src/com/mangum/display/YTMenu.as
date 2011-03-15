@@ -48,7 +48,7 @@ package com.mangum.display{
 		}	
 		
 		/* PRIVATE METHODS */
-	
+		
 		private function mkMenu(arr:Array,w:Number,h:Number,b:Number):void{
 			cont = new MovieClip();
 			addChild(cont);
@@ -59,24 +59,35 @@ package com.mangum.display{
 		
 		private function createThumbs(arr:Array,w:Number,h:Number,b:Number):void{		
 			var xCount:Number = 0;
+			var xVal:Number = 0;
+			var yVal:Number = 17;
 			var len:uint = arr.length;	
 			var multiplier:Number = w * arr.length;
+			var newRow:Boolean = false;
+			var currWidth:Number;
 			
 			for(var i:uint = 0; i < len; i++){
 				var yt:YTLoader = new YTLoader(arr[i].id,w,h,true); 
-				
-				cont.addChild(yt);	
-
-				yt.x = xCount;
-				yt.y += 15;	
-				
-				trace("curr width: "+xCount);
-				
+				cont.addChild(yt);
 				//so we can access later
-				movArr[i] = yt;						
-				
-				mkTitle(arr[i].title, w, h, xCount);
-				xCount+=w+25;
+				movArr[i] = yt;		
+				currWidth = xCount + w;				
+
+				if((b-currWidth) > 0){								
+					xVal = xCount;																	
+				} else {					
+					xCount = 0;	
+					xVal = 0;
+					yVal += 200;						
+				}
+
+				yt.x = xVal;
+				yt.y = yVal;
+				var msg:Messenger = new Messenger(arr[i].title,w);
+				addChild(msg);
+				msg.x = xVal;
+				msg.y = yVal + h ;
+				xCount += w + 25;			
 			}			
 			
 			navBg.width = xCount+gutter/1.5;
@@ -89,15 +100,6 @@ package com.mangum.display{
 			movArr[0].highlight();
 			
  		}		
-		
-		private function mkTitle(txt:String,width:Number,height:Number,pos:Number):void{
-			var msg:Messenger = new Messenger(txt,width);
-			addChild(msg);
-			msg.x = pos;
-			msg.y = height+gutter/1.5;
-			
-//			msg.setSize(20);
-		}
 		
 		
 		/* GETTER SETTERS */

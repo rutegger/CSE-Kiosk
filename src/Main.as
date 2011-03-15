@@ -57,13 +57,11 @@ package{
 			
 //			hideCursor();			
 			
-			// ********* Kiosk Background ********* 
-			
+			// ********* Kiosk Background ********* 			
 			var bg:Background = new Background();
 			addChild(bg);
 			
-			// ********* Main Content Holder ********* 
-			
+			// ********* Main Content Holder ********* 			
 			addChild(content);
 			content.name = "content";
 			
@@ -76,13 +74,11 @@ package{
 			n.x = (stage.stageWidth / 2) - (n.width / 2);
 			n.y = 50;			
 			
-			// ********* YouTube ********* 
-			
-			ytManager = new YTManager(640,380);
+			// ********* YouTube ********* 			
+			ytManager = new YTManager(640,390);
 			content.addChild(ytManager);
 			ytManager.x = 100;
-			ytManager.y = 100;
-			
+			ytManager.y = 100;			
 		
 			// ********* SlideshowPro *********
 			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
@@ -99,8 +95,9 @@ package{
 		
 		private function onFadeOutSSP(e:Event):void{	
 			trace("onFadeOutSSP");
-			removeChild(sspm);
-				
+			if (this.getChildByName("sspm") != null){
+				removeChild(sspm);
+			}							
 		}
 		
 		private function onFadeInSSP(e:Event):void{	
@@ -132,8 +129,6 @@ package{
 			addEventListener(MouseEvent.MOUSE_MOVE, onMouse, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouse, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_OVER, onMouse, false, 0, true);
-		}
-		
-	}
-	
+		}		
+	}	
 }

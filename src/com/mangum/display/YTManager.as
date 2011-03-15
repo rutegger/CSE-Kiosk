@@ -99,7 +99,7 @@ package com.mangum.display{
 			box.height = 500;
 			menu = new YTMenu(arr,150,545); // mov array, thumb width
 			addChild(menu);				
-			menu.x = 300;
+			menu.x = 310;
 			menu.y = 380;			
 			
 			box.x = menu.x - 15;
