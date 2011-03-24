@@ -1,6 +1,7 @@
 package{
 	
 	import com.mangum.display.*;
+	import com.mangum.display.FlashEffTester;
 	import com.mangum.display.Nav;
 	import com.mangum.display.Positioner;
 	import com.mangum.display.SSPManager;
@@ -8,6 +9,8 @@ package{
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.utils.IdleTimer;
+	import com.greensock.*;
+	import com.greensock.easing.*;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -26,17 +29,19 @@ package{
 		private var ytManager:YTManager;
 		private var idleTimer:IdleTimer;
 		private var content:MovieClip = new MovieClip();
-		private var clock:Messenger;
+		private var slide:MovieClip = new MovieClip();
+		
+		private var clock:Messenger; // for testing
 		
 		public function Main(){	
 			init();
 			
 			// **** for testing:
-			var ver:Messenger = new Messenger("V .03",60);
+			var ver:Messenger = new Messenger("V .03",60,0x000000,12);
 			addChild(ver);
 			clock = new Messenger(String(idleTimer.idleTime),100);
-			clock.name = "clock";
-			clock.setSize(50);
+//			clock.name = "clock";
+			clock.setAttribute("size",40);
 			Positioner.topCenter(stage,clock);
 			idleTimer.addEventListener("tic",onTic,false,0,true);
 		
@@ -66,19 +71,23 @@ package{
 			content.name = "content";
 			
 			// ********* Navigation ********* 
-			var arr:Array = [{id:"yt",title:"YouTube Videos"},
-							 {id:"energy",title:"Water & Energy Nexus"},
-							 {id:"satellite",title:"Student Satellite"}];			
+			var arr:Array = [{id:"yt", title:"YouTube Videos"},
+							 {id:"energy", title:"Water & Energy Nexus"},
+							 {id:"satellite", title:"Student Satellite"}];			
 			var n:Nav = new Nav(arr);
 			content.addChild(n);
 			n.x = (stage.stageWidth / 2) - (n.width / 2);
 			n.y = 50;			
+			n.addEventListener("navSelected",onNavSelected,false,0,true);	
 			
-			// ********* YouTube ********* 			
+			// ********* Content Slides ********* 
+			content.addChild(slide);
+			// YouTube 		
 			ytManager = new YTManager(640,390);
-			content.addChild(ytManager);
+			slide.addChild(ytManager);
 			ytManager.x = 100;
-			ytManager.y = 100;			
+			ytManager.y = 100;	
+			
 		
 			// ********* SlideshowPro *********
 			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
@@ -90,18 +99,31 @@ package{
 			
 			// ********* Timeout *********
 			idleTimer = new IdleTimer(stage, 20);	
-			idleTimer.addEventListener("handleInteractivity", handleInteractivity);					
-		}			
+			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
+			
+			// ********* FlashEff *********
+//			var ft:FlashEffTester = new FlashEffTester();
+//			addChild(ft);
+			
+			
+			
+		}	
+		
+		
+		/* EVENT HANDLERS */
+		
+		private function onNavSelected(e:ActionEvent):void{
+			trace("Main.as >>>> "+e.msg);
+			moveSlide(e.msg);
+		}
 		
 		private function onFadeOutSSP(e:Event):void{	
-			trace("onFadeOutSSP");
 			if (this.getChildByName("sspm") != null){
 				removeChild(sspm);
 			}							
 		}
 		
 		private function onFadeInSSP(e:Event):void{	
-			trace("onFadeInSSP");
 			if (this.getChildByName("content") != null) {
 				removeChild(content);
 			}		
@@ -123,8 +145,19 @@ package{
 			setChildIndex(sspm,numChildren-1);// put sspm on top
 		}
 		
+		
+		/* PRIVATE METHODS */
+		
+		private function moveSlide(val:String):void{
+			switch (val){
+				case "satellite":
+					TweenLite.to(slide, 5, {x:200, ease:Cubic.easeOut});
+					break;
+			}
+		}
+		
 		private function hideCursor():void{
-			// Hide cursor - klugy, but Mouse.hidu() alone doesn't work
+			// Hide cursor - kludgy, but Mouse.hidu() alone doesn't work
 			addEventListener(MouseEvent.CLICK, onMouse, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_MOVE, onMouse, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouse, false, 0, true);

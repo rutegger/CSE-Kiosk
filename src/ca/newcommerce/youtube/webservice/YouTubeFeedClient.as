@@ -103,7 +103,7 @@ package ca.newcommerce.youtube.webservice
 			var loader:URLLoader = new URLLoader();			
 //			loader.dataFormat = URLLoaderDataFormat.TEXT;
 //			loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, doHttpStatus);
-//			loader.addEventListener(IOErrorEvent.IO_ERROR, doIOError);
+			loader.addEventListener(IOErrorEvent.IO_ERROR, doIOError);
 //			loader.addEventListener(ProgressEvent.PROGRESS, handleProgress);
 //			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR , doSecurityError);
 			loader.addEventListener(Event.COMPLETE, doComplete);
@@ -442,13 +442,16 @@ package ca.newcommerce.youtube.webservice
 		* Event handler for IOErrorEvent.IO_ERROR on URLLoader
 		* @param	evt IOErrorEvent object
 		*/
-		protected function doIOError(evt:IOErrorEvent):void
-		{
+		protected function doIOError(evt:IOErrorEvent):void{ // MTM added event dispatch
+
 			var wrapper:Object = getWrapper(evt.target as URLLoader);
-			if(!wrapper.success)
+			if(!wrapper.success){
 				trace("WSClient.doIOError(" + evt.toString());
-			else
+				dispatchEvent(new Event("onYTConnectionError"));
+				
+			}else{
 				trace("success!");
+			}
 		}
 		
 		/**

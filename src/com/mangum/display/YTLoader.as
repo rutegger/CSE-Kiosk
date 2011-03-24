@@ -27,6 +27,7 @@ package com.mangum.display{
 		private var _thumb:Boolean;
 		private var _bool:Boolean = true;	
 		private var blocker:Sprite = new BlockerMC();
+		private var attempts:int = 0;
 		
 		public function YTLoader(id:String, w:Number, h:Number, thumb:Boolean){
 			//		trace("YTLoader constructor id: "+id);
@@ -53,11 +54,17 @@ package com.mangum.display{
 		}
 		
 		private function onIOError(e:IOErrorEvent):void{
-			//			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
-			trace("io error: "+e);
-			var myRequest:URLRequest = new URLRequest("http://www.youtube.com/apiplayer?version=3");		
-			loader.load(myRequest);			
-			loader.contentLoaderInfo.addEventListener(Event.INIT, onLoaderInit, false, 0, true);
+			attempts ++;
+			if(attempts < 4){
+				trace("io error #"+attempts+": "+e);
+				// try again...
+				var myRequest:URLRequest = new URLRequest("http://www.youtube.com/apiplayer?version=3");		
+				loader.load(myRequest);		
+			} else {
+				trace("ERROR: after 3 attempts I gave up. Handle YT fail...");
+				loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
+			}
+			
 		}		
 		
 		protected function doVideoInfoReady(evt:VideoDataEvent):void {

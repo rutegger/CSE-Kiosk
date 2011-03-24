@@ -21,6 +21,7 @@ package com.mangum.display{
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	
 	import net.slideshowpro.slideshowpro.*;
 	
@@ -42,7 +43,7 @@ package com.mangum.display{
 			_stage = stage;
 			_path = path;
 			mkSSP();
-			mkResumeBtn();
+//			mkResumeBtn();
 		}
 		
 		public function show(bool:Boolean):void{			
@@ -86,10 +87,16 @@ package com.mangum.display{
 			}
 		}
 		
+		private function onSSPIOerror(e:IOErrorEvent):void{
+			trace("ssp error");
+		};
+									  
+		
 		private function mkSSP():void{
 			ssp = new SlideShowPro();	
 			//			ssp.pauseMedia();
 			ssp.setData(_path,"Director");
+			ssp.addEventListener(IOErrorEvent.IO_ERROR, onSSPIOerror);
 			ssp.width = 1680;
 			ssp.height = 1050;
 //			ssp.contentScale = "Crop to Fit All";

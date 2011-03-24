@@ -1,22 +1,17 @@
 package com.mangum.display{
 	
-	import ca.newcommerce.youtube.DataTracer;
-	import ca.newcommerce.youtube.data.ThumbnailData;
 	import ca.newcommerce.youtube.data.VideoData;
-	import ca.newcommerce.youtube.events.VideoDataEvent;
 	import ca.newcommerce.youtube.events.VideoFeedEvent;
 	import ca.newcommerce.youtube.feeds.VideoFeed;
-	import ca.newcommerce.youtube.iterators.ThumbnailIterator;
 	import ca.newcommerce.youtube.webservice.YouTubeFeedClient;
 	
 	import com.greensock.*;
 	import com.greensock.easing.*;
-	import com.mangum.display.YTLoader;
-	import com.mangum.display.YTMenu;
 	import com.mangum.events.ActionEvent;
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	public class YTManager extends MovieClip{
@@ -34,10 +29,15 @@ package com.mangum.display{
 			
 			_wsFeed.getUserFavorites("cockrellSchool");
 			_wsFeed.addEventListener(VideoFeedEvent.USER_FAVORITES_DATA_RECEIVED, doFavoritesReady,false,0,true);
+			_wsFeed.addEventListener("onYTConnectionError", onYTConnectionError);
 			// stage.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		}
 		
 		/* EVENT HANDLERS */
+		
+		private function onYTConnectionError(e:Event):void{
+			trace("YT's down : (");
+		}
 		
 		private function onSelected(e:ActionEvent):void{
 			main.playVideo(e.msg);		
@@ -86,8 +86,8 @@ package com.mangum.display{
 			box.height = _height - 5;
 			
 			main = new YTLoader(arr[0].id,_width,_height,false);  
-			addChild(main);			
-	
+			addChild(main);	
+			
 			main.mask = createMask();
 		}
 		
@@ -95,7 +95,7 @@ package com.mangum.display{
 			var box:Sprite = new Box();
 			addChild(box);
 			
-			box.width = 545;
+			box.width = 525;
 			box.height = 500;
 			menu = new YTMenu(arr,150,545); // mov array, thumb width
 			addChild(menu);				
@@ -113,7 +113,7 @@ package com.mangum.display{
 			
 			shape.graphics.lineStyle(1, 0);
 			shape.graphics.beginFill(0xFF00FF);
-			shape.graphics.drawRect(0,0,_width+100,_height+70);
+			shape.graphics.drawRect(0,0,_width+100,_height+70); //have to add gutter for some reason
 			shape.graphics.endFill();
 			return shape;
 		}

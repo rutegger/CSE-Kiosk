@@ -78,15 +78,19 @@ package com.mangum.display{
 				} else {					
 					xCount = 0;	
 					xVal = 0;
-					yVal += 200;						
+					yVal += h * 2.2;						
 				}
 
 				yt.x = xVal;
 				yt.y = yVal;
-				var msg:Messenger = new Messenger(arr[i].title,w);
+				var msg:Messenger = new Messenger(arr[i].title,w,0xcc3333,13);
+				
+//				msg.setAttribute("color",0xff0000); doesn't work
+				
 				addChild(msg);
+			
 				msg.x = xVal;
-				msg.y = yVal + h ;
+				msg.y = yVal + h;
 				xCount += w + 25;			
 			}			
 			
