@@ -33,6 +33,12 @@ package com.mangum.display{
 			// stage.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		}
 		
+		/* PUBLIC METHODS */
+		
+		public function pauseMovie():void{
+			main.pause();
+		}
+		
 		/* EVENT HANDLERS */
 		
 		private function onYTConnectionError(e:Event):void{
@@ -42,11 +48,7 @@ package com.mangum.display{
 		private function onSelected(e:ActionEvent):void{
 			main.playVideo(e.msg);		
 		}
-		
-		public function pauseMovie():void{
-			main.pause();
-		}
-		
+
 		private function doFavoritesReady(evt:VideoFeedEvent):void{
 			_wsFeed.removeEventListener(VideoFeedEvent.USER_FAVORITES_DATA_RECEIVED, doFavoritesReady);
 			var vids:Array = new Array();
@@ -87,7 +89,7 @@ package com.mangum.display{
 			
 			main = new YTLoader(arr[0].id,_width,_height,false);  
 			addChild(main);	
-			
+	
 			main.mask = createMask();
 		}
 		
@@ -95,7 +97,7 @@ package com.mangum.display{
 			var box:Sprite = new Box();
 			addChild(box);
 			
-			box.width = 525;
+			box.width = 550;
 			box.height = 500;
 			menu = new YTMenu(arr,150,545); // mov array, thumb width
 			addChild(menu);				
@@ -109,12 +111,13 @@ package com.mangum.display{
 		}
 		
 		private function createMask():Sprite{
-			var shape:Sprite = new Sprite();			
-			
+			var shape:Sprite = new Sprite();					
 			shape.graphics.lineStyle(1, 0);
 			shape.graphics.beginFill(0xFF00FF);
-			shape.graphics.drawRect(0,0,_width+100,_height+70); //have to add gutter for some reason
+			shape.graphics.drawRect(0,0,1650,_height+70); // since the mask wont follow the slide I just made the width 100%; 
+			                                              // also have to add gutter _hieght for some reason
 			shape.graphics.endFill();
+			shape.y = 50;
 			return shape;
 		}
 		

@@ -1,5 +1,7 @@
 package{
 	
+	import com.greensock.*;
+	import com.greensock.easing.*;
 	import com.mangum.display.*;
 	import com.mangum.display.FlashEffTester;
 	import com.mangum.display.Nav;
@@ -9,8 +11,6 @@ package{
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.utils.IdleTimer;
-	import com.greensock.*;
-	import com.greensock.easing.*;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -30,6 +30,7 @@ package{
 		private var idleTimer:IdleTimer;
 		private var content:MovieClip = new MovieClip();
 		private var slide:MovieClip = new MovieClip();
+		private var satelliteSlide:MovieClip;
 		
 		private var clock:Messenger; // for testing
 		
@@ -37,7 +38,7 @@ package{
 			init();
 			
 			// **** for testing:
-			var ver:Messenger = new Messenger("V .03",60,0x000000,12);
+			var ver:Messenger = new Messenger("V .04",60,0x000000,12);
 			addChild(ver);
 			clock = new Messenger(String(idleTimer.idleTime),100);
 //			clock.name = "clock";
@@ -77,7 +78,7 @@ package{
 			var n:Nav = new Nav(arr);
 			content.addChild(n);
 			n.x = (stage.stageWidth / 2) - (n.width / 2);
-			n.y = 50;			
+			n.y = 900;			
 			n.addEventListener("navSelected",onNavSelected,false,0,true);	
 			
 			// ********* Content Slides ********* 
@@ -86,7 +87,12 @@ package{
 			ytManager = new YTManager(640,390);
 			slide.addChild(ytManager);
 			ytManager.x = 100;
-			ytManager.y = 100;	
+			ytManager.y = 50;
+			// Satellite
+			satelliteSlide = new SatelliteSlide();
+			slide.addChild(satelliteSlide);
+			satelliteSlide.x = 1700;
+			satelliteSlide.y = 150;
 			
 		
 			// ********* SlideshowPro *********
@@ -104,9 +110,7 @@ package{
 			// ********* FlashEff *********
 //			var ft:FlashEffTester = new FlashEffTester();
 //			addChild(ft);
-			
-			
-			
+	
 		}	
 		
 		
@@ -150,8 +154,12 @@ package{
 		
 		private function moveSlide(val:String):void{
 			switch (val){
+				case "yt":
+					TweenLite.to(slide, 1.5, {x:0, ease:Cubic.easeOut});	
+					break;
 				case "satellite":
-					TweenLite.to(slide, 5, {x:200, ease:Cubic.easeOut});
+					TweenLite.to(slide, 1.5, {x:-1700, ease:Cubic.easeOut});	
+					ytManager.pauseMovie();
 					break;
 			}
 		}

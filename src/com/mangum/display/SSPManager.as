@@ -43,7 +43,7 @@ package com.mangum.display{
 			_stage = stage;
 			_path = path;
 			mkSSP();
-//			mkResumeBtn();
+			mkResumeBtn();
 		}
 		
 		public function show(bool:Boolean):void{			
@@ -54,7 +54,7 @@ package com.mangum.display{
 				TweenLite.to(resume, 1, {y:500, ease:Elastic.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
 			}else{ 
 				ssp.pauseMedia();		
-				TweenLite.to(resume, .5, {y:-300, ease:Quad.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
+				TweenLite.to(resume, .75, {y:-300, ease:Quad.easeOut,onComplete:onResumeTweenComplete, onCompleteParams:[bool]});
 				_playing = false;
 			}
 		}
@@ -78,7 +78,7 @@ package com.mangum.display{
 			resume.name = "resume";
 			addChild(resume);
 			Positioner.center(_stage,resume);
-//			resume.x = (_stage.stageHeight / 2) - (resume.height / 2);			
+			resume.x = (_stage.stageWidth / 2) - (resume.width / 2);			
 		}
 		
 		private function removeResume():void{	

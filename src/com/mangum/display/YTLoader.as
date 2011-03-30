@@ -26,7 +26,7 @@ package com.mangum.display{
 		private var _h:Number;
 		private var _thumb:Boolean;
 		private var _bool:Boolean = true;	
-		private var blocker:Sprite = new BlockerMC();
+//		private var blocker:Sprite = new BlockerMC();
 		private var attempts:int = 0;
 		
 		public function YTLoader(id:String, w:Number, h:Number, thumb:Boolean){
@@ -109,11 +109,9 @@ package com.mangum.display{
 				mkButton();	
 			} else {
 				player.cueVideoById(_id);
-				addChild(blocker);
-				blocker.x = _w - blocker.width;
-				blocker.y = _h - blocker.height-1;
-				
-				//				trace("xxxxxx> "+_id+": "+player.getDuration(), player.getCurrentTime());
+//				addChild(blocker);
+//				blocker.x = _w - blocker.width;
+//				blocker.y = _h - blocker.height-1;
 			}
 		}				
 		

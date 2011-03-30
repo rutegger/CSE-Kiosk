@@ -27,9 +27,6 @@
       <libraryPathEntry kind="3" linkType="1" path="libs/Assets.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="libs/SlideShowPro_1985_AS3.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="1" linkType="1" path="${PROJECT_FRAMEWORKS}/locale/en_US"/>
-      <libraryPathEntry kind="3" linkType="1" path="libs/flashEff/FlashEff2Flex.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="libs/flashEff/Patterns/FESEqualizer.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="libs/flashEff/Patterns/FESUnpack.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
