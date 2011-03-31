@@ -1,6 +1,5 @@
-package com.mangum.display{
+package com.mangum.display.YT{
 		
-	import com.mangum.display.YTLoader;
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
 	

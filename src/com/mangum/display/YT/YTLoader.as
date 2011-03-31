@@ -1,4 +1,4 @@
-package com.mangum.display{
+package com.mangum.display.YT{
 	
 	import ca.newcommerce.youtube.DataTracer;
 	import ca.newcommerce.youtube.events.VideoDataEvent;
@@ -15,6 +15,7 @@ package com.mangum.display{
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
 	import flash.system.Security;
+	import com.mangum.display.HitArea;
 	
 	
 	public class YTLoader extends MovieClip{

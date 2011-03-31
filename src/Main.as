@@ -6,8 +6,8 @@ package{
 	import com.mangum.display.FlashEffTester;
 	import com.mangum.display.Nav;
 	import com.mangum.display.Positioner;
-	import com.mangum.display.SSPManager;
-	import com.mangum.display.YTManager;
+	import com.mangum.display.SSP.SSPManager;
+	import com.mangum.display.YT.YTManager;
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.utils.IdleTimer;
@@ -32,6 +32,7 @@ package{
 		private var slide:MovieClip = new MovieClip();
 		private var satelliteSlide:MovieClip;
 		
+		
 		private var clock:Messenger; // for testing
 		
 		public function Main(){	
@@ -41,7 +42,6 @@ package{
 			var ver:Messenger = new Messenger("V .04",60,0x000000,12);
 			addChild(ver);
 			clock = new Messenger(String(idleTimer.idleTime),100);
-//			clock.name = "clock";
 			clock.setAttribute("size",40);
 			Positioner.topCenter(stage,clock);
 			idleTimer.addEventListener("tic",onTic,false,0,true);

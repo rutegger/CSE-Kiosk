@@ -1,10 +1,10 @@
-package com.mangum.display{
+package com.mangum.display.SSP{
 	
 	import com.greensock.*;
 	import com.greensock.easing.*;
 	import com.greensock.plugins.*;
 	import com.mangum.display.Positioner;
-	import com.mangum.display.SSPManager;
+	import com.mangum.display.SSP.SSPManager;
 	
 	import flash.display.Bitmap;
 	import flash.display.GradientType;

@@ -1,4 +1,4 @@
-package com.mangum.display{
+package com.mangum.display.YT{
 	
 	import ca.newcommerce.youtube.data.VideoData;
 	import ca.newcommerce.youtube.events.VideoFeedEvent;
@@ -13,8 +13,9 @@ package com.mangum.display{
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import com.mangum.display.Slide;
 	
-	public class YTManager extends MovieClip{
+	public class YTManager extends Slide{
 		
 		private var _width:Number;
 		private var _height:Number;
@@ -27,11 +28,12 @@ package com.mangum.display{
 			_width = width;
 			_height = height;
 			
-			_wsFeed.getUserFavorites("cockrellSchool");
-			_wsFeed.addEventListener(VideoFeedEvent.USER_FAVORITES_DATA_RECEIVED, doFavoritesReady,false,0,true);
-			_wsFeed.addEventListener("onYTConnectionError", onYTConnectionError);
+			setUpFeed("cockrellSchool");
+			
+			
 			// stage.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		}
+		
 		
 		/* PUBLIC METHODS */
 		
@@ -72,7 +74,13 @@ package com.mangum.display{
 		}
 		
 		
-		/* PRIVATE METHODS */			
+		/* PRIVATE METHODS */	
+		
+		private function setUpFeed(fav:String):void{
+			_wsFeed.getUserFavorites(fav);
+			_wsFeed.addEventListener(VideoFeedEvent.USER_FAVORITES_DATA_RECEIVED, doFavoritesReady,false,0,true);
+			_wsFeed.addEventListener("onYTConnectionError", onYTConnectionError);
+		}
 		
 		private function build(vids:Array):void{	
 			mkMovie(vids);
@@ -89,23 +97,25 @@ package com.mangum.display{
 			
 			main = new YTLoader(arr[0].id,_width,_height,false);  
 			addChild(main);	
-	
+//			addChild(createMask());
 			main.mask = createMask();
 		}
 		
 		private function mkNav(arr:Array):void{
 			var box:Sprite = new Box();
 			addChild(box);
+		
 			
-			box.width = 550;
-			box.height = 500;
 			menu = new YTMenu(arr,150,545); // mov array, thumb width
-			addChild(menu);				
+			addChild(menu);	
+			trace(menu.height, menu.h);
 			menu.x = 310;
 			menu.y = 380;			
 			
 			box.x = menu.x - 15;
 			box.y = menu.y;
+			box.width = 550;
+			box.height = menu.height*2;
 			
 			menu.addEventListener("selected", onSelected, false, 0, true);
 		}
@@ -114,7 +124,7 @@ package com.mangum.display{
 			var shape:Sprite = new Sprite();					
 			shape.graphics.lineStyle(1, 0);
 			shape.graphics.beginFill(0xFF00FF);
-			shape.graphics.drawRect(0,0,1650,_height+70); // since the mask wont follow the slide I just made the width 100%; 
+			shape.graphics.drawRect(0,-70,1650,_height+40); // since the mask wont follow the slide I just made the width 100%; 
 			                                              // also have to add gutter _hieght for some reason
 			shape.graphics.endFill();
 			shape.y = 50;
