@@ -15,23 +15,27 @@ package com.mangum.display.YT{
 		private var movArr:Array = new Array();
 		private var _width:Number;
 		private var _height:Number;
-		private var _boxSize:Number
 		private var navBg:Sprite = new NavBg();
-		private var gutter:Number = 30;		
+		private var gutter:Number = 30;	
+		private var box:Sprite;
 		
-		public function YTMenu(arr:Array,width:Number=200,boxSize:Number=500){	
-			var height:Number=width*.5;
-			_boxSize = boxSize;
-			mkMenu(arr,width,height,boxSize);
+		public function YTMenu(arr:Array,thumbWidth:Number=200,boxWidth:Number=500){	
+			var height:Number=thumbWidth*.5;
+			_width = boxWidth;
+			
+			box = new Box();
+			addChild(box);
+			box.x = -5;
+			box.y = 0;
+			
+
+			mkMenu(arr,thumbWidth,height,boxWidth);
 			this.addEventListener("selected", onSelected);
-//		    this.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
+			
 		}
 		
 		/* EVENT HANDLERS */
 		
-//		private function onClick(e:MouseEvent):Number{
-//			return e.localX;
-//		}
 		
 		private function onSelected(e:ActionEvent):void{
 //			trace(e.msg);
@@ -48,50 +52,62 @@ package com.mangum.display.YT{
 		
 		/* PRIVATE METHODS */
 		
-		private function mkMenu(arr:Array,w:Number,h:Number,b:Number):void{
+		private function mkMenu(arr:Array,thbWidth:Number,h:Number,boxWidth:Number):void{
 			cont = new MovieClip();
 			addChild(cont);
 //			cont.addChild(navBg);
 //			navBg.x = -gutter/2;
-			createThumbs(arr,w,h,b);
+			createThumbs(arr,thbWidth,h,boxWidth);
 		}
 		
-		private function createThumbs(arr:Array,w:Number,h:Number,b:Number):void{		
+		private function createThumbs(arr:Array,thbWidth:Number,h:Number,boxWidth:Number):void{		
 			var xCount:Number = 0;
 			var xVal:Number = 0;
 			var yVal:Number = 17;
 			var len:uint = arr.length;	
-			var multiplier:Number = w * arr.length;
+			var multiplier:Number = thbWidth * arr.length;
 			var newRow:Boolean = false;
 			var currWidth:Number;
+			var rows:int = 1;
+			var totalHeight:Number;
 			
 			for(var i:uint = 0; i < len; i++){
-				var yt:YTLoader = new YTLoader(arr[i].id,w,h,true); 
+				var yt:YTLoader = new YTLoader(arr[i].id,thbWidth,h,true); 
 				cont.addChild(yt);
 				//so we can access later
 				movArr[i] = yt;		
-				currWidth = xCount + w;				
-
-				if((b-currWidth) > 0){								
+				currWidth = xCount + thbWidth;	
+				
+				if((boxWidth-currWidth) > 0){								
 					xVal = xCount;																	
-				} else {					
+				} else {	
+					rows++;
 					xCount = 0;	
 					xVal = 0;
 					yVal += h * 2.2;						
 				}
 
 				yt.x = xVal;
-				yt.y = yVal;
-				var msg:Messenger = new Messenger(arr[i].title,w,0xcc3333,13);
 				
-//				msg.setAttribute("color",0xff0000); doesn't work
+				yt.y = yVal;
+				var msg:Messenger = new Messenger(arr[i].title,thbWidth,0xcc3333,13);
+				
+				totalHeight = h+msg.height+(gutter*2);
+				
+//				msg.setAttribute("color",0xff00ff); //doesn't work ??
 				
 				addChild(msg);
 			
 				msg.x = xVal;
 				msg.y = yVal + h;
-				xCount += w + 25;			
+				xCount += thbWidth + 25;			
 			}			
+			
+			_height = (totalHeight * rows);
+			_width = _width - gutter/3;
+			
+			box.width = _width;
+			box.height = _height;
 			
 			navBg.width = xCount+gutter/1.5;
 			navBg.height = 75 + gutter;
@@ -108,12 +124,13 @@ package com.mangum.display.YT{
 		/* GETTER SETTERS */
 		
 		public function get w():Number {
-			return navBg.width;
+			return _width;
 		}		
 				
 		public function get h():Number {
-			return navBg.height;
+			return _height;
 		}			
+		
 
 		
 	}

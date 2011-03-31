@@ -29,9 +29,8 @@ package{
 		private var ytManager:YTManager;
 		private var idleTimer:IdleTimer;
 		private var content:MovieClip = new MovieClip();
-		private var slide:MovieClip = new MovieClip();
+		private var slideContainer:MovieClip = new MovieClip();
 		private var satelliteSlide:MovieClip;
-		
 		
 		private var clock:Messenger; // for testing
 		
@@ -82,18 +81,19 @@ package{
 			n.addEventListener("navSelected",onNavSelected,false,0,true);	
 			
 			// ********* Content Slides ********* 
-			content.addChild(slide);
+			content.addChild(slideContainer);
+			slideContainer.y = 200;
+			
 			// YouTube 		
 			ytManager = new YTManager(640,390);
-			slide.addChild(ytManager);
+			slideContainer.addChild(ytManager);
 			ytManager.x = 100;
-			ytManager.y = 50;
+			ytManager.y = 100;
 			// Satellite
 			satelliteSlide = new SatelliteSlide();
-			slide.addChild(satelliteSlide);
+			slideContainer.addChild(satelliteSlide);
 			satelliteSlide.x = 1700;
-			satelliteSlide.y = 150;
-			
+			satelliteSlide.y = 150;			
 		
 			// ********* SlideshowPro *********
 			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
@@ -155,10 +155,10 @@ package{
 		private function moveSlide(val:String):void{
 			switch (val){
 				case "yt":
-					TweenLite.to(slide, 1.5, {x:0, ease:Cubic.easeOut});	
+					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut});	
 					break;
 				case "satellite":
-					TweenLite.to(slide, 1.5, {x:-1700, ease:Cubic.easeOut});	
+					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut});	
 					ytManager.pauseMovie();
 					break;
 			}

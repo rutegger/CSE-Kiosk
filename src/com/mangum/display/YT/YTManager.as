@@ -19,7 +19,7 @@ package com.mangum.display.YT{
 		
 		private var _width:Number;
 		private var _height:Number;
-		private var main:YTLoader;
+		private var mov:YTLoader;
 		private var menu:YTMenu;
 		private var count:int = 0;
 		protected var _wsFeed:YouTubeFeedClient = YouTubeFeedClient.getInstance();	
@@ -38,7 +38,7 @@ package com.mangum.display.YT{
 		/* PUBLIC METHODS */
 		
 		public function pauseMovie():void{
-			main.pause();
+			mov.pause();
 		}
 		
 		/* EVENT HANDLERS */
@@ -48,7 +48,7 @@ package com.mangum.display.YT{
 		}
 		
 		private function onSelected(e:ActionEvent):void{
-			main.playVideo(e.msg);		
+			mov.playVideo(e.msg);		
 		}
 
 		private function doFavoritesReady(evt:VideoFeedEvent):void{
@@ -82,52 +82,49 @@ package com.mangum.display.YT{
 			_wsFeed.addEventListener("onYTConnectionError", onYTConnectionError);
 		}
 		
-		private function build(vids:Array):void{	
-			mkMovie(vids);
-			mkNav(vids);
-		}
-		
-		private function mkMovie(arr:Array):void{
+		private function build(vids:Array):void{
+			
 			var box:Sprite = new Box();
 			addChild(box);
 			box.x = 5;
 			box.y = -10;
 			box.width = _width + 25;
 			box.height = _height - 5;
-			
-			main = new YTLoader(arr[0].id,_width,_height,false);  
-			addChild(main);	
-//			addChild(createMask());
-			main.mask = createMask();
+			addChild(mkMovie(vids));
+			addChild(mkNav(vids));
 		}
 		
-		private function mkNav(arr:Array):void{
-			var box:Sprite = new Box();
-			addChild(box);
+		private function mkMovie(arr:Array):MovieClip{
+//			var box:Sprite = new Box();
+//			addChild(box);
+//			box.x = 5;
+//			box.y = -10;
+//			box.width = _width + 25;
+//			box.height = _height - 5;
+			
+			mov = new YTLoader(arr[0].id,_width,_height,false);  
+//			addChild(main);	
+//			addChild(createMask());
+			mov.mask = createMask();
+			return mov;
+		}
 		
-			
-			menu = new YTMenu(arr,150,545); // mov array, thumb width
-			addChild(menu);	
-			trace(menu.height, menu.h);
-			menu.x = 310;
-			menu.y = 380;			
-			
-			box.x = menu.x - 15;
-			box.y = menu.y;
-			box.width = 550;
-			box.height = menu.height*2;
-			
+		private function mkNav(arr:Array):MovieClip{
+			menu = new YTMenu(arr,150,545); // mov array, thumb width				
+			menu.x = 755;
+			menu.y = 50;					
 			menu.addEventListener("selected", onSelected, false, 0, true);
+			return menu;
 		}
 		
 		private function createMask():Sprite{
 			var shape:Sprite = new Sprite();					
 			shape.graphics.lineStyle(1, 0);
 			shape.graphics.beginFill(0xFF00FF);
-			shape.graphics.drawRect(0,-70,1650,_height+40); // since the mask wont follow the slide I just made the width 100%; 
-			                                              // also have to add gutter _hieght for some reason
+			shape.graphics.drawRect(0,-70,1680,_height+40); // since the mask wont follow the slide I just made the width 100%; 
+			                                                // also have to add gutter _hieght for some reason
 			shape.graphics.endFill();
-			shape.y = 50;
+			shape.y = 300;
 			return shape;
 		}
 		
