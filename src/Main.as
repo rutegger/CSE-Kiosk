@@ -11,6 +11,7 @@ package{
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.utils.IdleTimer;
+	import com.mangum.display.weather.WeatherManager;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -41,7 +42,7 @@ package{
 			var ver:Messenger = new Messenger("V .04",60,0x000000,12);
 			addChild(ver);
 			clock = new Messenger(String(idleTimer.idleTime),100);
-			clock.setAttribute("size",40);
+			clock.setAttribute("size",20);
 			Positioner.topCenter(stage,clock);
 			idleTimer.addEventListener("tic",onTic,false,0,true);
 		
@@ -66,6 +67,14 @@ package{
 			var bg:Background = new Background();
 			addChild(bg);
 			
+			// ********* Weather Widget ********* 
+			var weather:WeatherManager = new WeatherManager();
+			addChild(weather);
+			weather.scaleX = .95;
+			weather.scaleY = .95
+			weather.x = 620;
+			weather.y = 10;
+			
 			// ********* Main Content Holder ********* 			
 			addChild(content);
 			content.name = "content";
@@ -87,13 +96,13 @@ package{
 			// YouTube 		
 			ytManager = new YTManager(640,390);
 			slideContainer.addChild(ytManager);
-			ytManager.x = 100;
+			ytManager.x = 180;
 			ytManager.y = 100;
 			// Satellite
 			satelliteSlide = new SatelliteSlide();
 			slideContainer.addChild(satelliteSlide);
-			satelliteSlide.x = 1700;
-			satelliteSlide.y = 150;			
+			satelliteSlide.x = stage.stageWidth +200;
+			satelliteSlide.y = 10;			
 		
 			// ********* SlideshowPro *********
 			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
