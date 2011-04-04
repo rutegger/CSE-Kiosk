@@ -32,6 +32,7 @@ package{
 		private var content:MovieClip = new MovieClip();
 		private var slideContainer:MovieClip = new MovieClip();
 		private var satelliteSlide:MovieClip;
+		private var cancerSlide:MovieClip;
 		
 		private var clock:Messenger; // for testing
 		
@@ -102,7 +103,12 @@ package{
 			satelliteSlide = new SatelliteSlide();
 			slideContainer.addChild(satelliteSlide);
 			satelliteSlide.x = stage.stageWidth +200;
-			satelliteSlide.y = 10;			
+			satelliteSlide.y = 10;	
+			// Cancer Research
+			cancerSlide = new CancerSlide();
+			slideContainer.addChild(cancerSlide);
+			cancerSlide.x = (stage.stageWidth*2) + 200;
+			cancerSlide.y = 10;	
 		
 			// ********* SlideshowPro *********
 			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
@@ -168,6 +174,10 @@ package{
 					break;
 				case "satellite":
 					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut});	
+					ytManager.pauseMovie();
+					break;
+				case "cancer":
+					TweenLite.to(slideContainer, 1.5, {x:-3400, ease:Cubic.easeOut});	
 					ytManager.pauseMovie();
 					break;
 			}
