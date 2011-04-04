@@ -8,10 +8,10 @@ package{
 	import com.mangum.display.Positioner;
 	import com.mangum.display.SSP.SSPManager;
 	import com.mangum.display.YT.YTManager;
+	import com.mangum.display.weather.WeatherManager;
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.utils.IdleTimer;
-	import com.mangum.display.weather.WeatherManager;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -81,14 +81,17 @@ package{
 			content.name = "content";
 			
 			// ********* Navigation ********* 
-			var arr:Array = [{id:"yt", title:"YouTube Videos"},
-							 {id:"energy", title:"Water & Energy Nexus"},
-							 {id:"satellite", title:"Student Satellite"}];			
+			var ytBtn:MovieClip = new YTButton();
+			var satelliteBtn:MovieClip = new SatelliteButton();
+			var cancerBtn:MovieClip = new CancerButton();
+			var arr:Array = [{id:"yt", mc:ytBtn},
+							 {id:"satellite", mc:satelliteBtn},
+							 {id:"cancer", mc:cancerBtn}];			
 			var n:Nav = new Nav(arr);
 			content.addChild(n);
 			n.x = (stage.stageWidth / 2) - (n.width / 2);
 			n.y = 900;			
-			n.addEventListener("navSelected",onNavSelected,false,0,true);	
+			n.addEventListener("navSelected",onNavSelected,false,0,true);
 			
 			// ********* Content Slides ********* 
 			content.addChild(slideContainer);
@@ -121,6 +124,11 @@ package{
 			// ********* Timeout *********
 			idleTimer = new IdleTimer(stage, 20);	
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
+			
+		
+			
+			
+			
 			
 			// ********* FlashEff *********
 //			var ft:FlashEffTester = new FlashEffTester();
