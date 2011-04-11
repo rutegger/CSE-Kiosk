@@ -6,6 +6,7 @@ package com.mangum.display.YT{
 	
 	import com.greensock.*;
 	import com.greensock.easing.*;
+	import com.mangum.display.HitArea;
 	import com.mangum.events.ActionEvent;
 	
 	import flash.display.Loader;
@@ -15,7 +16,6 @@ package com.mangum.display.YT{
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
 	import flash.system.Security;
-	import com.mangum.display.HitArea;
 	
 	
 	public class YTLoader extends MovieClip{
@@ -28,6 +28,7 @@ package com.mangum.display.YT{
 		private var _thumb:Boolean;
 		private var _bool:Boolean = true;	
 //		private var blocker:Sprite = new BlockerMC();
+		private var linkBlocker:YTLinkBlocker = new YTLinkBlocker();
 		private var attempts:int = 0;
 		
 		public function YTLoader(id:String, w:Number, h:Number, thumb:Boolean){
@@ -113,6 +114,12 @@ package com.mangum.display.YT{
 //				addChild(blocker);
 //				blocker.x = _w - blocker.width;
 //				blocker.y = _h - blocker.height-1;
+				addChild(linkBlocker);
+				linkBlocker.x = _w - linkBlocker.width - 45;
+				linkBlocker.y = _h - linkBlocker.height - 25;
+				linkBlocker.width = 95;
+				linkBlocker.height = 45;
+//				alpha = 0;
 			}
 		}				
 		

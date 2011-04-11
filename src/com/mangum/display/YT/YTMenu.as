@@ -28,7 +28,6 @@ package com.mangum.display.YT{
 			box.x = -5;
 			box.y = 0;
 			
-
 			mkMenu(arr,thumbWidth,height,boxWidth);
 			this.addEventListener("selected", onSelected);
 			

@@ -12,6 +12,7 @@ package{
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.utils.IdleTimer;
+	import com.mangum.utils.MouseSpeed;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -19,31 +20,46 @@ package{
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Rectangle;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursor;
 	
 	[SWF(width='1680', height='1050', backgroundColor='#0000000', frameRate='24')]
 	
-	public class Main extends Sprite{		
+	public class Main extends Sprite{
 		
 		private var sspm:SSPManager; 
 		private var ytManager:YTManager;
 		private var idleTimer:IdleTimer;
 		private var content:MovieClip = new MovieClip();
+		private var currentSelection:String;
+		
 		private var slideContainer:MovieClip = new MovieClip();
 		private var satelliteSlide:MovieClip;
 		private var cancerSlide:MovieClip;
 		
+		private var ms:MouseSpeed = new MouseSpeed();
+		private var xSpeed:Number	= 0;
+		private var ySpeed:Number	= 0;
+		private var friction:Number	= 0.96;
+		private var offsetX:Number	= 0;
+		private var offsetY:Number	= 0;	
+
+		
 		private var clock:Messenger; // for testing
 		
 		public function Main(){	
+					
+			var name:String="flash mx";
+			trace(name.split("a")[1].slice(2, 4).toUpperCase());
 			init();
 			
 			// **** for testing:
 			var ver:Messenger = new Messenger("V .04",60,0x000000,12);
 			addChild(ver);
 			clock = new Messenger(String(idleTimer.idleTime),100);
-			clock.setAttribute("size",20);
+			clock.setAttribute("size",15);
+			clock.setAttribute("color",0xffffff);
 			Positioner.topCenter(stage,clock);
 			idleTimer.addEventListener("tic",onTic,false,0,true);
 		
@@ -59,7 +75,7 @@ package{
 		
 		
 		private function init():void{
-			
+						
 //			stage.displayState = StageDisplayState.FULL_SCREEN;			
 			
 //			hideCursor();			
@@ -93,10 +109,20 @@ package{
 			n.y = 900;			
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
 			
+			for (var i:String in arr) 
+			{ 
+				trace(arr[i].id); 
+			} 
+						
+			for each (var id in arr) 
+			{ 
+				trace(id); 
+			} 
+			
 			// ********* Content Slides ********* 
 			content.addChild(slideContainer);
 			slideContainer.y = 200;
-			
+	
 			// YouTube 		
 			ytManager = new YTManager(640,390);
 			slideContainer.addChild(ytManager);
@@ -111,7 +137,11 @@ package{
 			cancerSlide = new CancerSlide();
 			slideContainer.addChild(cancerSlide);
 			cancerSlide.x = (stage.stageWidth*2) + 200;
-			cancerSlide.y = 10;	
+			cancerSlide.y = 10;				
+						
+//			slideContainer.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
+//			slideContainer.addEventListener(Event.ENTER_FRAME, throwobject);	
+		
 		
 			// ********* SlideshowPro *********
 			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
@@ -122,13 +152,9 @@ package{
 			sspm.addEventListener("onFadeInSSP", onFadeInSSP, false, 0, true);
 			
 			// ********* Timeout *********
-			idleTimer = new IdleTimer(stage, 20);	
+			idleTimer = new IdleTimer(stage, 45);
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
-			
-		
-			
-			
-			
+						
 			
 			// ********* FlashEff *********
 //			var ft:FlashEffTester = new FlashEffTester();
@@ -137,7 +163,46 @@ package{
 		}	
 		
 		
+		
+		
 		/* EVENT HANDLERS */
+		
+		private function mouseDownHandler(e:MouseEvent):void{
+			
+			slideContainer.addEventListener(Event.ENTER_FRAME, throwobject);	//if !exists
+			stage.addEventListener(Event.ENTER_FRAME, drag);
+			stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			offsetX = mouseX - slideContainer.x;
+		}
+		
+		private function mouseUpHandler(e:MouseEvent):void{
+			stage.removeEventListener(Event.ENTER_FRAME, drag);
+			stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			xSpeed = ms.getXSpeed();
+		}
+		
+		private function drag(e:Event):void{
+			slideContainer.x = mouseX - offsetX;
+			trace("drag: "+Math.floor(slideContainer.x),currentSelection);
+		}
+		
+		private function throwobject(e:Event):void{
+			slideContainer.x += xSpeed;				
+			xSpeed *= friction
+//			trace("throw: "+Math.floor(slideContainer.x),currentSelection);
+//			if(Math.floor(slideContainer.x) > 0 ){
+//				moveSlide("yt");
+//			} else if(Math.floor(slideContainer.x) > -450 && Math.floor(slideContainer.x) < -1000 && currentSelection != "yt"){
+//				moveSlide("yt");
+//			} else if (Math.floor(slideContainer.x) <= -451 && currentSelection != "satellite"){
+//				trace("sat?");
+//				moveSlide("satellite");
+//			} 
+			
+			slideContainer.x = Math.floor(slideContainer.x) - mouseX % 500;
+			
+			//  0 to -450 | -451 - 
+		}
 		
 		private function onNavSelected(e:ActionEvent):void{
 			trace("Main.as >>>> "+e.msg);
@@ -176,6 +241,8 @@ package{
 		/* PRIVATE METHODS */
 		
 		private function moveSlide(val:String):void{
+			currentSelection = val;
+			slideContainer.removeEventListener(Event.ENTER_FRAME, throwobject);
 			switch (val){
 				case "yt":
 					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut});	

@@ -22,9 +22,14 @@
 //			t.start();		
 		}
 		
+		/* PUBLIC METHODS */
+		
 		public function begin():void{
 			t.start();
 		}
+		
+		
+		/* PRIVATE METHODS */
 		
 		private function onMouseDown(e:MouseEvent):void {
 //			dispatchEvent(new Event("cancelIdle"));
