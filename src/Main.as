@@ -87,10 +87,10 @@ package{
 			// ********* Weather Widget ********* 
 			var weather:WeatherManager = new WeatherManager();
 			addChild(weather);
-			weather.scaleX = .95;
-			weather.scaleY = .95
-			weather.x = 620;
-			weather.y = 10;
+			weather.scaleX = 1.5;
+			weather.scaleY = 1.5
+			weather.x = 15;
+			weather.y = 0;
 			
 			// ********* Main Content Holder ********* 			
 			addChild(content);
