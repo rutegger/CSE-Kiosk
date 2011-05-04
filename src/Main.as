@@ -23,6 +23,7 @@ package{
 	import flash.geom.Rectangle;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursor;
+	import flash.display.Bitmap;
 	
 	[SWF(width='1680', height='1050', backgroundColor='#0000000', frameRate='24')]
 	
@@ -44,6 +45,9 @@ package{
 		private var friction:Number	= 0.96;
 		private var offsetX:Number	= 0;
 		private var offsetY:Number	= 0;	
+		
+		[Embed (source="/../assets/hexagons.png")]
+		private var Hex:Class; 
 
 		
 		private var clock:Messenger; // for testing
@@ -57,11 +61,11 @@ package{
 			// **** for testing:
 			var ver:Messenger = new Messenger("V .04",60,0x000000,12);
 			addChild(ver);
-			clock = new Messenger(String(idleTimer.idleTime),100);
-			clock.setAttribute("size",15);
-			clock.setAttribute("color",0xffffff);
-			Positioner.topCenter(stage,clock);
-			idleTimer.addEventListener("tic",onTic,false,0,true);
+//			clock = new Messenger(String(idleTimer.idleTime),100);
+//			clock.	setAttribute("size",15);
+//			clock.setAttribute("color",0xffffff);
+//			Positioner.topCenter(stage,clock);
+//			idleTimer.addEventListener("tic",onTic,false,0,true);
 		
 		}
 		
@@ -100,60 +104,59 @@ package{
 			var ytBtn:MovieClip = new YTButton();
 			var satelliteBtn:MovieClip = new SatelliteButton();
 			var cancerBtn:MovieClip = new CancerButton();
-			var arr:Array = [{id:"yt", mc:ytBtn},
-							 {id:"satellite", mc:satelliteBtn},
-							 {id:"cancer", mc:cancerBtn}];			
+			var arr:Array = [{id:"satellite", mc:satelliteBtn},
+							 {id:"cancer", mc:cancerBtn},
+							 {id:"yt", mc:ytBtn}];			
 			var n:Nav = new Nav(arr);
 			content.addChild(n);
-			n.x = (stage.stageWidth / 2) - (n.width / 2);
-			n.y = 900;			
+//			n.x = (stage.stageWidth / 2) - (n.width / 2);
+			n.x = 800;
+			n.y = 0;			
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
 			
-			for (var i:String in arr) 
-			{ 
-				trace(arr[i].id); 
-			} 
-						
-			for each (var id in arr) 
-			{ 
-				trace(id); 
-			} 
 			
 			// ********* Content Slides ********* 
 			content.addChild(slideContainer);
 			slideContainer.y = 200;
-	
-			// YouTube 		
-			ytManager = new YTManager(640,390);
-			slideContainer.addChild(ytManager);
-			ytManager.x = 180;
-			ytManager.y = 100;
+
+			// Background
+			var hex:Bitmap = new Hex();
+			slideContainer.addChild(hex);
+			hex.y = -70;
+			
 			// Satellite
 			satelliteSlide = new SatelliteSlide();
 			slideContainer.addChild(satelliteSlide);
-			satelliteSlide.x = stage.stageWidth +200;
-			satelliteSlide.y = 10;	
+			satelliteSlide.x = 110; 
+			satelliteSlide.y = 70;	
+
 			// Cancer Research
 			cancerSlide = new CancerSlide();
 			slideContainer.addChild(cancerSlide);
-			cancerSlide.x = (stage.stageWidth*2) + 200;
-			cancerSlide.y = 10;				
+			cancerSlide.x = stage.stageWidth +200;
+			cancerSlide.y = 10;		
+			
+			// YouTube 		
+			ytManager = new YTManager(640,390);
+			slideContainer.addChild(ytManager);
+			ytManager.x = (stage.stageWidth*2) + 200;
+			ytManager.y = 100;
 						
 //			slideContainer.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 //			slideContainer.addEventListener(Event.ENTER_FRAME, throwobject);	
 		
 		
 			// ********* SlideshowPro *********
-			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
-			addChild(sspm);
-			sspm.name = "sspm";
-			sspm.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);			
-			sspm.addEventListener("onFadeOutSSP", onFadeOutSSP, false, 0, true);
-			sspm.addEventListener("onFadeInSSP", onFadeInSSP, false, 0, true);
-			
-			// ********* Timeout *********
-			idleTimer = new IdleTimer(stage, 45);
-			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
+//			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
+//			addChild(sspm);
+//			sspm.name = "sspm";
+//			sspm.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);			
+//			sspm.addEventListener("onFadeOutSSP", onFadeOutSSP, false, 0, true);
+//			sspm.addEventListener("onFadeInSSP", onFadeInSSP, false, 0, true);
+//			
+//			// ********* Timeout *********
+//			idleTimer = new IdleTimer(stage, 45);
+//			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
 						
 			
 			// ********* FlashEff *********
@@ -244,16 +247,16 @@ package{
 			currentSelection = val;
 			slideContainer.removeEventListener(Event.ENTER_FRAME, throwobject);
 			switch (val){
-				case "yt":
-					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut});	
-					break;
 				case "satellite":
-					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut});	
+					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut});	
 					ytManager.pauseMovie();
 					break;
 				case "cancer":
-					TweenLite.to(slideContainer, 1.5, {x:-3400, ease:Cubic.easeOut});	
+					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut});	
 					ytManager.pauseMovie();
+					break;
+				case "yt":
+					TweenLite.to(slideContainer, 1.5, {x:-3400 , ease:Cubic.easeOut});	
 					break;
 			}
 		}
