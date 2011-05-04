@@ -29,6 +29,7 @@ package{
 	
 	public class Main extends Sprite{
 		
+		private var bg:Background;
 		private var sspm:SSPManager; 
 		private var ytManager:YTManager;
 		private var idleTimer:IdleTimer;
@@ -85,7 +86,7 @@ package{
 //			hideCursor();			
 			
 			// ********* Kiosk Background ********* 			
-			var bg:Background = new Background();
+			bg = new Background();
 			addChild(bg);
 			
 			// ********* Weather Widget ********* 
@@ -170,45 +171,43 @@ package{
 		
 		/* EVENT HANDLERS */
 		
-		private function mouseDownHandler(e:MouseEvent):void{
-			
-			slideContainer.addEventListener(Event.ENTER_FRAME, throwobject);	//if !exists
-			stage.addEventListener(Event.ENTER_FRAME, drag);
-			stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
-			offsetX = mouseX - slideContainer.x;
-		}
+//		private function mouseDownHandler(e:MouseEvent):void{	
+//			slideContainer.addEventListener(Event.ENTER_FRAME, throwobject);	//if !exists
+//			stage.addEventListener(Event.ENTER_FRAME, drag);
+//			stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+//			offsetX = mouseX - slideContainer.x;
+//		}
 		
-		private function mouseUpHandler(e:MouseEvent):void{
-			stage.removeEventListener(Event.ENTER_FRAME, drag);
-			stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
-			xSpeed = ms.getXSpeed();
-		}
+//		private function mouseUpHandler(e:MouseEvent):void{
+//			stage.removeEventListener(Event.ENTER_FRAME, drag);
+//			stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+//			xSpeed = ms.getXSpeed();
+//		}
 		
-		private function drag(e:Event):void{
-			slideContainer.x = mouseX - offsetX;
-			trace("drag: "+Math.floor(slideContainer.x),currentSelection);
-		}
+//		private function drag(e:Event):void{
+//			slideContainer.x = mouseX - offsetX;
+//			trace("drag: "+Math.floor(slideContainer.x),currentSelection);
+//		}
 		
-		private function throwobject(e:Event):void{
-			slideContainer.x += xSpeed;				
-			xSpeed *= friction
-//			trace("throw: "+Math.floor(slideContainer.x),currentSelection);
-//			if(Math.floor(slideContainer.x) > 0 ){
-//				moveSlide("yt");
-//			} else if(Math.floor(slideContainer.x) > -450 && Math.floor(slideContainer.x) < -1000 && currentSelection != "yt"){
-//				moveSlide("yt");
-//			} else if (Math.floor(slideContainer.x) <= -451 && currentSelection != "satellite"){
-//				trace("sat?");
-//				moveSlide("satellite");
-//			} 
-			
-			slideContainer.x = Math.floor(slideContainer.x) - mouseX % 500;
-			
-			//  0 to -450 | -451 - 
-		}
+//		private function throwobject(e:Event):void{
+//			slideContainer.x += xSpeed;				
+//			xSpeed *= friction
+////			trace("throw: "+Math.floor(slideContainer.x),currentSelection);
+////			if(Math.floor(slideContainer.x) > 0 ){
+////				moveSlide("yt");
+////			} else if(Math.floor(slideContainer.x) > -450 && Math.floor(slideContainer.x) < -1000 && currentSelection != "yt"){
+////				moveSlide("yt");
+////			} else if (Math.floor(slideContainer.x) <= -451 && currentSelection != "satellite"){
+////				trace("sat?");
+////				moveSlide("satellite");
+////			} 
+//			
+//			slideContainer.x = Math.floor(slideContainer.x) - mouseX % 500;
+//			
+//			//  0 to -450 | -451 - 
+//		}
 		
 		private function onNavSelected(e:ActionEvent):void{
-			trace("Main.as >>>> "+e.msg);
 			moveSlide(e.msg);
 		}
 		
@@ -245,20 +244,27 @@ package{
 		
 		private function moveSlide(val:String):void{
 			currentSelection = val;
-			slideContainer.removeEventListener(Event.ENTER_FRAME, throwobject);
+//			slideContainer.removeEventListener(Event.ENTER_FRAME, throwobject);
 			switch (val){
 				case "satellite":
-					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut});	
+					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					break;
 				case "cancer":
-					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut});	
+					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					break;
 				case "yt":
-					TweenLite.to(slideContainer, 1.5, {x:-3400 , ease:Cubic.easeOut});	
+					TweenLite.to(slideContainer, 1.5, {x:-3400 , ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					break;
 			}
+			
+			bg.setImage(val);
+		}
+		
+		private function setBg(sel:String):void{
+			trace("sel: "+sel, currentSelection);
+//			bg.setImage(sel);
 		}
 		
 		private function hideCursor():void{
