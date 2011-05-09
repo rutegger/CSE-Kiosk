@@ -32,13 +32,14 @@ package com.mangum.text {
 			_size = size;
 			configureLabel(width,color,size);
 			setLabel(_labelText);
-			setShadow();			
+//			setShadow();			
 		}
 		
 		/* PUBLIC METHODS */
 		
 		public function setLabel(str:String):void {
-			_label.text = str;
+//			trace("setLabel("+str+")");
+			_label.htmlText = str;
 		}	
 		
 		public function setAttribute(attribute:String, value:Number):void {
@@ -86,10 +87,6 @@ package com.mangum.text {
 		
 		/* GETTER SETTERS */
 		
-		
-		
-		
-		
-		
+	
 	}
 }

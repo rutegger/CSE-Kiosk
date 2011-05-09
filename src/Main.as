@@ -9,6 +9,7 @@ package{
 	import com.mangum.display.SSP.SSPManager;
 	import com.mangum.display.YT.YTManager;
 	import com.mangum.display.weather.WeatherManager;
+	import com.mangum.display.twitter.TwitterManager;
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.utils.IdleTimer;
@@ -56,7 +57,7 @@ package{
 		public function Main(){	
 					
 			var name:String="flash mx";
-			trace(name.split("a")[1].slice(2, 4).toUpperCase());
+//			trace(name.split("a")[1].slice(2, 4).toUpperCase());
 			init();
 			
 			// **** for testing:
@@ -96,6 +97,13 @@ package{
 			weather.scaleY = 1.5
 			weather.x = 15;
 			weather.y = 0;
+			
+			// ********* Twitter Widget ********* 
+			var twitter:TwitterManager = new TwitterManager();
+			addChild(twitter);
+
+			twitter.x = 480;
+			twitter.y = 8;
 			
 			// ********* Main Content Holder ********* 			
 			addChild(content);
