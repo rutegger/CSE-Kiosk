@@ -50,10 +50,7 @@ package com.mangum.display.YT.model{
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError,false,0,true);
 			
 		}
-		
-		public function pause():void{
-			player.pauseVideo();
-		}
+
 		
 		private function onIOError(e:IOErrorEvent):void{
 			attempts ++;
@@ -89,16 +86,10 @@ package com.mangum.display.YT.model{
 		
 		private function onPlayerReady(event:Event):void {
 			loader.content.removeEventListener("onReady", onPlayerReady);
-			// Event.data contains the event parameter, which is the Player API ID 
-			// trace("player ready:", Object(event).data);
-			
-			// Once this event has been dispatched by the player, we can use
-			// cueVideoById, loadVideoById, cueVideoByUrl and loadVideoByUrl
-			// to load a particular YouTube video.
+
 			player = loader.content;
 			player.cueVideoById(_id,10);
 			player.setSize(_w, _h);		
-			
 			
 			//			trace("******* "+_id+" quality level: "+player.getAvailableQualityLevels());
 			
@@ -182,6 +173,30 @@ package com.mangum.display.YT.model{
 			}else{
 				TweenMax.to(this, .1, {glowFilter:{color:0xff6600, alpha:1, blurX:30, blurY:30, strength:0}});
 			}			
+		}
+		
+		public function pause():void{
+			trace(">>>>>>>>> "+player.getPlayerState());
+			switch(player.getPlayerState()){ //ended (0), playing (1), paused (2), buffering (3), video cued (5).
+				case 0: // ended
+					player.pauseVideo(); trace("0 video paused");
+					break;
+				case -1: // unstarted
+					player.pauseVideo(); trace("-1 video paused");
+					break;
+				case 1: // playing
+					player.pauseVideo(); trace("1 video paused");
+					break;
+				case 2: // paused
+					break;
+				case 3: // buffering
+					player.pauseVideo(); trace("3 video paused");
+					break;
+			}		
+		}
+		
+		public function startVideo():void{
+			player.playVideo();
 		}
 		
 		

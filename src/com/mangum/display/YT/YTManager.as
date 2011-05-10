@@ -42,10 +42,14 @@ package com.mangum.display.YT{
 			mov.pause();
 		}
 		
+		public function playMovie():void{
+			mov.startVideo();
+		}
+		
 		/* EVENT HANDLERS */
 		
 		private function onYTConnectionError(e:Event):void{
-			trace("YT's down : (");
+			trace("YouTube is down : (");
 		}
 		
 		private function onSelected(e:ActionEvent):void{
@@ -83,8 +87,7 @@ package com.mangum.display.YT{
 			_wsFeed.addEventListener("onYTConnectionError", onYTConnectionError);
 		}
 		
-		private function build(vids:Array):void{
-			
+		private function build(vids:Array):void{		
 			var boxShadow:Sprite = new BoxShadow();
 			addChild(boxShadow);
 			boxShadow.x = 7;

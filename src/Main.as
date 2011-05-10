@@ -267,6 +267,7 @@ package{
 					break;
 				case "yt":
 					TweenLite.to(slideContainer, 1.5, {x:-3400 , ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					ytManager.playMovie();
 					break;
 			}
 			

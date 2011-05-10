@@ -136,9 +136,7 @@ package com.mangum.display.YT.controller{
 		public function get h():Number {
 			return _height;
 		}			
-		
-
-		
+			
 	}
 	
 }

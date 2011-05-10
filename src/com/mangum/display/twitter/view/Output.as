@@ -29,7 +29,7 @@ package com.mangum.display.twitter.view{
 		
 		public function createTweets(obj:Object):void{
 			
-			// first delete old old strings		
+			// first delete old strings		
 			for(var j:uint = 0; j < obj.length; j++){
 				tweetArray[i].setLabel("");
 			}
