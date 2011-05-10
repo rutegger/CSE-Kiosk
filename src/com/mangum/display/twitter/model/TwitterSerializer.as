@@ -11,7 +11,7 @@ package com.mangum.display.twitter.model{
 	
 	public class TwitterSerializer extends Sprite{
 		
-		private static var RELOAD_TIME:Number = 5000; //15 min
+		private static var RELOAD_TIME:Number = 900000; //15 min
 		private static var TWEETS:Number = 12;
 		private static var instance:TwitterSerializer;
 		private static var allowInstantiation:Boolean;

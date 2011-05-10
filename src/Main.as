@@ -8,7 +8,7 @@ package{
 	import com.mangum.display.Positioner;
 	import com.mangum.display.SSP.SSPManager;
 	import com.mangum.display.YT.YTManager;
-	import com.mangum.display.weather.WeatherManager;
+	import com.mangum.display.dashboard.DashboardManager;
 	import com.mangum.display.twitter.TwitterManager;
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
@@ -30,7 +30,7 @@ package{
 	
 	public class Main extends Sprite{
 		
-		private var bg:Background;
+		private var bg:Background;		
 		private var sspm:SSPManager; 
 		private var ytManager:YTManager;
 		private var idleTimer:IdleTimer;
@@ -48,8 +48,8 @@ package{
 		private var offsetX:Number	= 0;
 		private var offsetY:Number	= 0;	
 		
-		[Embed (source="/../assets/hexagons.png")]
-		private var Hex:Class; 
+//		[Embed (source="/../assets/hexagons.png")]
+//		private var Hex:Class; 
 
 		
 		private var clock:Messenger; // for testing
@@ -90,20 +90,20 @@ package{
 			bg = new Background();
 			addChild(bg);
 			
-			// ********* Weather Widget ********* 
-			var weather:WeatherManager = new WeatherManager();
-			addChild(weather);
-			weather.scaleX = 1.5;
-			weather.scaleY = 1.5
-			weather.x = 15;
-			weather.y = 0;
+			// ********* Dashboard Widget ********* 
+			var dashboard:DashboardManager = new DashboardManager();
+			addChild(dashboard);
+			dashboard.scaleX = 1.5;
+			dashboard.scaleY = 1.5
+			dashboard.x = 15;
+			dashboard.y = 5;
 			
 			// ********* Twitter Widget ********* 
 			var twitter:TwitterManager = new TwitterManager();
 			addChild(twitter);
 
 			twitter.x = 480;
-			twitter.y = 8;
+			twitter.y = 10;
 			
 			// ********* Main Content Holder ********* 			
 			addChild(content);
@@ -119,7 +119,7 @@ package{
 			var n:Nav = new Nav(arr);
 			content.addChild(n);
 //			n.x = (stage.stageWidth / 2) - (n.width / 2);
-			n.x = 800;
+			n.x = 940;
 			n.y = 0;			
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
 			
@@ -129,9 +129,12 @@ package{
 			slideContainer.y = 200;
 
 			// Background
-			var hex:Bitmap = new Hex();
-			slideContainer.addChild(hex);
-			hex.y = -70;
+//			var hex:Bitmap = new Hex();
+//			slideContainer.addChild(hex);
+//			hex.y = -70;
+			var isogrid:Isogrid = new Isogrid();
+			slideContainer.addChild(isogrid);
+			isogrid.y = -70
 			
 			// Satellite
 			satelliteSlide = new SatelliteSlide();

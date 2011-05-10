@@ -31,7 +31,6 @@ package com.mangum.display.twitter.view{
 			
 			// first delete old old strings		
 			for(var j:uint = 0; j < obj.length; j++){
-//				trace("delete tweetArray["+j+"].setLabel('')");
 				tweetArray[i].setLabel("");
 			}
 
@@ -39,7 +38,7 @@ package com.mangum.display.twitter.view{
 				var name:String = obj[i].name;
 				var msg:String = obj[i].message;
 				var pattern:RegExp;// = new RegExp("http:\/\/.*"); // removes link
-				var str:String = "<u>" + name + "</u>: " + msg.replace(pattern,""); 
+				var str:String = "<u>@" + name + "</u>: " + msg.replace(pattern,""); 
 				tweetArray[i].setLabel(str);
 			}
 			//	tweet.setAttribute("font","UniversCE65Bold");			
@@ -48,8 +47,7 @@ package com.mangum.display.twitter.view{
 	
 		/* EVENT HANDLERS */
 		
-		private function onTimer(e:TimerEvent):void{
-			
+		private function onTimer(e:TimerEvent):void{			
 			if(containerY == -900) {
 				containerY = 100;
 				container.y = 100;
@@ -65,7 +63,7 @@ package com.mangum.display.twitter.view{
 			var tweetMask:Shape = new Shape();
 			tweetMask.graphics.lineStyle(1, 0x000000);
 			tweetMask.graphics.beginFill(0xff0000);
-			tweetMask.graphics.drawRect(20, 20, 400, 100);
+			tweetMask.graphics.drawRect(20, 20, 425, 100);
 			tweetMask.graphics.endFill();
 			this.addChild(tweetMask);
 			
@@ -77,7 +75,7 @@ package com.mangum.display.twitter.view{
 			//set up tweet containers
 			var counter:uint = 30;
 			for(var i:uint = 0; i <= 10; i++){
-				var tweet:Messenger = new Messenger("--"+i, 275, 0xC7B299, 13);
+				var tweet:Messenger = new Messenger("--"+i, 425, 0xC7B299, 15);
 				tweetArray[i] = tweet;
 				container.addChild(tweet);
 				tweet.x = 22;

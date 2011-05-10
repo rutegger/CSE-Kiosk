@@ -14,6 +14,8 @@ package com.mangum.display.YT{
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import com.mangum.display.Slide;
+	import com.mangum.display.YT.model.YTLoader;
+	import com.mangum.display.YT.controller.YTMenu;
 	
 	public class YTManager extends Slide{
 		
@@ -29,9 +31,8 @@ package com.mangum.display.YT{
 			_height = height;
 			
 			setUpFeed("cockrellSchool");
-			
-			
-			// stage.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
+	
+			// stage.addEventListener(MouseEvent.CLICK, onClick, false, 0, true); 	
 		}
 		
 		
@@ -84,33 +85,31 @@ package com.mangum.display.YT{
 		
 		private function build(vids:Array):void{
 			
+			var boxShadow:Sprite = new BoxShadow();
+			addChild(boxShadow);
+			boxShadow.x = 7;
+			boxShadow.y = -7;
+			boxShadow.width = _width + 28;
+			boxShadow.height = _height - 2;
+			
 			var box:Sprite = new Box();
 			addChild(box);
-			box.x = 5;
-			box.y = -10;
-			box.width = _width + 25;
-			box.height = _height - 5;
+			box.x = 2;
+			box.y = -12;
+			box.width = _width + 28;
+			box.height = _height - 2;
 			addChild(mkMovie(vids));
 			addChild(mkNav(vids));
 		}
 		
-		private function mkMovie(arr:Array):MovieClip{
-//			var box:Sprite = new Box();
-//			addChild(box);
-//			box.x = 5;
-//			box.y = -10;
-//			box.width = _width + 25;
-//			box.height = _height - 5;
-			
+		private function mkMovie(arr:Array):MovieClip{		
 			mov = new YTLoader(arr[0].id,_width,_height,false);  
-//			addChild(main);	
-//			addChild(createMask());
 			mov.mask = createMask();
 			return mov;
 		}
 		
 		private function mkNav(arr:Array):MovieClip{
-			menu = new YTMenu(arr,150,545); // mov array, thumb width				
+			menu = new YTMenu(arr,150,4); // mov array, thumb width, # of columns			
 			menu.x = 755;
 			menu.y = 50;					
 			menu.addEventListener("selected", onSelected, false, 0, true);
