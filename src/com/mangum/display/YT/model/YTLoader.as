@@ -176,21 +176,21 @@ package com.mangum.display.YT.model{
 		}
 		
 		public function pause():void{
-			trace(">>>>>>>>> "+player.getPlayerState());
+//			trace(">>>>>>>>> "+player.getPlayerState());
 			switch(player.getPlayerState()){ //ended (0), playing (1), paused (2), buffering (3), video cued (5).
 				case 0: // ended
-					player.pauseVideo(); trace("0 video paused");
+					player.pauseVideo(); 
 					break;
 				case -1: // unstarted
-					player.pauseVideo(); trace("-1 video paused");
+					player.pauseVideo();
 					break;
 				case 1: // playing
-					player.pauseVideo(); trace("1 video paused");
+					player.pauseVideo(); 
 					break;
 				case 2: // paused
 					break;
 				case 3: // buffering
-					player.pauseVideo(); trace("3 video paused");
+					player.pauseVideo();
 					break;
 			}		
 		}
