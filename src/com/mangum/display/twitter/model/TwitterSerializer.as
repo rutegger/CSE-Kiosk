@@ -4,51 +4,35 @@ package com.mangum.display.twitter.model{
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.TimerEvent;
-	import flash.utils.Timer;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.utils.Timer;
 	
 	
 	public class TwitterSerializer extends Sprite{
 		
-		private static var RELOAD_TIME:Number = 900000; //15 min
-		private static var TWEETS:Number = 12;
-		private static var instance:TwitterSerializer;
-		private static var allowInstantiation:Boolean;
-		
-		public static function getInstance():TwitterSerializer {
-			if (instance == null) {
-				allowInstantiation = true;
-				instance = new TwitterSerializer();
-				allowInstantiation = false;
-			}
-			return instance;
-		}
-		
-		public function TwitterSerializer():void {		
-			if (!allowInstantiation) {
-				throw new Error("Error: Instantiation failed: Use WeatherService.getInstance() instead of new.");
-			} else {
-				init();
-			}
-		}
-		
-		private var user:String = "CockrellSchool";	
-		private var feed_xml_url:String = "http://twitter.com/statuses/user_timeline/"+user+".xml?count="+TWEETS;		
+		private var _reload:Number = 900000; //15 min	
 		private var feed:XML;
 		private var feed_url:URLRequest;
 		private var feedLoader:URLLoader;
 		
-		private var timer:Timer = new Timer(RELOAD_TIME); 
+		private var timer:Timer = new Timer(_reload); 
 		
 		private var _name:String;
 		private var _created:String;
 		private var _message:String;
 		private var _tweetArr:Array = new Array();
 		
-		private function init():void {			
+		public function TwitterSerializer(user:String, num:Number):void {
+			init(user, num);
+		}
+		
+		/* PRIVATE METHODS */
+		
+		private function init(user:String, num:Number):void {			
 			feed = new XML();
-			feedLoader = new URLLoader();
+			feedLoader = new URLLoader();				
+			var feed_xml_url:String = "http://twitter.com/statuses/user_timeline/"+user+".xml?count="+num;	
 			feed_url= new URLRequest(feed_xml_url);
 			feedLoader.load(feed_url);
 			feedLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError);			
@@ -89,10 +73,7 @@ package com.mangum.display.twitter.model{
 			_message = _tweetArr[0].message;
 				
 			dispatchEvent(new Event("onFeedLoaded"));
-		}
-		
-		/* PRIVATE METHODS */
-		
+		}			
 		
 		
 		/* GETTER SETTERS */

@@ -2,6 +2,7 @@ package com.mangum.display.twitter{
 	
 	import com.mangum.display.twitter.model.TwitterSerializer;
 	import com.mangum.display.twitter.view.Output;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -11,14 +12,15 @@ package com.mangum.display.twitter{
 		
 		private var ts:TwitterSerializer;
 		private var output:Output;
+		private var numberOfTweets:Number = 15;
 		
 		public function TwitterManager(){
 			//model
-			ts = TwitterSerializer.getInstance(); // Singleton
+			ts = new TwitterSerializer("CockrellSchool", numberOfTweets);
 			ts.addEventListener("onFeedLoaded", onFeedLoaded, false, 0, true);	
 			
 			//view
-			output = new Output();
+			output = new Output(numberOfTweets);
 		}
 		
 		/* EVENT HANDLERS */

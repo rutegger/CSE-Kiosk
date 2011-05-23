@@ -15,6 +15,7 @@ package{
 	import com.mangum.utils.IdleTimer;
 	import com.mangum.utils.MouseSpeed;
 	
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -24,9 +25,8 @@ package{
 	import flash.geom.Rectangle;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursor;
-	import flash.display.Bitmap;
 	
-	[SWF(width='1680', height='1050', backgroundColor='#0000000', frameRate='24')]
+	[SWF(width='1680', height='1050', backgroundColor='#ffffff', frameRate='24')]
 	
 	public class Main extends Sprite{
 		
@@ -36,6 +36,10 @@ package{
 		private var idleTimer:IdleTimer;
 		private var content:MovieClip = new MovieClip();
 		private var currentSelection:String;
+		
+		private var ytBtn:MovieClip;
+		private var satelliteBtn:MovieClip;
+		private var cancerBtn:MovieClip;
 		
 		private var slideContainer:MovieClip = new MovieClip();
 		private var satelliteSlide:MovieClip;
@@ -63,17 +67,18 @@ package{
 			// **** for testing:
 			var ver:Messenger = new Messenger("V .04",60,0x000000,12);
 			addChild(ver);
-//			clock = new Messenger(String(idleTimer.idleTime),100);
-//			clock.	setAttribute("size",15);
+			
+			clock = new Messenger(String(idleTimer.idleTime),100);
+			clock.	setAttribute("size",15);
 //			clock.setAttribute("color",0xffffff);
-//			Positioner.topCenter(stage,clock);
-//			idleTimer.addEventListener("tic",onTic,false,0,true);
+			Positioner.topCenter(stage,clock);
+			idleTimer.addEventListener("tic",onTic,false,0,true);
 		
 		}
 		
 		/* TESTING FUNCTIONS */
 		
-		private function onTic(e:ActionEvent):void{			
+		private function onTic(e:ActionEvent):void{	
 			clock.setLabel(e.msg);
 			if(this.getChildByName("clock") == null) addChild(clock);
 		}
@@ -84,7 +89,7 @@ package{
 						
 //			stage.displayState = StageDisplayState.FULL_SCREEN;			
 			
-//			hideCursor();			
+			hideCursor();			
 			
 			// ********* Kiosk Background ********* 			
 			bg = new Background();
@@ -110,15 +115,14 @@ package{
 			content.name = "content";
 			
 			// ********* Navigation ********* 
-			var ytBtn:MovieClip = new YTButton();
-			var satelliteBtn:MovieClip = new SatelliteButton();
-			var cancerBtn:MovieClip = new CancerButton();
+			ytBtn= new YTButton();
+			satelliteBtn = new SatelliteButton();
+			cancerBtn = new CancerButton();
 			var arr:Array = [{id:"satellite", mc:satelliteBtn},
 							 {id:"cancer", mc:cancerBtn},
 							 {id:"yt", mc:ytBtn}];			
 			var n:Nav = new Nav(arr);
 			content.addChild(n);
-//			n.x = (stage.stageWidth / 2) - (n.width / 2);
 			n.x = 940;
 			n.y = 0;			
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
@@ -129,109 +133,51 @@ package{
 			slideContainer.y = 200;
 
 			// Background
-//			var hex:Bitmap = new Hex();
-//			slideContainer.addChild(hex);
-//			hex.y = -70;
 			var isogrid:Isogrid = new Isogrid();
 			slideContainer.addChild(isogrid);
-			isogrid.y = -70
+			isogrid.y = -70;
+			
+			// SlideshowPro 
+			sspm = new SSPManager("http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
+			slideContainer.addChild(sspm);
+			sspm.x = 200;
+			sspm.y = 20;
 			
 			// Satellite
 			satelliteSlide = new SatelliteSlide();
 			slideContainer.addChild(satelliteSlide);
-			satelliteSlide.x = 110; 
-			satelliteSlide.y = 70;	
+			satelliteSlide.x = stage.stageWidth +200; 
+			satelliteSlide.y = 100;	
 
-			// Cancer Research
+			// Water Research
 			cancerSlide = new CancerSlide();
 			slideContainer.addChild(cancerSlide);
-			cancerSlide.x = stage.stageWidth +200;
+			cancerSlide.x =(stage.stageWidth*2) + 200;
 			cancerSlide.y = 10;		
 			
 			// YouTube 		
 			ytManager = new YTManager(640,390);
 			slideContainer.addChild(ytManager);
-			ytManager.x = (stage.stageWidth*2) + 200;
-			ytManager.y = 100;
-						
-//			slideContainer.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
-//			slideContainer.addEventListener(Event.ENTER_FRAME, throwobject);	
-		
-		
-			// ********* SlideshowPro *********
-//			sspm = new SSPManager(stage, "http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
-//			addChild(sspm);
-//			sspm.name = "sspm";
-//			sspm.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);			
-//			sspm.addEventListener("onFadeOutSSP", onFadeOutSSP, false, 0, true);
-//			sspm.addEventListener("onFadeInSSP", onFadeInSSP, false, 0, true);
-//			
-//			// ********* Timeout *********
-//			idleTimer = new IdleTimer(stage, 45);
-//			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
-						
+			ytManager.x = (stage.stageWidth*3) + 200;
+			ytManager.y = 100;			
+				
 			
-			// ********* FlashEff *********
-//			var ft:FlashEffTester = new FlashEffTester();
-//			addChild(ft);
-	
-		}	
-		
-		
+			// ********* Timeout *********
+			idleTimer = new IdleTimer(stage, 10);
+			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
+						
+		}		
 		
 		
 		/* EVENT HANDLERS */
 		
-//		private function mouseDownHandler(e:MouseEvent):void{	
-//			slideContainer.addEventListener(Event.ENTER_FRAME, throwobject);	//if !exists
-//			stage.addEventListener(Event.ENTER_FRAME, drag);
-//			stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
-//			offsetX = mouseX - slideContainer.x;
-//		}
-		
-//		private function mouseUpHandler(e:MouseEvent):void{
-//			stage.removeEventListener(Event.ENTER_FRAME, drag);
-//			stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
-//			xSpeed = ms.getXSpeed();
-//		}
-		
-//		private function drag(e:Event):void{
-//			slideContainer.x = mouseX - offsetX;
-//			trace("drag: "+Math.floor(slideContainer.x),currentSelection);
-//		}
-		
-//		private function throwobject(e:Event):void{
-//			slideContainer.x += xSpeed;				
-//			xSpeed *= friction
-////			trace("throw: "+Math.floor(slideContainer.x),currentSelection);
-////			if(Math.floor(slideContainer.x) > 0 ){
-////				moveSlide("yt");
-////			} else if(Math.floor(slideContainer.x) > -450 && Math.floor(slideContainer.x) < -1000 && currentSelection != "yt"){
-////				moveSlide("yt");
-////			} else if (Math.floor(slideContainer.x) <= -451 && currentSelection != "satellite"){
-////				trace("sat?");
-////				moveSlide("satellite");
-////			} 
-//			
-//			slideContainer.x = Math.floor(slideContainer.x) - mouseX % 500;
-//			
-//			//  0 to -450 | -451 - 
-//		}
-		
 		private function onNavSelected(e:ActionEvent):void{
 			moveSlide(e.msg);
-		}
-		
-		private function onFadeOutSSP(e:Event):void{	
-			if (this.getChildByName("sspm") != null){
-				removeChild(sspm);
-			}							
-		}
-		
-		private function onFadeInSSP(e:Event):void{	
-			if (this.getChildByName("content") != null) {
-				removeChild(content);
-			}		
+			
+			TweenLite.to(satelliteBtn, 1, {y:0, ease:Cubic.easeOut});	
+			TweenLite.to(cancerBtn, 1, {y:0, ease:Cubic.easeOut});
+			TweenLite.to(ytBtn, 1, {y:0, ease:Cubic.easeOut});
+			TweenLite.to(this[e.msg+"Btn"], 1.5, {y:10, ease:Cubic.easeOut});	
 		}
 		
 		private function onMouse(e:MouseEvent):void{
@@ -239,43 +185,42 @@ package{
 		}
 		
 		private function handleInteractivity(e:Event):void{	// user interaction timeout
-			ytManager.pauseMovie();
-			addChild(sspm);
-			sspm.show(true);
+			moveSlide("slideshow");
 		}
 		
-		private function onClick(e:MouseEvent):void{ // user clicks screen
-			sspm.show(false);
-			if (this.getChildByName("content") == null)addChild(content);			
-			setChildIndex(sspm,numChildren-1);// put sspm on top
-		}
-		
-		
+
 		/* PRIVATE METHODS */
 		
 		private function moveSlide(val:String):void{
 			currentSelection = val;
 //			slideContainer.removeEventListener(Event.ENTER_FRAME, throwobject);
 			switch (val){
-				case "satellite":
+				case "slideshow":
 					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
+					sspm.playMe();
+					break;
+				case "satellite":
+					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					ytManager.pauseMovie();
+					sspm.pauseMe();
 					break;
 				case "cancer":
-					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					TweenLite.to(slideContainer, 1.5, {x:-3400, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					break;
 				case "yt":
-					TweenLite.to(slideContainer, 1.5, {x:-3400 , ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					TweenLite.to(slideContainer, 1.5, {x:-5100, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.playMovie();
 					break;
+				
 			}
 			
 			bg.setImage(val);
 		}
 		
 		private function setBg(sel:String):void{
-			trace("sel: "+sel, currentSelection);
+//			trace("sel: "+sel, currentSelection);
 //			bg.setImage(sel);
 		}
 		

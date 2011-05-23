@@ -18,8 +18,7 @@ package com.mangum.display{
 		private var _items:Array;
 		
 		public function Nav(items:Array){	
-			_items = items;
-			
+			_items = items;	
 			if (stage) createMenuItems();
 			else addEventListener(Event.ADDED_TO_STAGE, init);
 		}
@@ -29,6 +28,7 @@ package com.mangum.display{
 		
 		private function onClicked(e:Event):void{ 
 			dispatchEvent(new ActionEvent(e.target.name, "navSelected", true));
+			trace(e.target.name);
 		}
 		
 		
@@ -43,7 +43,6 @@ package com.mangum.display{
 			
 			//trace(_items[i].mc.width+","+stage.stageWidth);
 			var div:Number = Math.floor(stage.stageWidth/_items[i].mc.width);
-			//trace(div);
 		    var xVal:Number = 0;
 			var space:Number = 240;	// want this number			
 			

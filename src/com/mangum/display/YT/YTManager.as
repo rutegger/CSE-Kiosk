@@ -7,17 +7,16 @@ package com.mangum.display.YT{
 	
 	import com.greensock.*;
 	import com.greensock.easing.*;
+	import com.mangum.display.YT.controller.YTMenu;
+	import com.mangum.display.YT.model.YTLoader;
 	import com.mangum.events.ActionEvent;
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import com.mangum.display.Slide;
-	import com.mangum.display.YT.model.YTLoader;
-	import com.mangum.display.YT.controller.YTMenu;
 	
-	public class YTManager extends Slide{
+	public class YTManager extends Sprite{
 		
 		private var _width:Number;
 		private var _height:Number;

@@ -39,7 +39,7 @@ package com.mangum.display{
 		
 		
 		public function setImage(val:String):void{
-			trace("setImage: "+val);
+//			trace("setImage: "+val);
 			switch(val){
 				case "satellite":	
 					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide

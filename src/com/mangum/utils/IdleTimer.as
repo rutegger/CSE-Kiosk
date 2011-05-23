@@ -19,7 +19,7 @@
 			_idleTime = idleTime;
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			t.addEventListener(TimerEvent.TIMER, onTimer);
-//			t.start();		
+			t.start();		
 		}
 		
 		/* PUBLIC METHODS */

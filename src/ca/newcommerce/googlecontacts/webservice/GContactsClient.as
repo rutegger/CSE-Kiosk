@@ -218,7 +218,6 @@
 		{
 			var wrapper:Object = getWrapperFromResult(result);
 			var ba:ByteArray = Base64.decodeToByteArray(result.content);
-			trace("length:"+ba.length);
 			var loader:Loader = new Loader();
 			loader.loadBytes(ba);
 
@@ -253,7 +252,7 @@
 					return _requestQueue[i];
 			}
 			
-			trace("wrapper with requestId:" + requestId + " not found. Returning null");
+//			trace("wrapper with requestId:" + requestId + " not found. Returning null");
 			return null;
 		}
 		

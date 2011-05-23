@@ -32,6 +32,7 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="com/mangum/display/SSP/SSPManagerNew.as"/>
     <application path="ThrowTest.as"/>
     <application path="Main.as"/>
   </applications>
