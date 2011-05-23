@@ -36,10 +36,9 @@ package com.mangum.display.twitter.view{
 
 			for(var i:uint = 0; i < obj.length; i++){
 				var name:String = obj[i].name;
-				var created:String = obj[i].created;
 				var msg:String = obj[i].message;
 				var pattern:RegExp;// = new RegExp("http:\/\/.*"); // removes link
-				var str:String = "<u>@" + name + "</u>: " + " • " + formatDate(created) + " • "+ msg.replace(pattern,""); 
+				var str:String = "<u>@" + name + "</u>: " + msg.replace(pattern,""); 
 				tweetArray[i].setLabel(str);
 			}
 			//	tweet.setAttribute("font","UniversCE65Bold");			
@@ -59,40 +58,6 @@ package com.mangum.display.twitter.view{
 
 		
 		/* PRIVATE METHODS */
-		
-		private function formatDate(str:String):String{
-			//			Fri Apr 08 22:03:05 +0000 2011	
-			var weekday:String = str.slice(0,3);
-			var month:String = str.slice(4,8);
-			var rawDay:String = str.slice(8,10);			
-			var pattern:RegExp = new RegExp("^0+"); // removes leading 0's
-			var day:String = rawDay.replace(pattern,""); 
-			var rawTime:String = str.slice(11,16);
-			var time:String = convertTime(rawTime.replace(":",""));
-			//var time:String = convertTime(str.slice(11,15));
-			var newStr:String = weekday+", "+month+day+ " "+time;
-			return newStr;
-		}
-		
-		private function convertTime(_t:String):String{
-			var _mTime:Number = parseInt(_t);
-			
-			var AMPM:String = "AM";
-			if (_mTime > 1200){
-				_mTime = _mTime - 1200;
-				AMPM = "PM";
-			}
-			
-			var _digit:Number = 4;
-			if (_mTime < 1000)_digit = 3;
-			
-			var _hr:String = _mTime.toString().substr(0, _digit - 2);
-			var _mn:String = _mTime.toString().substr(-2);
-			
-			var _rtn:String = _hr + ":" + _mn + " " + AMPM;
-			
-			return _rtn;
-		}
 		
 		private function init():void{
 			var tweetMask:Shape = new Shape();
@@ -115,7 +80,7 @@ package com.mangum.display.twitter.view{
 				container.addChild(tweet);
 				tweet.x = 22;
 				tweet.y = counter;
-				counter += 100;
+				counter +=  100;
 			}
 			
 			// -----------			
@@ -127,7 +92,9 @@ package com.mangum.display.twitter.view{
 			TweenLite.to(container, ANIMATION_SPEED, {y:val, ease:Back.easeOut});
 		}
 		
-
+		
+		
+		
 		/* GETTERS & SETTERS */
 			
 	}
