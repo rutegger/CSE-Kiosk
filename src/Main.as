@@ -196,17 +196,17 @@ package{
 					sspm.playMe();
 					break;
 				case "satellite":
-//					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.pauseMe();
 					break;
 				case "cancer":
-//					TweenLite.to(slideContainer, 1.5, {x:-3400, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					TweenLite.to(slideContainer, 1.5, {x:-3400, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.pauseMe();
 					break;
 				case "yt":
-//					TweenLite.to(slideContainer, 1.5, {x:-5100, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					TweenLite.to(slideContainer, 1.5, {x:-5100, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 //					ytManager.playMovie();
 					sspm.pauseMe();
 					break;				
