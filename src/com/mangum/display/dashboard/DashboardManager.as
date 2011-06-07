@@ -4,7 +4,6 @@ package com.mangum.display.dashboard{
 	import com.greensock.easing.*;
 	import com.mangum.display.dashboard.model.WeatherService;
 	import com.mangum.display.dashboard.view.Output;
-
 	
 	import flash.display.Sprite;
 	import flash.events.Event;

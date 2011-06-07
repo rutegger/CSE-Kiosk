@@ -52,16 +52,11 @@ package{
 		private var offsetX:Number	= 0;
 		private var offsetY:Number	= 0;	
 		
-//		[Embed (source="/../assets/hexagons.png")]
-//		private var Hex:Class; 
-
 		
 		private var clock:Messenger; // for testing
 		
 		public function Main(){	
 					
-			var name:String="flash mx";
-//			trace(name.split("a")[1].slice(2, 4).toUpperCase());
 			init();
 			
 			// **** for testing:
@@ -69,12 +64,13 @@ package{
 			addChild(ver);
 			
 			clock = new Messenger(String(idleTimer.idleTime),100);
-			clock.	setAttribute("size",15);
+			clock.setAttribute("size",15);
 //			clock.setAttribute("color",0xffffff);
 			Positioner.topCenter(stage,clock);
 			idleTimer.addEventListener("tic",onTic,false,0,true);
 		
 		}
+
 		
 		/* TESTING FUNCTIONS */
 		
@@ -87,9 +83,8 @@ package{
 		
 		private function init():void{
 						
-//			stage.displayState = StageDisplayState.FULL_SCREEN;			
-			
-			hideCursor();			
+//			stage.displayState = StageDisplayState.FULL_SCREEN;				
+//			hideCursor();			
 			
 			// ********* Kiosk Background ********* 			
 			bg = new Background();
@@ -107,8 +102,9 @@ package{
 			var twitter:TwitterManager = new TwitterManager();
 			addChild(twitter);
 
-			twitter.x = 480;
+			twitter.x = 205;
 			twitter.y = 10;
+			
 			
 			// ********* Main Content Holder ********* 			
 			addChild(content);
@@ -123,8 +119,8 @@ package{
 							 {id:"yt", mc:ytBtn}];			
 			var n:Nav = new Nav(arr);
 			content.addChild(n);
-			n.x = 940;
-			n.y = 0;			
+			n.x = 450;
+			n.y = 900;			
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
 			
 			
@@ -159,11 +155,10 @@ package{
 			ytManager = new YTManager(640,390);
 			slideContainer.addChild(ytManager);
 			ytManager.x = (stage.stageWidth*3) + 200;
-			ytManager.y = 100;			
-				
+			ytManager.y = 100;					
 			
 			// ********* Timeout *********
-			idleTimer = new IdleTimer(stage, 10);
+			idleTimer = new IdleTimer(stage, 20);
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
 						
 		}		
@@ -174,10 +169,10 @@ package{
 		private function onNavSelected(e:ActionEvent):void{
 			moveSlide(e.msg);
 			
-			TweenLite.to(satelliteBtn, 1, {y:0, ease:Cubic.easeOut});	
-			TweenLite.to(cancerBtn, 1, {y:0, ease:Cubic.easeOut});
-			TweenLite.to(ytBtn, 1, {y:0, ease:Cubic.easeOut});
-			TweenLite.to(this[e.msg+"Btn"], 1.5, {y:10, ease:Cubic.easeOut});	
+			TweenLite.to(satelliteBtn, .5, {y:0, ease:Cubic.easeOut});	
+			TweenLite.to(cancerBtn, .5, {y:0, ease:Cubic.easeOut});
+			TweenLite.to(ytBtn, .5, {y:0, ease:Cubic.easeOut});
+			TweenLite.to(this[e.msg+"Btn"], .5, {y:10, ease:Cubic.easeOut});	
 		}
 		
 		private function onMouse(e:MouseEvent):void{
@@ -201,19 +196,20 @@ package{
 					sspm.playMe();
 					break;
 				case "satellite":
-					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+//					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.pauseMe();
 					break;
 				case "cancer":
-					TweenLite.to(slideContainer, 1.5, {x:-3400, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+//					TweenLite.to(slideContainer, 1.5, {x:-3400, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
+					sspm.pauseMe();
 					break;
 				case "yt":
-					TweenLite.to(slideContainer, 1.5, {x:-5100, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
-					ytManager.playMovie();
-					break;
-				
+//					TweenLite.to(slideContainer, 1.5, {x:-5100, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+//					ytManager.playMovie();
+					sspm.pauseMe();
+					break;				
 			}
 			
 			bg.setImage(val);

@@ -49,19 +49,17 @@ package com.mangum.display.dashboard.view{
 			timeMsg = new Messenger("--:--:--", 300, 0xC7B299, 40, -1.5);
 			addChild(timeMsg);
 	
-			timeMsg.x = 22;
-			timeMsg.y = 25;
+			timeMsg.x = 550;
+			timeMsg.y = 25     ;
 			timeMsg.setAttribute("align","right");
 			setTime();
 			
 			tempMsg = new Messenger("-- °F", 300, 0xC7B299, 40, -1);
 			addChild(tempMsg);
 			tempMsg.setAttribute("align","right");
-			tempMsg.x = 150;
+			tempMsg.x = 765;
 			tempMsg.y = 25;	
-		}		
-			
-	
+		}			
 		
 		private function setValues(dashboard:Dashboard,obj:Object):void{
 			

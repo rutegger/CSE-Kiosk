@@ -35,17 +35,17 @@ package com.mangum.display.twitter.view{
 			
 			// first delete old strings		
 			for(var j:uint = 0; j < numTweets; j++){
-				trace("j: "+j);
+				//trace("j: "+j);
 				tweetArray[j].setLabel("");
 			}
 			
-			for(var i:uint = 0; i < numTweets; i++){
-				
+			for(var i:uint = 0; i < numTweets; i++){				
 				var name:String = obj[i].name;
 				var created:String = obj[i].created;
 				var msg:String = obj[i].message;
 				var pattern:RegExp;// = new RegExp("http:\/\/.*"); // removes link
-				var str:String = "<u>@" + name + "</u>: " + " • " + formatDate(created) + " • "+ msg.replace(pattern,""); 
+//				var str:String = "<b>@" + name + "</u>: " + " • " + formatDate(created) + " • "+ msg.replace(pattern,""); 
+				var str:String = "<b>CockrellSchool</b>: " + " • " + formatDate(created) + " • "+ msg.replace(pattern,""); 
 				tweetArray[i].setLabel(str);
 			}
 			//	tweet.setAttribute("font","UniversCE65Bold");			

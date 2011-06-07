@@ -262,7 +262,7 @@ package ca.newcommerce.youtube.webservice
 		}
 		
 		public function getUserFavorites(username:String, categories:Array = null, keywords:Array = null, startIndex:Number = 1, maxResults:Number = 50):Number
-		{
+		{			
 			var url:String = "http://gdata.youtube.com/feeds/api/users/" + username + "/favorites/";			
 			
 			if (categories is Array && categories.length > 0)

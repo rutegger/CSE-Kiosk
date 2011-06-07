@@ -24,8 +24,10 @@ package com.mangum.display.YT{
 		private var menu:YTMenu;
 		private var count:int = 0;
 		protected var _wsFeed:YouTubeFeedClient = YouTubeFeedClient.getInstance();	
+		private var _ytEnabled:Boolean = true;
 		
 		public function YTManager(width:Number,height:Number){	
+			trace("YTManager");
 			_width = width;
 			_height = height;
 			
@@ -38,17 +40,18 @@ package com.mangum.display.YT{
 		/* PUBLIC METHODS */
 		
 		public function pauseMovie():void{
-			mov.pause();
+			if (_ytEnabled) mov.pause();
 		}
 		
 		public function playMovie():void{
-			mov.startVideo();
+			if (_ytEnabled) mov.startVideo();
 		}
 		
 		/* EVENT HANDLERS */
 		
 		private function onYTConnectionError(e:Event):void{
 			trace("YouTube is down : (");
+			_ytEnabled = false;
 		}
 		
 		private function onSelected(e:ActionEvent):void{
@@ -100,8 +103,14 @@ package com.mangum.display.YT{
 			box.y = -12;
 			box.width = _width + 28;
 			box.height = _height - 2;
-			addChild(mkMovie(vids));
-			addChild(mkNav(vids));
+			if(vids.length > 0){
+				addChild(mkMovie(vids));
+				addChild(mkNav(vids));
+			} else {
+				// handle error
+				trace("Sorry, Cockrell School Videos not available");
+			}
+			
 		}
 		
 		private function mkMovie(arr:Array):MovieClip{		

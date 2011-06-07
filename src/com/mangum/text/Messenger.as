@@ -43,7 +43,7 @@ package com.mangum.text {
 		}	
 		
 		public function setAttribute(attribute:String, value:Number):void {
-			trace("setAttribute("+setAttribute+", "+value+")");
+			//trace("setAttribute("+setAttribute+", "+value+")");
 			format[attribute] = value;
 
 			_label.defaultTextFormat = format;

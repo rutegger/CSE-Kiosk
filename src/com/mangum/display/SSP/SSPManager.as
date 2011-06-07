@@ -29,17 +29,19 @@ package com.mangum.display.SSP{
 			view = new Output(model.ssp);
 			
 			// controller
-			controller = new Controller(model.ssp);
+//			controller = new Controller(model.ssp);
 		}
 		
 		/* PUBLIC METHODS */
 		
 		public function pauseMe():void{
-			_ssp.pauseMedia();
+			view.pauseMe()
+			trace("sspManager pauseMe");
 		}
 		
 		public function playMe():void{
-			_ssp.playMedia();
+			view.playMe();
+			trace("sspManager playMe");
 		}
 		
 		/* PRIVATE METHODS*/
@@ -51,8 +53,8 @@ package com.mangum.display.SSP{
 		private function onSSPLoaded(e:Event):void{		
 			if(this.contains(view) == false){
 				addChild(view);
-				_ssp = model.ssp;
-				trace("_ssp: "+_ssp.contentOrder);
+//				view_ssp = model.ssp;
+//				trace("_ssp: "+_ssp.contentOrder);
 //				_ssp.playMedia();
 			}			
 		}	
