@@ -8,6 +8,8 @@ package com.mangum.display.twitter.model{
 	import flash.net.URLRequest;
 	import flash.utils.Timer;
 	
+	import com.mangum.utils.EmailErrorAlerter;
+	
 	
 	public class TwitterSerializer extends Sprite{
 		
@@ -31,8 +33,8 @@ package com.mangum.display.twitter.model{
 		
 		private function init(user:String, num:Number):void {			
 			feed = new XML();
-			feedLoader = new URLLoader();				
-			var feed_xml_url:String = "http://twitter.com/statuses/user_timeline/"+user+".xml?count="+num;	
+			feedLoader = new URLLoader();	
+			var feed_xml_url:String = "http://twittexxx.com/statuses/user_timeline/"+user+".xml?count="+num;	
 			feed_url= new URLRequest(feed_xml_url);
 			feedLoader.load(feed_url);
 			feedLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError);			
@@ -53,13 +55,15 @@ package com.mangum.display.twitter.model{
 		
 		private function onIOError(e:IOErrorEvent):void{
 			trace("An IO Error has occured.\n\n", e);
+			// send alert email to kiosk admin
+			var emailError:EmailErrorAlerter = new EmailErrorAlerter();
+			emailError.notify("Twitter Connection Error");
 		}
 		
 		private function feedLoaded(e:Event):void{
 			feed = XML(feedLoader.data);
 		    		   
 //			trace("twitter: \n"+feed); //XML
-
 			
 			var len:uint = feed.child("status").length();
 			
