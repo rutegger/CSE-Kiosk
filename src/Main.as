@@ -60,7 +60,7 @@ package{
 			init();
 			
 			// **** for testing:
-			var ver:Messenger = new Messenger("V .04",60,0x000000,12);
+			var ver:Messenger = new Messenger("V .5",60,0x000000,12);
 			addChild(ver);
 			
 			clock = new Messenger(String(idleTimer.idleTime),100);
@@ -68,7 +68,7 @@ package{
 //			clock.setAttribute("color",0xffffff);
 			Positioner.topCenter(stage,clock);
 			idleTimer.addEventListener("tic",onTic,false,0,true);
-		
+			
 		}
 
 		

@@ -72,6 +72,8 @@ package com.mangum.display.dashboard.model{
 			dataLoader = new URLLoader();
 			
 			dataLoader.load(data_url);
+			dataLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError,false,0,true);
+				
 			dataLoader.addEventListener(Event.COMPLETE, dataLoaded, false, 0, true);
 			Security.allowDomain("*", "xoap.weather.com");
 			

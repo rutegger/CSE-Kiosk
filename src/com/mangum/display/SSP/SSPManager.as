@@ -8,6 +8,7 @@ package com.mangum.display.SSP{
 	import flash.events.Event;
 	
 	import net.slideshowpro.slideshowpro.SlideShowPro;
+	import com.mangum.utils.EmailErrorAlerter;
 	
 	[SWF(width='1680', height='1050', backgroundColor='#0000000', frameRate='24')]
 	
@@ -23,7 +24,8 @@ package com.mangum.display.SSP{
 			
 			// model
 			model = new SSPConnector(path);
-			model.addEventListener("onSSPLoaded", onSSPLoaded, false, 0, true);	
+			model.addEventListener("onSSPLoaded", onSSPLoaded, false, 0, true);
+			model.addEventListener("onSSPError", onSSPError, false, 0, true);	
 			
 			// view
 			view = new Output(model.ssp);
@@ -48,13 +50,20 @@ package com.mangum.display.SSP{
 		
 		/* EVENT HANDLERS */
 		
-		private function onSSPLoaded(e:Event):void{		
+		private function onSSPLoaded(e:Event):void{	
+			trace("onSSPLoaded");
 			if(this.contains(view) == false){
 				addChild(view);
 //				view_ssp = model.ssp;
 //				trace("_ssp: "+_ssp.contentOrder);
 //				_ssp.playMedia();
 			}			
+		}	
+		
+		private function onSSPError(e:Event):void{		
+			// send alert email to kiosk admin
+			var emailError:EmailErrorAlerter = new EmailErrorAlerter();
+			emailError.notify("SSP Connection Error");
 		}	
 		
 	}

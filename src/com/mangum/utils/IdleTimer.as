@@ -19,13 +19,16 @@
 			_idleTime = idleTime;
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			t.addEventListener(TimerEvent.TIMER, onTimer);
-			t.start();		
 		}
 		
 		/* PUBLIC METHODS */
 		
 		public function begin():void{
 			t.start();
+		}
+		
+		public function stopTimer():void{
+			t.stop();
 		}
 		
 		

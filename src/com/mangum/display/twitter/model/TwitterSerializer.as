@@ -34,7 +34,7 @@ package com.mangum.display.twitter.model{
 		private function init(user:String, num:Number):void {			
 			feed = new XML();
 			feedLoader = new URLLoader();	
-			var feed_xml_url:String = "http://twittexxx.com/statuses/user_timeline/"+user+".xml?count="+num;	
+			var feed_xml_url:String = "http://twitter.com/statuses/user_timeline/"+user+".xml?count="+num;	
 			feed_url= new URLRequest(feed_xml_url);
 			feedLoader.load(feed_url);
 			feedLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError);			

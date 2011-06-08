@@ -64,9 +64,7 @@ package com.mangum.display.YT.model{
 				// send alert email to kiosk admin
 				var emailError:EmailErrorAlerter = new EmailErrorAlerter();
 				emailError.notify("YouTube Connection Error");
-
-			}
-			
+			}			
 		}		
 		
 		protected function doVideoInfoReady(evt:VideoDataEvent):void {
