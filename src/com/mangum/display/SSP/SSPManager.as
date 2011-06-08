@@ -36,12 +36,10 @@ package com.mangum.display.SSP{
 		
 		public function pauseMe():void{
 			view.pauseMe()
-			trace("sspManager pauseMe");
 		}
 		
 		public function playMe():void{
 			view.playMe();
-			trace("sspManager playMe");
 		}
 		
 		/* PRIVATE METHODS*/

@@ -40,6 +40,7 @@ package com.mangum.display{
 				hitAreaContainer.buttonMode = true;
 				
 				shape.addEventListener(MouseEvent.CLICK, onClick);
+				shape.buttonMode = false;
 				
 				return shape;
 			}	

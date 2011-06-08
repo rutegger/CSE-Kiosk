@@ -51,7 +51,7 @@
 			
 			while (group = feed.next())
 			{
-				trace("[" + feed.pointer + "] " + group.title);
+				// trace("[" + feed.pointer + "] " + group.title);
 			}
 		}
 		
@@ -62,7 +62,7 @@
 			
 			while (contact = feed.next())
 			{
-				trace("["+feed.pointer+"] " + contact.title + " <" + contact.email + "> -- " + contact.image);
+				// trace("["+feed.pointer+"] " + contact.title + " <" + contact.email + "> -- " + contact.image);
 			}
 			
 			_ws.getPhoto(feed.getAt(0).image);
@@ -70,7 +70,7 @@
 		
 		protected function doPhotoLoaded(evt:PhotoEvent):void
 		{
-			trace("dophotoLoaded");
+		//	trace("dophotoLoaded");
 			evt.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, doImgReady);
 			
 			//var bmpData:BitmapData = (evt.loader.content as Bitmap).bitmapData;

@@ -35,7 +35,7 @@ package com.mangum.display.YT.controller{
 			box.y = -2;
 
 			mkMenu(arr,thumbWidth,height,_width);
-			this.addEventListener("selected", onSelected);		
+			this.addEventListener("selected", onSelected);	
 		}
 		
 		/* EVENT HANDLERS */

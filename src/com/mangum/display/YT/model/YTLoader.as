@@ -2,16 +2,15 @@ package com.mangum.display.YT.model{
 	
 	import ca.newcommerce.youtube.DataTracer;
 	import ca.newcommerce.youtube.events.VideoDataEvent;
-	import ca.newcommerce.youtube.webservice.YouTubeFeedClient;
 	
 	import com.greensock.*;
 	import com.greensock.easing.*;
 	import com.mangum.display.HitArea;
 	import com.mangum.events.ActionEvent;
+	import com.mangum.utils.EmailErrorAlerter;
 	
 	import flash.display.Loader;
 	import flash.display.MovieClip;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
@@ -62,6 +61,10 @@ package com.mangum.display.YT.model{
 			} else {
 				trace("ERROR: after 3 attempts I gave up. Handle YT fail...");
 				loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
+				// send alert email to kiosk admin
+				var emailError:EmailErrorAlerter = new EmailErrorAlerter();
+				emailError.notify("YouTube Connection Error");
+
 			}
 			
 		}		
@@ -159,6 +162,7 @@ package com.mangum.display.YT.model{
 			var hitArea:HitArea = new HitArea(0,0,_w,_h);				
 			addChild(hitArea);				
 			hitArea.addEventListener("clicked", onClicked,false,0,true);	
+			hitArea.buttonMode = false;
 		}		
 		
 		/* PUBLIC METHODS */

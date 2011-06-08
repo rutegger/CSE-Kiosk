@@ -10,11 +10,15 @@ package com.mangum.display.YT{
 	import com.mangum.display.YT.controller.YTMenu;
 	import com.mangum.display.YT.model.YTLoader;
 	import com.mangum.events.ActionEvent;
+	import com.mangum.utils.EmailErrorAlerter;
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+
 	
 	public class YTManager extends Sprite{
 		
@@ -27,7 +31,6 @@ package com.mangum.display.YT{
 		private var _ytEnabled:Boolean = true;
 		
 		public function YTManager(width:Number,height:Number){	
-			trace("YTManager");
 			_width = width;
 			_height = height;
 			
@@ -51,7 +54,11 @@ package com.mangum.display.YT{
 		
 		private function onYTConnectionError(e:Event):void{
 			trace("YouTube is down : (");
-			_ytEnabled = false;
+			_ytEnabled = false; // disable to avoid other errors
+			// send alert email to kiosk admin
+			var emailError:EmailErrorAlerter = new EmailErrorAlerter();
+			emailError.notify("YouTube Configuration Error (most likely Favorites has been set to private in YT settings)");
+			
 		}
 		
 		private function onSelected(e:ActionEvent):void{
@@ -124,6 +131,7 @@ package com.mangum.display.YT{
 			menu.x = 755;
 			menu.y = 50;					
 			menu.addEventListener("selected", onSelected, false, 0, true);
+			menu.buttonMode = false;
 			return menu;
 		}
 		

@@ -1,13 +1,13 @@
 package com.mangum.display.dashboard.model{
 	
+	import com.mangum.utils.EmailErrorAlerter;
+	
 	import flash.display.Sprite;
-	import flash.errors.IOError;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.TimerEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.sampler.StackFrame;
 	import flash.system.Security;
 	import flash.utils.Timer;
 	
@@ -104,6 +104,9 @@ package com.mangum.display.dashboard.model{
 		
 		private function onIOError(e:IOErrorEvent):void{
 			trace("An IO Error has occured.\n\n", e);
+			// send alert email to kiosk admin
+			var emailError:EmailErrorAlerter = new EmailErrorAlerter();
+			emailError.notify("Weather.com Connection Error");
 		}
 		
 		private function weatherLoaded(e:Event):void{
