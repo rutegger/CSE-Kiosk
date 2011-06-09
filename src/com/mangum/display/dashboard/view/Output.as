@@ -50,14 +50,14 @@ package com.mangum.display.dashboard.view{
 			addChild(timeMsg);
 	
 			timeMsg.x = 550;
-			timeMsg.y = 25     ;
+			timeMsg.y = 25;
 			timeMsg.setAttribute("align","right");
 			setTime();
 			
 			tempMsg = new Messenger("-- °F", 300, 0xC7B299, 40, -1);
 			addChild(tempMsg);
 			tempMsg.setAttribute("align","right");
-			tempMsg.x = 765;
+			tempMsg.x = 760;
 			tempMsg.y = 25;	
 		}			
 		

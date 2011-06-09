@@ -48,6 +48,8 @@ package com.mangum.display.SSP.view{
 			ssp.panZoomScale = [1,1.2];	
 			ssp.captionAppearance = "Overlay Auto (if Available)";
 			ssp.captionPosition = "Bottom";
+			ssp.captionTextSize = 14;
+			ssp.captionTextColor = 0xF2EFEA;
 			ssp.captionElements = "Caption Only";
 			ssp.captionHeaderBackgroundAlpha = .6;
 			ssp.contentOrder = "Sequential";

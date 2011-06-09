@@ -72,7 +72,7 @@ package com.mangum.display.dashboard.model{
 			dataLoader = new URLLoader();
 			
 			dataLoader.load(data_url);
-			dataLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError,false,0,true);
+			dataLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOErrorData,false,0,true);
 				
 			dataLoader.addEventListener(Event.COMPLETE, dataLoaded, false, 0, true);
 			Security.allowDomain("*", "xoap.weather.com");
@@ -93,22 +93,30 @@ package com.mangum.display.dashboard.model{
 			key  = user_data.key.toString();
 			units  = user_data.units.toString();
 			
-			weather_xml_url = "http://xoap.weather.com/weather/local/"+city+"?cc=*&link=xoap&dayf=5&par="+par_id+"&key="+key+"&unit="+units;
+//			weather_xml_url = "http://xoap.weather.com/weather/local/"+city+"?cc=*&link=xoap&dayf=5&par="+par_id+"&key="+key+"&unit="+units;
+			weather_xml_url = "http://xoap.weather.com/weather/local/USTX0057?cc=*&link=xoap&dayf=5&par=1157834084&key=4bfd761563529a4a&unit="+units;
 
 			weather = new XML();
 			weatherLoader = new URLLoader();
 			weather_url= new URLRequest(weather_xml_url);
 			weatherLoader.load(weather_url);
-			weatherLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+			weatherLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOErrorFeed);
 				
 			weatherLoader.addEventListener(Event.COMPLETE, weatherLoaded, false, 0, true);
 		}
 		
-		private function onIOError(e:IOErrorEvent):void{
+		private function onIOErrorData(e:IOErrorEvent):void{
 			trace("An IO Error has occured.\n\n", e);
 			// send alert email to kiosk admin
 			var emailError:EmailErrorAlerter = new EmailErrorAlerter();
-			emailError.notify("Weather.com Connection Error");
+			emailError.notify("Utwired data.xml Connection Error");
+		}
+		
+		private function onIOErrorFeed(e:IOErrorEvent):void{
+			trace("An IO Error has occured.\n\n", e);
+			// send alert email to kiosk admin
+			var emailError:EmailErrorAlerter = new EmailErrorAlerter();
+			emailError.notify("xoap.weather.com Feed Connection Error");
 		}
 		
 		private function weatherLoaded(e:Event):void{

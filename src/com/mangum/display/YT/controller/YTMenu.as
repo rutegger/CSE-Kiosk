@@ -89,7 +89,7 @@ package com.mangum.display.YT.controller{
 					rows++;
 					xCount = 0;	
 					xVal = 0;
-					yVal += h * 2.2;						
+					yVal += h * 2;						
 				}
 
 				yt.x = xVal;				
@@ -97,7 +97,7 @@ package com.mangum.display.YT.controller{
 				var msg:Messenger = new Messenger(arr[i].title,thbWidth,0xcc3333,13);
 				
 				totalHeight = h+msg.height+(gutter*1.4);
-				
+							
 //				msg.setAttribute("color",0xff00ff); //doesn't work ??
 				
 				addChild(msg);

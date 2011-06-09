@@ -84,7 +84,7 @@ package{
 		private function init():void{
 						
 //			stage.displayState = StageDisplayState.FULL_SCREEN;				
-			hideCursor();			
+//			hideCursor();			
 			
 			// ********* Kiosk Background ********* 			
 			bg = new Background();
