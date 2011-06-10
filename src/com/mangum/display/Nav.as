@@ -12,31 +12,99 @@ package com.mangum.display{
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	
+	import mx.flash.UIMovieClip;
+	
 	
 	public class Nav extends Sprite{
 		
 		private var _items:Array;
+		private var arrowRight:Sprite = new ArrowRight();
+		private var arrowLeft:Sprite = new ArrowLeft();
+		private var _current:uint = 0;
 		
 		public function Nav(items:Array){	
 			_items = items;	
 			if (stage) createMenuItems();
 			else addEventListener(Event.ADDED_TO_STAGE, init);
+			showArrow(arrowLeft,true);
 		}
 		
 		
-		/* EVENT HANDLERS */		
+		/* EVENT HANDLERS */	
 		
-		private function onClicked(e:Event):void{ 
-			dispatchEvent(new ActionEvent(e.target.name, "navSelected", true));
-			trace(e.target.name);
+		private function setSlide(slide:String):void{
+			
+			var slide:String;
+			
+			if (getIndex(slide) != -1){
+				_current = getIndex(slide);
+				slide = slide;		
+			}else {	
+				if(slide == "right"){
+					showArrow(arrowLeft,true);
+					_current ++;
+					
+				}else if(slide == "left"){
+					_current --;
+					showArrow(arrowRight,true);					
+					
+				}
+				slide = _items[_current].id;
+				
+			} 			
+			setArrows();			
+			dispatchEvent(new ActionEvent(slide, "navSelected", true));
+		}
+		
+		private function onClicked(e:Event):void{
+			setSlide(e.target.name);
 		}
 		
 		
 		/* PRIVATE METHODS */	
 		
+		private function showArrow(mc:Sprite,bool:Boolean):void{
+			mc.y = (bool) ? 0 : 1000;
+		}
+		
+		
+		private function getIndex(target:String):int{
+			var index:int = -1;
+			for(var i:uint = 0; i < _items.length; i++){
+				if(target == _items[i].id){
+					index = i;
+				}				
+			}
+			return index;
+		}
+		
+		private function setArrows():void{
+			trace("setArr");
+			if (_current >= _items.length-1){
+				showArrow(arrowRight,false);				
+			} else {
+				showArrow(arrowRight,true);
+			}
+			if (_current == 0){
+				showArrow(arrowLeft,false);
+			} else {
+				showArrow(arrowLeft,true);
+			}
+		}
+		
 		private function init(e:Event = null):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			createMenuItems()
+			createMenuItems();
+			
+			addChild(arrowRight);
+			arrowRight.name = "right"
+			arrowRight.x = this.width-50;
+			addChild(arrowLeft);
+			arrowLeft.name = "left"
+			arrowLeft.x = -50;
+			
+			arrowRight.addEventListener(MouseEvent.CLICK, onClicked, false, 0 , true);
+			arrowLeft.addEventListener(MouseEvent.CLICK, onClicked, false, 0 , true);
 		}
 		
 		private function createMenuItems():void{
@@ -61,8 +129,17 @@ package com.mangum.display{
 			
 		}
 		
-		
+
 		/* GETTER SETTERS */
+		
+		public function set current(val:int):void {
+			_current = current;
+			showArrow(arrowRight,true);
+			showArrow(arrowLeft, false);
+		}		
+		public function get current():int {
+			return _current;
+		}
 		
 	}
 	

@@ -38,9 +38,11 @@ package{
 		private var currentSelection:String;
 		
 		private var ytBtn:MovieClip;
+		private var sspBtn:MovieClip;
 		private var satelliteBtn:MovieClip;
 		private var cancerBtn:MovieClip;
 		
+		private var n:Nav;
 		private var slideContainer:MovieClip = new MovieClip();
 		private var satelliteSlide:MovieClip;
 		private var cancerSlide:MovieClip;
@@ -103,24 +105,26 @@ package{
 			addChild(twitter);
 
 			twitter.x = 205;
-			twitter.y = 10;
-			
+			twitter.y = 10;			
 			
 			// ********* Main Content Holder ********* 			
 			addChild(content);
 			content.name = "content";
 			
+			
 			// ********* Navigation ********* 
-			ytBtn= new YTButton();
+			sspBtn = new SSPButton();
+			ytBtn = new YTButton();
 			satelliteBtn = new SatelliteButton();
 			cancerBtn = new CancerButton();
-			var arr:Array = [{id:"satellite", mc:satelliteBtn},
+			var arr:Array = [{id:"ssp", mc:sspBtn},
+							 {id:"satellite", mc:satelliteBtn},
 							 {id:"cancer", mc:cancerBtn},
 							 {id:"yt", mc:ytBtn}];			
-			var n:Nav = new Nav(arr);
+			n = new Nav(arr);
 			content.addChild(n);
-			n.x = 450;
-			n.y = 900;			
+			n.x = 50;
+			n.y = 960;			
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
 			
 			
@@ -168,11 +172,10 @@ package{
 		
 		private function onNavSelected(e:ActionEvent):void{
 			moveSlide(e.msg);
-			
 			TweenLite.to(satelliteBtn, .5, {y:0, ease:Cubic.easeOut});	
 			TweenLite.to(cancerBtn, .5, {y:0, ease:Cubic.easeOut});
 			TweenLite.to(ytBtn, .5, {y:0, ease:Cubic.easeOut});
-			TweenLite.to(this[e.msg+"Btn"], .5, {y:10, ease:Cubic.easeOut});	
+//			TweenLite.to(this[e.msg+"Btn"], .5, {y:-10, ease:Cubic.easeOut});	
 		}
 		
 		private function onMouse(e:MouseEvent):void{
@@ -180,7 +183,8 @@ package{
 		}
 		
 		private function handleInteractivity(e:Event):void{	// user interaction timeout
-			moveSlide("slideshow");
+			moveSlide("ssp");
+			n.current = 0;
 		}
 		
 
@@ -190,7 +194,7 @@ package{
 			currentSelection = val;
 //			slideContainer.removeEventListener(Event.ENTER_FRAME, throwobject);
 			switch (val){
-				case "slideshow":
+				case "ssp":
 					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.playMe();
