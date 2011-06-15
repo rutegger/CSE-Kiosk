@@ -123,7 +123,7 @@ package com.mangum.display.twitter.view{
 		private function createTweetContainers():void{
 			var counter:uint = 30;
 			for(var i:uint = 0; i < numTweets; i++){
-				var tweet:Messenger = new Messenger("--"+i, 425, 0xC7B299, 15);
+				var tweet:Messenger = new Messenger("--"+i, 420, 0xC7B299, 15);
 				tweet.setAttribute("leading", 2);
 				tweetArray[i] = tweet;
 				container.addChild(tweet);

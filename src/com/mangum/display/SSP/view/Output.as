@@ -36,8 +36,8 @@ package com.mangum.display.SSP.view{
 		/* PRIVATE METHODS */
 		
 		private function config(ssp:SlideShowPro):void{
-			ssp.width = 900;
-			ssp.height = 600;
+			ssp.width = 776;
+			ssp.height = 476;
 			ssp.contentScale = "Crop to Fit All";
 			ssp.directorLargeQuality = 100;
 			ssp.transitionStyle = "Cross Fade";
@@ -48,11 +48,12 @@ package com.mangum.display.SSP.view{
 			ssp.panZoomScale = [1,1.2];	
 			ssp.captionAppearance = "Overlay Auto (if Available)";
 			ssp.captionPosition = "Bottom";
-			ssp.captionTextSize = 14;
+			ssp.captionTextSize = 13;
 			ssp.captionTextColor = 0xF2EFEA;
 			ssp.captionElements = "Caption Only";
 			ssp.captionHeaderBackgroundAlpha = .6;
 			ssp.contentOrder = "Sequential";
+			ssp.captionBackgroundColor = 0x736357;
 //			ssp.galleryAppearance = "Hidden";
 			ssp.mediaPlayerAppearance = "Hidden";
 			ssp.navAppearance = "Hidden";

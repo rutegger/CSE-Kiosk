@@ -46,18 +46,18 @@ package com.mangum.display.dashboard.view{
 		}
 		
 		private function setTextfields():void{
-			timeMsg = new Messenger("--:--:--", 300, 0xC7B299, 40, -1.5);
+			timeMsg = new Messenger("--:--:--", 300, 0xC7B299, 42, -1.5);
 			addChild(timeMsg);
 	
-			timeMsg.x = 550;
+			timeMsg.x = -90;
 			timeMsg.y = 25;
 			timeMsg.setAttribute("align","right");
 			setTime();
 			
-			tempMsg = new Messenger("-- °F", 300, 0xC7B299, 40, -1);
+			tempMsg = new Messenger("-- °F", 300, 0xC7B299, 42, -1);
 			addChild(tempMsg);
 			tempMsg.setAttribute("align","right");
-			tempMsg.x = 760;
+			tempMsg.x = 143;
 			tempMsg.y = 25;	
 		}			
 		
@@ -78,20 +78,20 @@ package com.mangum.display.dashboard.view{
 						   new Date().getFullYear().toString().slice(2);
 //			dashboard.today.todayTxt.text = obj.weatherArr[0].day + ", " + obj.weatherArr[0].date  + ", " + year; 
 			dashboard.today.todayTxt.text = t;
-			dashboard.sunrise.sunriseTxt.text = "sunrise: " + obj.sunrise;
-			dashboard.sunset.sunsetTxt.text = "sunset: " + obj.sunset;
+//			dashboard.sunrise.sunriseTxt.text = "sunrise: " + obj.sunrise;
+//			dashboard.sunset.sunsetTxt.text = "sunset: " + obj.sunset;
 			
-			setIcon(obj.icon);
-			dashboard.conditions.conditionsTxt.text = obj.currently;
+//			setIcon(obj.icon);
+//			dashboard.conditions.conditionsTxt.text = obj.currently;
 			
-			setDirection(obj.windDirection);
-			dashboard.windSpeed.windSpeedTxt.text = (obj.windSpeed == "calm") ? obj.windSpeed: obj.windSpeed  + " mph" ;
+//			setDirection(obj.windDirection);
+//			dashboard.windSpeed.windSpeedTxt.text = (obj.windSpeed == "calm") ? obj.windSpeed: obj.windSpeed  + " mph" ;
 			
 			tempMsg.setLabel(obj.temp + "°F");
 			
-			dashboard.high.highTxt.text = obj.high + " °F";
-			dashboard.low.lowTxt.text = obj.low  + " °F";
-			dashboard.humidity.humidityTxt.text = "humidity: "+ obj.humidity + "%";	
+//			dashboard.high.highTxt.text = obj.high + " °F";
+//			dashboard.low.lowTxt.text = obj.low  + " °F";
+//			dashboard.humidity.humidityTxt.text = "humidity: "+ obj.humidity + "%";	
 			
 			// 4 Day Forcast
 //			for(var i:int = 1; i <= 4; i++){

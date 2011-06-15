@@ -9,6 +9,7 @@ package{
 	import com.mangum.display.SSP.SSPManager;
 	import com.mangum.display.YT.YTManager;
 	import com.mangum.display.dashboard.DashboardManager;
+	import com.mangum.display.delicious.DeliciousManager;
 	import com.mangum.display.twitter.TwitterManager;
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
@@ -37,10 +38,10 @@ package{
 		private var content:MovieClip = new MovieClip();
 		private var currentSelection:String;
 		
-		private var ytBtn:MovieClip;
-		private var sspBtn:MovieClip;
-		private var satelliteBtn:MovieClip;
-		private var cancerBtn:MovieClip;
+		private var homeBtn:HomeBtn;
+		private var button01:MovieClip; // satellite
+		private var button02:MovieClip; // water research
+		private var button03:MovieClip; // YouTube
 		
 		private var n:Nav;
 		private var slideContainer:MovieClip = new MovieClip();
@@ -86,7 +87,7 @@ package{
 		private function init():void{
 						
 //			stage.displayState = StageDisplayState.FULL_SCREEN;				
-//			hideCursor();			
+			hideCursor();			
 			
 			// ********* Kiosk Background ********* 			
 			bg = new Background();
@@ -104,8 +105,15 @@ package{
 			var twitter:TwitterManager = new TwitterManager();
 			addChild(twitter);
 
-			twitter.x = 205;
+			twitter.x = 495;
 			twitter.y = 10;			
+			
+			// ********* Delicious Widget ********* 
+			var dm:DeliciousManager = new DeliciousManager();
+			addChild(dm);
+			
+			dm.x = 960;
+			dm.y = 40;	
 			
 			// ********* Main Content Holder ********* 			
 			addChild(content);
@@ -113,18 +121,18 @@ package{
 			
 			
 			// ********* Navigation ********* 
-			sspBtn = new SSPButton();
-			ytBtn = new YTButton();
-			satelliteBtn = new SatelliteButton();
-			cancerBtn = new CancerButton();
-			var arr:Array = [{id:"ssp", mc:sspBtn},
-							 {id:"satellite", mc:satelliteBtn},
-							 {id:"cancer", mc:cancerBtn},
-							 {id:"yt", mc:ytBtn}];			
+			homeBtn = new HomeBtn();
+			button01 = new Button01();
+			button02 = new Button02();
+			button03 = new Button03();
+			var arr:Array = [{id:"ssp", mc:homeBtn},
+							 {id:"satellite", mc:button01},
+							 {id:"cancer", mc:button02},
+							 {id:"yt", mc:button03}];			
 			n = new Nav(arr);
 			content.addChild(n);
-			n.x = 50;
-			n.y = 960;			
+			n.x = -80;
+			n.y = 932;			
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
 			
 			
@@ -138,15 +146,19 @@ package{
 			isogrid.y = -70;
 			
 			// SlideshowPro 
+			var slide0:Slide0 = new Slide0();
+			slideContainer.addChild(slide0);
+			slide0.x = 135;
+			slide0.y = -12;
 			sspm = new SSPManager("http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
 			slideContainer.addChild(sspm);
-			sspm.x = 200;
-			sspm.y = 20;
+			sspm.x = 746;
+			sspm.y = 200;
 			
 			// Satellite
 			satelliteSlide = new SatelliteSlide();
 			slideContainer.addChild(satelliteSlide);
-			satelliteSlide.x = stage.stageWidth +200; 
+			satelliteSlide.x = stage.stageWidth+200; 
 			satelliteSlide.y = 100;	
 
 			// Water Research
@@ -172,9 +184,9 @@ package{
 		
 		private function onNavSelected(e:ActionEvent):void{
 			moveSlide(e.msg);
-			TweenLite.to(satelliteBtn, .5, {y:0, ease:Cubic.easeOut});	
-			TweenLite.to(cancerBtn, .5, {y:0, ease:Cubic.easeOut});
-			TweenLite.to(ytBtn, .5, {y:0, ease:Cubic.easeOut});
+			TweenLite.to(button01, .5, {y:0, ease:Cubic.easeOut});	
+			TweenLite.to(button02, .5, {y:0, ease:Cubic.easeOut});
+			TweenLite.to(button03, .5, {y:0, ease:Cubic.easeOut});
 //			TweenLite.to(this[e.msg+"Btn"], .5, {y:-10, ease:Cubic.easeOut});	
 		}
 		
