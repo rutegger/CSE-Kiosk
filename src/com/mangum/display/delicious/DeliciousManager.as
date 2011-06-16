@@ -10,14 +10,14 @@ package com.mangum.display.delicious{
 		
 		private var ds:Serializer;
 		private var viewer:Viewer;
-		private var numberOfStories:Number = 1;
+		private var numberOfStories:Number = 15;
 		
 		public function DeliciousManager(){
 			//model
 			ds = new Serializer("cockrellschool", numberOfStories);
 			ds.addEventListener("onFeedLoaded", onFeedLoaded, false, 0, true);	
 			
-			viewer = new Viewer();
+			viewer = new Viewer(numberOfStories);
 		}
 		
 		/* EVENT HANDLERS */
@@ -28,11 +28,13 @@ package com.mangum.display.delicious{
 //				trace(index+" => "+ds.news[index].message); 
 //			}
 			if(this.contains(viewer) == false){
-				addChild(viewer)
+				addChild(viewer);				
 			}			
-			viewer.createStory(ds.news);
+			viewer.news = ds.news;
+			viewer.createStory();
 		}
 		
+
 	}
 	
 	

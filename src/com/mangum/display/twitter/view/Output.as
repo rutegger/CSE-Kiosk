@@ -20,6 +20,7 @@ package com.mangum.display.twitter.view{
 		private var numTweets:Number;	
 		private var timer:Timer = new Timer(RELOAD_TIME); 
 		private var containerY:Number = 0;
+		private var tweetTitleArray:Array = new Array();
 		private var tweetArray:Array = new Array();
 		
 		public function Output(num:Number):void {
@@ -45,7 +46,7 @@ package com.mangum.display.twitter.view{
 				var msg:String = obj[i].message;
 				var pattern:RegExp;// = new RegExp("http:\/\/.*"); // removes link
 //				var str:String = "<b>@" + name + "</u>: " + " • " + formatDate(created) + " • "+ msg.replace(pattern,""); 
-				var str:String = "<b>CockrellSchool</b>: " + " • " + formatDate(created) + " • "+ msg.replace(pattern,""); 
+				var str:String = "                               : " + msg.replace(pattern,"") + " | <i>" + formatDate(created) + "</i>"; 
 				tweetArray[i].setLabel(str);
 			}
 			//	tweet.setAttribute("font","UniversCE65Bold");			
@@ -123,10 +124,15 @@ package com.mangum.display.twitter.view{
 		private function createTweetContainers():void{
 			var counter:uint = 30;
 			for(var i:uint = 0; i < numTweets; i++){
+				var tweetTitle:Messenger = new Messenger("@Cockrell School ", 420, 0xC7B299, 15,true);
 				var tweet:Messenger = new Messenger("--"+i, 420, 0xC7B299, 15);
 				tweet.setAttribute("leading", 2);
+				tweetTitleArray[i] = tweetTitle;
 				tweetArray[i] = tweet;
 				container.addChild(tweet);
+				container.addChild(tweetTitle);
+				tweetTitle.x = 22;
+				tweetTitle.y = counter;
 				tweet.x = 22;
 				tweet.y = counter;
 				counter += 100;
@@ -134,7 +140,7 @@ package com.mangum.display.twitter.view{
 		}
 		
 		private function roll(val:Number):void{
-			TweenLite.to(container, ANIMATION_SPEED, {y:val, ease:Back.easeOut});
+			TweenLite.to(container, ANIMATION_SPEED, {y:val, ease:Cubic.easeOut});
 		}
 		
 		

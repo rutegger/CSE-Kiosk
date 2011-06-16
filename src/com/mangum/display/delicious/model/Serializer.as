@@ -71,7 +71,7 @@ package com.mangum.display.delicious.model{
 			
 			for(var i:uint = 0; i < len; i++){			
 				_newsArr[i] = {created:feed.channel.item[i].pubDate,
-							   message:feed.channel.item[i].description};
+							   message:feed.channel.item[i].title};
 			}
 			
 			_created = _newsArr[0].created;

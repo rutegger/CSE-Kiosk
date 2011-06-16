@@ -56,8 +56,8 @@ package com.mangum.display.dashboard.view{
 			
 			tempMsg = new Messenger("-- °F", 300, 0xC7B299, 42, -1);
 			addChild(tempMsg);
-			tempMsg.setAttribute("align","right");
-			tempMsg.x = 143;
+//			tempMsg.setAttribute("align","right");
+			tempMsg.x = 240;
 			tempMsg.y = 25;	
 		}			
 		

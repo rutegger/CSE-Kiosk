@@ -26,8 +26,12 @@ package{
 	import flash.geom.Rectangle;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursor;
+	import flash.display.Stage;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	
-	[SWF(width='1680', height='1050', backgroundColor='#ffffff', frameRate='24')]
+	
+	[SWF(width='1866', height='1050', backgroundColor='#cccccc', frameRate='24')]
 	
 	public class Main extends Sprite{
 		
@@ -59,18 +63,19 @@ package{
 		private var clock:Messenger; // for testing
 		
 		public function Main(){	
+			
 					
 			init();
 			
 			// **** for testing:
 			var ver:Messenger = new Messenger("V .5",60,0x000000,12);
-			addChild(ver);
+			//addChild(ver);
 			
-			clock = new Messenger(String(idleTimer.idleTime),100);
-			clock.setAttribute("size",15);
+			//clock = new Messenger(String(idleTimer.idleTime),100);
+			//clock.setAttribute("size",15);
 //			clock.setAttribute("color",0xffffff);
-			Positioner.topCenter(stage,clock);
-			idleTimer.addEventListener("tic",onTic,false,0,true);
+			//Positioner.topCenter(stage,clock);
+			//idleTimer.addEventListener("tic",onTic,false,0,true);
 			
 		}
 
@@ -86,8 +91,11 @@ package{
 		
 		private function init():void{
 						
-//			stage.displayState = StageDisplayState.FULL_SCREEN;				
-			hideCursor();			
+//			stage.displayState = StageDisplayState.FULL_SCREEN;	
+//			stage.scaleMode = StageScaleMode.NO_SCALE;
+//			stage.align = StageAlign.TOP_LEFT;
+
+//			hideCursor();			
 			
 			// ********* Kiosk Background ********* 			
 			bg = new Background();
@@ -138,7 +146,7 @@ package{
 			
 			// ********* Content Slides ********* 
 			content.addChild(slideContainer);
-			slideContainer.y = 200;
+			slideContainer.y = 0;
 
 			// Background
 			var isogrid:Isogrid = new Isogrid();
@@ -148,29 +156,27 @@ package{
 			// SlideshowPro 
 			var slide0:Slide0 = new Slide0();
 			slideContainer.addChild(slide0);
-			slide0.x = 135;
-			slide0.y = -12;
 			sspm = new SSPManager("http://fic.engr.utexas.edu/ecjkiosk/slideshowpro/images.php?album=5");	
 			slideContainer.addChild(sspm);
-			sspm.x = 746;
-			sspm.y = 200;
+			sspm.x = 821;
+			sspm.y = 431;
 			
 			// Satellite
 			satelliteSlide = new SatelliteSlide();
 			slideContainer.addChild(satelliteSlide);
-			satelliteSlide.x = stage.stageWidth+200; 
+			satelliteSlide.x = stage.stageWidth; 
 			satelliteSlide.y = 100;	
 
 			// Water Research
 			cancerSlide = new CancerSlide();
 			slideContainer.addChild(cancerSlide);
-			cancerSlide.x =(stage.stageWidth*2) + 200;
+			cancerSlide.x =(stage.stageWidth*2);
 			cancerSlide.y = 10;		
 			
 			// YouTube 		
 			ytManager = new YTManager(640,390);
 			slideContainer.addChild(ytManager);
-			ytManager.x = (stage.stageWidth*3) + 200;
+			ytManager.x = (stage.stageWidth*3);
 			ytManager.y = 100;					
 			
 			// ********* Timeout *********
@@ -207,22 +213,22 @@ package{
 //			slideContainer.removeEventListener(Event.ENTER_FRAME, throwobject);
 			switch (val){
 				case "ssp":
-					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.playMe();
 					break;
 				case "satellite":
-					TweenLite.to(slideContainer, 1.5, {x:-1700, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					TweenLite.to(slideContainer, 1.5, {x:-stage.stageWidth, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.pauseMe();
 					break;
 				case "cancer":
-					TweenLite.to(slideContainer, 1.5, {x:-3400, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					TweenLite.to(slideContainer, 1.5, {x:-stage.stageWidth *2, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.pauseMe();
 					break;
 				case "yt":
-					TweenLite.to(slideContainer, 1.5, {x:-5100, ease:Cubic.easeOut, onComplete: setBg,onCompleteParams:[val]});	
+					TweenLite.to(slideContainer, 1.5, {x:-stage.stageWidth*3, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
 //					ytManager.playMovie();
 					sspm.pauseMe();
 					break;				
@@ -231,7 +237,7 @@ package{
 			bg.setImage(val);
 		}
 		
-		private function setBg(sel:String):void{
+		private function onSlideComplete(sel:String):void{
 //			trace("sel: "+sel, currentSelection);
 //			bg.setImage(sel);
 		}

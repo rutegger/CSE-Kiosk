@@ -51,7 +51,6 @@ package com.mangum.display.SSP{
 		/* EVENT HANDLERS */
 		
 		private function onSSPLoaded(e:Event):void{	
-			trace("onSSPLoaded");
 			if(this.contains(view) == false){
 				addChild(view);
 //				view_ssp = model.ssp;
