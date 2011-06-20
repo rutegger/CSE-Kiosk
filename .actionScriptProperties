@@ -35,7 +35,6 @@
   </compiler>
   <applications>
     <application path="Main.as"/>
-    <application path="com/mangum/display/SSP/SSPManagerNew.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

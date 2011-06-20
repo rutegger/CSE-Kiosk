@@ -16,8 +16,6 @@ package com.mangum.display.SSP.view{
 			_ssp = ssp;
 			addChild(_ssp);
 			config(_ssp);
-			
-
 		}		
 		
 		/* PUBLIC METHODS */
@@ -52,7 +50,7 @@ package com.mangum.display.SSP.view{
 			ssp.captionHeaderText = "{fileName}";
 			ssp.captionTextColor = 0xF2EFEA;
 			ssp.captionElements = "Caption Only";
-			ssp.captionPadding = [10,10,10,10];
+			ssp.captionPadding = [20,20,20,20];
 			ssp.captionHeaderBackgroundAlpha = .6;
 			ssp.contentOrder = "Sequential";
 			ssp.captionBackgroundColor = 0x736357;

@@ -9,10 +9,10 @@ package com.mangum.text {
 	import flash.filters.DropShadowFilter;
 	import flash.text.AntiAliasType;
 	import flash.text.Font;
+	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
-	import flash.text.StyleSheet;
 	
 	public class Messenger extends Sprite {
 				
@@ -33,6 +33,8 @@ package com.mangum.text {
 		private var format:TextFormat;
 		private var container:MovieClip =  new MovieClip();
 		private var _bold:Boolean = false;
+		private var _uppercase:Boolean = false;
+		
 		
 		public function Messenger(msg:String,width:Number,color:Number=0x000000,size:Number=20,bold:Boolean=false) {
 			
@@ -51,13 +53,21 @@ package com.mangum.text {
 		
 		public function setLabel(str:String):void {
 //			trace("setLabel("+str+")");
-			_label.htmlText = str;
+			
+			str.toLocaleUpperCase();
+			
+			if(_uppercase){
+				trace("_uppercase!");
+				var newStr:String = str.toUpperCase();
+				_label.htmlText = newStr;
+			} else {
+				_label.htmlText = str;
+			}
+			
 		}	
 		
 		public function setAttribute(attribute:String, value:Number):void {
-			//trace("setAttribute("+setAttribute+", "+value+")");
 			format[attribute] = value;
-			_label.defaultTextFormat = format;
 		}
 
 		
@@ -102,6 +112,19 @@ package com.mangum.text {
 		/* GETTER SETTERS */
 		public function get h():Number {
 			return _label.height;
+		}
+		
+		public function get lines():Number {
+			return _label.numLines;
+		}
+		
+		public function get uppercase():Boolean {
+			return _uppercase;
+		}
+		
+		public function set uppercase(val:Boolean):void {
+			_uppercase = val;
+			trace("uppercase");
 		}
 	
 	}

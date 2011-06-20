@@ -20,15 +20,15 @@ package{
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.display.Stage;
+	import flash.display.StageAlign;
 	import flash.display.StageDisplayState;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursor;
-	import flash.display.Stage;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
 	
 	
 	[SWF(width='1866', height='1050', backgroundColor='#cccccc', frameRate='24')]
@@ -77,6 +77,9 @@ package{
 			//Positioner.topCenter(stage,clock);
 			//idleTimer.addEventListener("tic",onTic,false,0,true);
 			
+			var loadMsg:LoaderMessage = new LoaderMessage(stage);
+			addChild(loadMsg);
+			
 		}
 
 		
@@ -96,6 +99,9 @@ package{
 //			stage.align = StageAlign.TOP_LEFT;
 
 //			hideCursor();			
+			
+
+			
 			
 			// ********* Kiosk Background ********* 			
 			bg = new Background();
@@ -162,10 +168,10 @@ package{
 			sspm.y = 431;
 			
 			// Satellite
-			satelliteSlide = new SatelliteSlide();
-			slideContainer.addChild(satelliteSlide);
-			satelliteSlide.x = stage.stageWidth; 
-			satelliteSlide.y = 100;	
+			var slide1:Slide1 = new Slide1();
+			slideContainer.addChild(slide1);
+			slide1.x = stage.stageWidth; 
+//			slide1.y = 100;	
 
 			// Water Research
 			cancerSlide = new CancerSlide();
@@ -243,7 +249,7 @@ package{
 		}
 		
 		private function hideCursor():void{
-			// Hide cursor - kludgy, but Mouse.hidu() alone doesn't work
+			// Hide cursor - kludgy, but Mouse.hide() alone doesn't work
 			addEventListener(MouseEvent.CLICK, onMouse, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_MOVE, onMouse, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouse, false, 0, true);

@@ -40,24 +40,30 @@ package com.mangum.display.delicious.view{
 		}
 		
 		public function createStory():void{
+			trace("createStory");
 			var rand:int = randRange(0,_numStories-1);			
-			message.setLabel("                      "+_news[rand].message);
-			var dif:Number = Math.floor(message.h);
-
-			switch(dif){
-				case 24:
-					dif = 17;
+			message.uppercase = true; 
+			message.setLabel("                       "+_news[rand].message);
+			var yVal:Number;
+			
+			switch(message.lines){
+				case 3:
+					yVal = 0;
 					break;
-				case 42:
-					dif = 10;
+				case 2:
+					yVal = 10;
 					break;
-				case 62:
-					dif = 0;
+				case 1:
+					yVal = 17;
+					break;
+				default:
+					yVal = 0;
 					break;
 			}
+			trace("yVal "+yVal);
 			
-			messageTitle.y = dif;	
-			message.y = dif;
+			messageTitle.y = yVal;	
+			message.y = messageTitle.y - 1;
 		}
 		
 		private function randRange(min:Number, max:Number):Number{
@@ -68,6 +74,7 @@ package com.mangum.display.delicious.view{
 		private function createHolder():void {
 			messageTitle = new Messenger("In the News:", 420, 0xC7B299, 15,true);
 			message = new Messenger("--", 420, 0xC7B299, 15);
+			
 			message.setAttribute("leading", 2);			
 			addChild(messageTitle);
 			addChild(message);
