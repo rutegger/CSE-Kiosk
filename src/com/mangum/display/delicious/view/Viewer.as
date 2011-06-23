@@ -40,7 +40,6 @@ package com.mangum.display.delicious.view{
 		}
 		
 		public function createStory():void{
-			trace("createStory");
 			var rand:int = randRange(0,_numStories-1);			
 			message.uppercase = true; 
 			message.setLabel("                       "+_news[rand].message);
@@ -60,8 +59,6 @@ package com.mangum.display.delicious.view{
 					yVal = 0;
 					break;
 			}
-			trace("yVal "+yVal);
-			
 			messageTitle.y = yVal;	
 			message.y = messageTitle.y - 1;
 		}

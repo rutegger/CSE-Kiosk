@@ -28,6 +28,7 @@ package com.mangum.display.dashboard.view{
 			setTextfields();
 			timer.addEventListener(TimerEvent.TIMER, onTimer);
 			timer.start();
+			
 //			addChild(glare);
 		}
 		

@@ -8,6 +8,8 @@ package com.mangum.display{
 	
 	public class Background extends Sprite{
 		
+		private var _screens:Array;
+		
 		[Embed (source="/../assets/bg0.jpg")]
 		private var Bg0:Class; 
 		private var bg0:Bitmap;
@@ -27,7 +29,9 @@ package com.mangum.display{
 		private const TRANSITION_SPEED:Number = 3;
 		
 		
-		public function Background(){
+		public function Background(screens:Array){
+			
+			_screens = screens;
 			
 			bg0 = new Bg0();
 			addChild(bg0);
@@ -48,31 +52,37 @@ package com.mangum.display{
 		
 		
 		public function setImage(val:String):void{
-			trace("setImage: "+val);
+//			trace("setImage: "+val);
 			switch(val){
-				case "ssp":	
+				case _screens[0]:	
 					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
 					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg3, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide	
 					break;
-				case "satellite":	
+				case _screens[1]:	
 					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
 					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg3, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide	
 					break;
-				case "cancer":		
+				case _screens[2]:		
 					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg3, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
 					break;
-				case "yt":
+				case _screens[3]:
 					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg3, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
+					break;		
+				case _screens[4]:
+//					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
+//					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
+//					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
+//					TweenLite.to(bg3, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
 					break;		
 			}
 			

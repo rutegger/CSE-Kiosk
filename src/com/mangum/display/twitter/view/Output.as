@@ -46,7 +46,7 @@ package com.mangum.display.twitter.view{
 				var msg:String = obj[i].message;
 				var pattern:RegExp;// = new RegExp("http:\/\/.*"); // removes link
 //				var str:String = "<b>@" + name + "</u>: " + " • " + formatDate(created) + " • "+ msg.replace(pattern,""); 
-				var str:String = "                               : " + msg.replace(pattern,"") + " | <i>" + formatDate(created) + "</i>"; 
+				var str:String = "                                " + msg.replace(pattern,"") + " | <i>" + formatDate(created) + "</i>"; 
 				tweetArray[i].setLabel(str);
 			}
 			//	tweet.setAttribute("font","UniversCE65Bold");			
@@ -67,8 +67,7 @@ package com.mangum.display.twitter.view{
 		
 		/* PRIVATE METHODS */
 		
-		private function formatDate(str:String):String{
-			//			Fri Apr 08 22:03:05 +0000 2011	
+		private function formatDate(str:String):String{	
 			var weekday:String = str.slice(0,3);
 			var month:String = str.slice(4,8);
 			var rawDay:String = str.slice(8,10);			
@@ -124,7 +123,7 @@ package com.mangum.display.twitter.view{
 		private function createTweetContainers():void{
 			var counter:uint = 30;
 			for(var i:uint = 0; i < numTweets; i++){
-				var tweetTitle:Messenger = new Messenger("@Cockrell School ", 420, 0xC7B299, 15,true);
+				var tweetTitle:Messenger = new Messenger("@Cockrell School:", 420, 0xC7B299, 15,true);
 				var tweet:Messenger = new Messenger("--"+i, 420, 0xC7B299, 15);
 				tweet.setAttribute("leading", 2);
 				tweetTitleArray[i] = tweetTitle;
@@ -134,7 +133,7 @@ package com.mangum.display.twitter.view{
 				tweetTitle.x = 22;
 				tweetTitle.y = counter;
 				tweet.x = 22;
-				tweet.y = counter;
+				tweet.y = tweetTitle.y - 1;
 				counter += 100;
 			}
 		}

@@ -52,18 +52,12 @@ package com.mangum.text {
 		/* PUBLIC METHODS */
 		
 		public function setLabel(str:String):void {
-//			trace("setLabel("+str+")");
-			
-			str.toLocaleUpperCase();
-			
 			if(_uppercase){
-				trace("_uppercase!");
 				var newStr:String = str.toUpperCase();
 				_label.htmlText = newStr;
 			} else {
 				_label.htmlText = str;
 			}
-			
 		}	
 		
 		public function setAttribute(attribute:String, value:Number):void {
@@ -124,7 +118,6 @@ package com.mangum.text {
 		
 		public function set uppercase(val:Boolean):void {
 			_uppercase = val;
-			trace("uppercase");
 		}
 	
 	}

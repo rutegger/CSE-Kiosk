@@ -4,12 +4,12 @@ package{
 	import com.greensock.easing.*;
 	import com.mangum.display.*;
 	import com.mangum.display.FlashEffTester;
-	import com.mangum.display.Nav;
 	import com.mangum.display.Positioner;
 	import com.mangum.display.SSP.SSPManager;
 	import com.mangum.display.YT.YTManager;
 	import com.mangum.display.dashboard.DashboardManager;
 	import com.mangum.display.delicious.DeliciousManager;
+	import com.mangum.display.nav.Navigator;
 	import com.mangum.display.twitter.TwitterManager;
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
@@ -35,6 +35,12 @@ package{
 	
 	public class Main extends Sprite{
 		
+		private var screens:Array = new Array("home","button1","button2","button3");
+		//			var arr:Array = [{id:"ssp", mc:homeBtn},
+		//							 {id:"satellite", mc:button01},
+		//							 {id:"water", mc:button02},
+		//							 {id:"yt", mc:button03}];	
+		
 		private var bg:Background;		
 		private var sspm:SSPManager; 
 		private var ytManager:YTManager;
@@ -42,12 +48,7 @@ package{
 		private var content:MovieClip = new MovieClip();
 		private var currentSelection:String;
 		
-		private var homeBtn:HomeBtn;
-		private var button01:MovieClip; // satellite
-		private var button02:MovieClip; // water research
-		private var button03:MovieClip; // YouTube
-		
-		private var n:Nav;
+		private var n:Navigator;
 		private var slideContainer:MovieClip = new MovieClip();
 		private var satelliteSlide:MovieClip;
 		private var cancerSlide:MovieClip;
@@ -104,7 +105,7 @@ package{
 			
 			
 			// ********* Kiosk Background ********* 			
-			bg = new Background();
+			bg = new Background(screens);
 			addChild(bg);
 			
 			// ********* Dashboard Widget ********* 
@@ -135,21 +136,14 @@ package{
 			
 			
 			// ********* Navigation ********* 
-			homeBtn = new HomeBtn();
-			button01 = new Button01();
-			button02 = new Button02();
-			button03 = new Button03();
-			var arr:Array = [{id:"ssp", mc:homeBtn},
-							 {id:"satellite", mc:button01},
-							 {id:"cancer", mc:button02},
-							 {id:"yt", mc:button03}];			
-			n = new Nav(arr);
-			content.addChild(n);
-			n.x = -80;
-			n.y = 932;			
+			
+			n = new Navigator(screens);
+			addChild(n);
+			n.x = 0;
+			n.y = 900;
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
 			
-			
+	
 			// ********* Content Slides ********* 
 			content.addChild(slideContainer);
 			slideContainer.y = 0;
@@ -196,56 +190,48 @@ package{
 		
 		private function onNavSelected(e:ActionEvent):void{
 			moveSlide(e.msg);
-			TweenLite.to(button01, .5, {y:0, ease:Cubic.easeOut});	
-			TweenLite.to(button02, .5, {y:0, ease:Cubic.easeOut});
-			TweenLite.to(button03, .5, {y:0, ease:Cubic.easeOut});
-//			TweenLite.to(this[e.msg+"Btn"], .5, {y:-10, ease:Cubic.easeOut});	
 		}
 		
 		private function onMouse(e:MouseEvent):void{
 			Mouse.hide();
 		}
 		
-		private function handleInteractivity(e:Event):void{	// user interaction timeout
-			moveSlide("ssp");
-			n.current = 0;
+		private function handleInteractivity(e:Event):void{	// user interaction timeout, send home
+			moveSlide("home");
 		}
 		
 
 		/* PRIVATE METHODS */
 		
 		private function moveSlide(val:String):void{
+			trace("moveSlide: "+val);
 			currentSelection = val;
-//			slideContainer.removeEventListener(Event.ENTER_FRAME, throwobject);
 			switch (val){
-				case "ssp":
+				case "home":
 					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.playMe();
 					break;
-				case "satellite":
+				case "button1":
 					TweenLite.to(slideContainer, 1.5, {x:-stage.stageWidth, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.pauseMe();
 					break;
-				case "cancer":
+				case "button2":
 					TweenLite.to(slideContainer, 1.5, {x:-stage.stageWidth *2, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
 					ytManager.pauseMovie();
 					sspm.pauseMe();
 					break;
-				case "yt":
+				case "button3":
 					TweenLite.to(slideContainer, 1.5, {x:-stage.stageWidth*3, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
-//					ytManager.playMovie();
 					sspm.pauseMe();
 					break;				
-			}
-			
+			}	
 			bg.setImage(val);
 		}
 		
 		private function onSlideComplete(sel:String):void{
-//			trace("sel: "+sel, currentSelection);
-//			bg.setImage(sel);
+
 		}
 		
 		private function hideCursor():void{
