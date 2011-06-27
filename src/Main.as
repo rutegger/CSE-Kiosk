@@ -62,7 +62,6 @@ package{
 		
 		public function Main(){	
 			
-					
 			init();
 			
 			// **** for testing:
