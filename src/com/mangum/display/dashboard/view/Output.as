@@ -117,14 +117,15 @@ package com.mangum.display.dashboard.view{
 		
 		private function setIcon(val:uint):void{
 			if(_obj.temp > 89 && val == 34){ // set 'hot' sun icon
+				dashboard.icons.gotoAndStop(49);
+				dashboard.slider.value = 49;
+			} else if (_obj.temp == 72 && val == 34){
 				dashboard.icons.gotoAndStop(50);
 				dashboard.slider.value = 50;
 			} else {
 				dashboard.icons.gotoAndStop(val);
 				dashboard.slider.value = val;
 			}
-			
-			
 		}
 			
 		private function setDirection(str:String):void{

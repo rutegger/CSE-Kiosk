@@ -181,7 +181,7 @@ package{
 			
 			
 			stage.addEventListener(MouseEvent.CLICK, onClick);
-
+			addEventListener("clicked", onClicked);
 						
 		}		
 		
@@ -189,10 +189,13 @@ package{
 		/* EVENT HANDLERS */
 		
 		protected function onClick(event:MouseEvent):void{
-//			trace("click");
+			trace("Main click");
 		}		
 		
-		
+		protected function onClicked(event:MouseEvent):void{
+			trace("Bubble click");
+		}		
+
 		private function onNavSelected(e:ActionEvent):void{
 			moveSlide(e.msg);
 		}
