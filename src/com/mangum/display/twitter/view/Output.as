@@ -46,7 +46,7 @@ package com.mangum.display.twitter.view{
 				var msg:String = obj[i].message;
 				var pattern:RegExp;// = new RegExp("http:\/\/.*"); // removes link
 //				var str:String = "<b>@" + name + "</u>: " + " • " + formatDate(created) + " • "+ msg.replace(pattern,""); 
-				var str:String = "                                " + msg.replace(pattern,"") + " | <i>" + formatDate(created) + "</i>"; 
+				var str:String = "                                " + msg.replace(pattern,"") + " |  " + formatDate(created); 
 				tweetArray[i].setLabel(str);
 			}
 			//	tweet.setAttribute("font","UniversCE65Bold");			

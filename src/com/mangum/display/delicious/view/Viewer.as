@@ -40,6 +40,7 @@ package com.mangum.display.delicious.view{
 		}
 		
 		public function createStory():void{
+			if(_news == null) return;
 			var rand:int = randRange(0,_numStories-1);			
 			message.uppercase = true; 
 			message.setLabel("                       "+_news[rand].message);

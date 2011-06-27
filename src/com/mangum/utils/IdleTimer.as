@@ -35,7 +35,6 @@
 		/* PRIVATE METHODS */
 		
 		private function onMouseDown(e:MouseEvent):void {
-//			dispatchEvent(new Event("cancelIdle"));
 			t.reset();
 			t.start();
 			tCount = 0;	
@@ -43,7 +42,6 @@
 		
 		private function onTimer(e:TimerEvent):void {
 			tCount++;
-//			trace(tCount);
 			dispatchEvent(new ActionEvent(String(tCount), "tic", true));
 			
 			if(tCount >= _idleTime){
@@ -54,7 +52,6 @@
 			dispatchEvent(new Event("handleInteractivity"));
 			t.reset();
 			tCount = 0;	
-//			_idleTime = _pauseTime;
 			t.stop();
 		}
 		

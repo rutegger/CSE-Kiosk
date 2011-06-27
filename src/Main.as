@@ -35,12 +35,10 @@ package{
 	
 	public class Main extends Sprite{
 		
-		private var screens:Array = new Array("home","button1","button2","button3");
-		//			var arr:Array = [{id:"ssp", mc:homeBtn},
-		//							 {id:"satellite", mc:button01},
-		//							 {id:"water", mc:button02},
-		//							 {id:"yt", mc:button03}];	
-		
+		private var screens:Array = new Array({id:"home", bg:"/../assets/bg0.jpg"},
+											  {id:"button1", bg:"/../assets/bg1.jpg"},
+											  {id:"button2", bg:"/../assets/bg2.jpg"},
+											  {id:"button3", bg:"/../assets/bg3.jpg"});
 		private var bg:Background;		
 		private var sspm:SSPManager; 
 		private var ytManager:YTManager;
@@ -60,7 +58,6 @@ package{
 		private var offsetX:Number	= 0;
 		private var offsetY:Number	= 0;	
 		
-		
 		private var clock:Messenger; // for testing
 		
 		public function Main(){	
@@ -70,13 +67,14 @@ package{
 			
 			// **** for testing:
 			var ver:Messenger = new Messenger("V .5",60,0x000000,12);
-			//addChild(ver);
+			addChild(ver);
 			
-			//clock = new Messenger(String(idleTimer.idleTime),100);
-			//clock.setAttribute("size",15);
-//			clock.setAttribute("color",0xffffff);
-			//Positioner.topCenter(stage,clock);
-			//idleTimer.addEventListener("tic",onTic,false,0,true);
+			clock = new Messenger(String(idleTimer.idleTime),100);
+			clock.setAttribute("size",15);
+			clock.setAttribute("color",0xffffff);
+			addChild(clock);
+			Positioner.topCenter(stage,clock);
+			idleTimer.addEventListener("tic",onTic,false,0,true);
 			
 			var loadMsg:LoaderMessage = new LoaderMessage(stage);
 			addChild(loadMsg);
@@ -100,9 +98,6 @@ package{
 //			stage.align = StageAlign.TOP_LEFT;
 
 //			hideCursor();			
-			
-
-			
 			
 			// ********* Kiosk Background ********* 			
 			bg = new Background(screens);
@@ -142,6 +137,7 @@ package{
 			n.x = 0;
 			n.y = 900;
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
+			n.setDefault();
 			
 	
 			// ********* Content Slides ********* 
@@ -182,11 +178,20 @@ package{
 			// ********* Timeout *********
 			idleTimer = new IdleTimer(stage, 20);
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
+			
+			
+			stage.addEventListener(MouseEvent.CLICK, onClick);
+
 						
 		}		
 		
 		
 		/* EVENT HANDLERS */
+		
+		protected function onClick(event:MouseEvent):void{
+//			trace("click");
+		}		
+		
 		
 		private function onNavSelected(e:ActionEvent):void{
 			moveSlide(e.msg);
@@ -231,7 +236,7 @@ package{
 		}
 		
 		private function onSlideComplete(sel:String):void{
-
+			// stub
 		}
 		
 		private function hideCursor():void{

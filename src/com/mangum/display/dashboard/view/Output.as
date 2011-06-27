@@ -5,6 +5,8 @@ package com.mangum.display.dashboard.view{
 	import com.greensock.easing.*;
 	import com.mangum.display.dashboard.view.text.Messenger;
 	
+	import fl.events.SliderEvent;
+	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -14,6 +16,7 @@ package com.mangum.display.dashboard.view{
 
 	public class Output extends Sprite{
 		
+		private var _obj:Object;
 		private var msg:Messenger;
 		private var dashboard:Dashboard;
 		private var timeMsg:Messenger;
@@ -33,7 +36,16 @@ package com.mangum.display.dashboard.view{
 		}
 		
 		public function init(obj:Object):void{
+			_obj = obj;
 			setValues(dashboard,obj);	
+			
+			dashboard.slider.addEventListener(SliderEvent.CHANGE,onSlider,false,0,true);
+		}
+		
+		protected function onSlider(event:SliderEvent):void{
+			trace(event.target.value);
+			setIcon(dashboard.slider.value);
+			
 		}
 		
 		private function onTimer(e:TimerEvent):void {
@@ -82,7 +94,7 @@ package com.mangum.display.dashboard.view{
 //			dashboard.sunrise.sunriseTxt.text = "sunrise: " + obj.sunrise;
 //			dashboard.sunset.sunsetTxt.text = "sunset: " + obj.sunset;
 			
-//			setIcon(obj.icon);
+			setIcon(obj.icon);
 //			dashboard.conditions.conditionsTxt.text = obj.currently;
 			
 //			setDirection(obj.windDirection);
@@ -104,7 +116,15 @@ package com.mangum.display.dashboard.view{
 		}
 		
 		private function setIcon(val:uint):void{
-			dashboard.icons.gotoAndStop(val);
+			if(_obj.temp > 89 && val == 34){ // set 'hot' sun icon
+				dashboard.icons.gotoAndStop(50);
+				dashboard.slider.value = 50;
+			} else {
+				dashboard.icons.gotoAndStop(val);
+				dashboard.slider.value = val;
+			}
+			
+			
 		}
 			
 		private function setDirection(str:String):void{

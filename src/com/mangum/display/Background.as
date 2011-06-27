@@ -1,3 +1,6 @@
+/**
+ * Try to make this dynamic using Loader rather than Embed 
+ */
 package com.mangum.display{
 	
 	import com.greensock.*;
@@ -5,10 +8,15 @@ package com.mangum.display{
 	
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.display.Loader;
+	import flash.events.*;
+	import flash.net.URLRequest;
+
 	
 	public class Background extends Sprite{
 		
-		private var _screens:Array;
+		private var _screens:Array; // make dynamic
+	
 		
 		[Embed (source="/../assets/bg0.jpg")]
 		private var Bg0:Class; 
@@ -52,33 +60,33 @@ package com.mangum.display{
 		
 		
 		public function setImage(val:String):void{
-//			trace("setImage: "+val);
+			trace("setImage: "+val,_screens[0]);
 			switch(val){
-				case _screens[0]:	
+				case _screens[0].id:	
 					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
 					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg3, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide	
 					break;
-				case _screens[1]:	
+				case _screens[1].id:	
 					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
 					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg3, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide	
 					break;
-				case _screens[2]:		
+				case _screens[2].id:		
 					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg3, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
 					break;
-				case _screens[3]:
+				case _screens[3].id:
 					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 					TweenLite.to(bg3, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
 					break;		
-				case _screens[4]:
+				case _screens[4].id:
 //					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 //					TweenLite.to(bg1, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
 //					TweenLite.to(bg2, TRANSITION_SPEED, {alpha:0, ease:Circ.easeOut}); // hide
