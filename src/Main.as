@@ -7,7 +7,7 @@ package{
 	import com.mangum.display.Positioner;
 	import com.mangum.display.SSP.SSPManager;
 	import com.mangum.display.YT.YTManager;
-	import com.mangum.display.dashboard.DashboardManager;
+	import com.mangum.display.weather.DashboardManager;
 	import com.mangum.display.delicious.DeliciousManager;
 	import com.mangum.display.nav.Navigator;
 	import com.mangum.display.twitter.TwitterManager;
