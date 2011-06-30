@@ -24,7 +24,7 @@ package com.mangum.display.YT.model{
 		private var loader:Loader = new Loader();	
 		private var _id:String;
 		private var _title:String;
-		private var _description:String = "--";
+		private var _description:String;
 		private var _w:Number;
 		private var _h:Number;
 		private var _thumb:Boolean;
@@ -184,14 +184,6 @@ package com.mangum.display.YT.model{
 			player.loadVideoById(id,0);
 		}
 		
-		public function highlight(bool:Boolean=true):void{
-			if(bool){
-//				TweenMax.to(this, 2, {glowFilter:{color:0xff6600, alpha:1, blurX:30, blurY:30, strength:1}, ease:Quart.easeOut});
-			}else{
-//				TweenMax.to(this, .1, {glowFilter:{color:0xff6600, alpha:1, blurX:30, blurY:30, strength:0}});
-			}			
-		}
-		
 		public function pause():void{
 //			trace(">>>>>>>>> "+player.getPlayerState());
 			if (player != null){
@@ -238,11 +230,7 @@ package com.mangum.display.YT.model{
 		public function get id():String {
 			return _id;
 		}
-				
-		public function get description():String {
-			return _description;
-		}		
-		
+			
 	}
 	
 	
