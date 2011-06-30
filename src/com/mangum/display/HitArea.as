@@ -1,5 +1,7 @@
 package com.mangum.display{
 		
+		import com.mangum.events.ActionEvent;
+		
 		import flash.display.MovieClip;
 		import flash.display.Sprite;
 		import flash.events.Event;
@@ -23,6 +25,17 @@ package com.mangum.display{
 				createHitArea(_xval,_yval,_w,_h);		
 			}
 			
+			
+			/* EVENT HANDLERS */
+			
+			protected function onClick(e:MouseEvent):void {
+				dispatchEvent(new Event("clicked"));
+				dispatchEvent(new ActionEvent(e.target.name, "UIClick", true));
+			}
+			
+			
+			/* PRIVATE METHODS */
+			
 			private function createHitArea(_xval:int,_yval:int,_w:int,_h:int):Sprite {						
 				addChild(hitAreaContainer);	
 				var shape:Sprite = new Sprite();
@@ -34,7 +47,7 @@ package com.mangum.display{
 				shape.graphics.drawRect(0,0,_w,_h);
 				shape.graphics.endFill();
 				
-				shape.alpha = 0 // hide button				
+				shape.alpha = 1; // hide button				
 				
 				hitAreaContainer.addChild(shape);
 				hitAreaContainer.buttonMode = true;
@@ -45,10 +58,7 @@ package com.mangum.display{
 				return shape;
 			}	
 			
-			private function onClick(e:MouseEvent):void {
-				dispatchEvent(new Event("clicked"));		
-			}
-				
+			/* PUBLIC METHODS */
 			public function showButton(val:Boolean):void {
 				hitAreaContainer.buttonMode = val;				
 			}

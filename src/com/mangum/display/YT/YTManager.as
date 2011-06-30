@@ -9,15 +9,12 @@ package com.mangum.display.YT{
 	import com.greensock.easing.*;
 	import com.mangum.display.YT.controller.YTMenu;
 	import com.mangum.display.YT.model.YTLoader;
-	import com.mangum.events.ActionEvent;
+	import com.mangum.events.VidEvent;
 	import com.mangum.utils.EmailErrorAlerter;
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
 
 	
 	public class YTManager extends Sprite{
@@ -29,14 +26,13 @@ package com.mangum.display.YT{
 		private var count:int = 0;
 		protected var _wsFeed:YouTubeFeedClient = YouTubeFeedClient.getInstance();	
 		private var _ytEnabled:Boolean = true;
+		private var _content:String;
 		
 		public function YTManager(width:Number,height:Number){	
 			_width = width;
 			_height = height;
 			
 			setUpFeed("cockrellSchool");
-	
-			// stage.addEventListener(MouseEvent.CLICK, onClick, false, 0, true); 	
 		}
 		
 		
@@ -53,16 +49,16 @@ package com.mangum.display.YT{
 		/* EVENT HANDLERS */
 		
 		private function onYTConnectionError(e:Event):void{
-			trace("YouTube is down : (");
+			trace("ERROR: YouTube is down : (");
 			_ytEnabled = false; // disable to avoid other errors
 			// send alert email to kiosk admin
 			var emailError:EmailErrorAlerter = new EmailErrorAlerter();
 			emailError.notify("YouTube Configuration Error (most likely Favorites has been set to private in YT settings)");
-			
 		}
 		
-		private function onSelected(e:ActionEvent):void{
-			mov.playVideo(e.msg);		
+		private function onSelected(e:VidEvent):void{
+			mov.playVideo(e.args.id);
+			trace("display description: ",e.args.discription);
 		}
 
 		private function doFavoritesReady(evt:VideoFeedEvent):void{
@@ -72,19 +68,10 @@ package com.mangum.display.YT{
 			var videoFeed:VideoFeed = evt.feed;				
 			
 			while (video = videoFeed.next()){
-				vids.push({id:video.actualId,title:video.title}); // put id & title into 2D array
+				vids.push({id:video.actualId,title:video.title,content:video.content}); // put id & title into 2D array
 				//	_wsFeed.getVideoComments(video.actualId);
 			}	
 			build(vids);
-		}
-		
-		private function onClick(e:MouseEvent):void{		
-			if(e.stageX > stage.stageWidth/2){
-				var val:Number = (menu.width *-1) + stage.stageWidth - 50;
-				TweenLite.to(menu, 1, {x:val, ease:Cubic.easeOut});
-			}else{
-				TweenLite.to(menu, 1, {x:50, ease:Cubic.easeOut});
-			}
 		}
 		
 		
@@ -110,26 +97,42 @@ package com.mangum.display.YT{
 			box.y = -12;
 			box.width = _width + 28;
 			box.height = _height - 2;
+			TweenMax.to(box, 1, {tint:0x736357}); // set to brown
+			
+			var descriptionBox:Sprite = new Box();
+			descriptionBox.x = 150;
+			descriptionBox.y = 390;
+			descriptionBox.width = 515;
+			descriptionBox.height = 200;
+			
+			var descriptionBoxShadow:Sprite = new BoxShadow();
+			descriptionBoxShadow.x = descriptionBox.x + 5;
+			descriptionBoxShadow.y = descriptionBox.y + 5;
+			descriptionBoxShadow.width = descriptionBox.width;
+			descriptionBoxShadow.height = descriptionBox.height;
+			
+			addChild(descriptionBoxShadow);
+			addChild(descriptionBox);	
+			
 			if(vids.length > 0){
 				addChild(mkMovie(vids));
 				addChild(mkNav(vids));
 			} else {
-				// handle error
 				trace("Sorry, Cockrell School Videos not available");
-			}
-			
+			}		
 		}
 		
 		private function mkMovie(arr:Array):MovieClip{		
-			mov = new YTLoader(arr[0].id,_width,_height,false);  
+			mov = new YTLoader(arr[0].id,arr[0].content, _width,_height,false);  
 			mov.mask = createMask();
+//			trace("***** "+arr[0].content);
 			return mov;
 		}
 		
 		private function mkNav(arr:Array):MovieClip{
-			menu = new YTMenu(arr,150,4); // mov array, thumb width, # of columns			
-			menu.x = 755;
-			menu.y = 50;					
+			menu = new YTMenu(arr,196,4); // mov array, thumb width, # of columns			
+			menu.x = 685;
+			menu.y = 45;					
 			menu.addEventListener("selected", onSelected, false, 0, true);
 			menu.buttonMode = false;
 			return menu;
@@ -139,14 +142,12 @@ package com.mangum.display.YT{
 			var shape:Sprite = new Sprite();					
 			shape.graphics.lineStyle(1, 0);
 			shape.graphics.beginFill(0xFF00FF);
-			shape.graphics.drawRect(0,-70,1680,_height+40); // since the mask wont follow the slide I just made the width 100%; 
+			shape.graphics.drawRect(0,-70,1900,370); // since the mask wont follow the slide I just made the width 100%; 
 			                                                // also have to add gutter _hieght for some reason
 			shape.graphics.endFill();
 			shape.y = 300;
 			return shape;
 		}
-		
-		
 	}
 	
 }

@@ -4,9 +4,6 @@ package com.mangum.events{
 	
 	public class ActionEvent extends Event{
 		
-//		public static const ANIMATE_IN        : String = "animateIn";
-//		public static const ANIMATE_OUT       : String = "animateOut";
-		
 //		public var args:Object;
 		public var msg:String;
 		

@@ -133,7 +133,7 @@ package com.mangum.display.twitter.view{
 				tweetTitle.x = 22;
 				tweetTitle.y = counter;
 				tweet.x = 22;
-				tweet.y = tweetTitle.y - 1;
+				tweet.y = tweetTitle.y;// - 1;
 				counter += 100;
 			}
 		}

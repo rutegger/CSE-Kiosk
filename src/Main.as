@@ -2,34 +2,29 @@ package{
 	
 	import com.greensock.*;
 	import com.greensock.easing.*;
+	import com.greensock.plugins.*; 
+	TweenPlugin.activate([MotionBlurPlugin]);
+	
 	import com.mangum.display.*;
-	import com.mangum.display.FlashEffTester;
-	import com.mangum.display.Positioner;
 	import com.mangum.display.SSP.SSPManager;
 	import com.mangum.display.YT.YTManager;
-	import com.mangum.display.weather.DashboardManager;
 	import com.mangum.display.delicious.DeliciousManager;
 	import com.mangum.display.nav.Navigator;
 	import com.mangum.display.twitter.TwitterManager;
+	import com.mangum.display.weather.DashboardManager;
 	import com.mangum.events.ActionEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.utils.IdleTimer;
 	import com.mangum.utils.MouseSpeed;
 	
-	import flash.display.Bitmap;
-	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	import flash.display.Stage;
-	import flash.display.StageAlign;
-	import flash.display.StageDisplayState;
 	import flash.display.StageScaleMode;
+	import flash.display.StageAlign;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.geom.Rectangle;
 	import flash.ui.Mouse;
-	import flash.ui.MouseCursor;
-	
+
 	
 	[SWF(width='1866', height='1050', backgroundColor='#cccccc', frameRate='24')]
 	
@@ -57,6 +52,9 @@ package{
 		private var friction:Number	= 0.96;
 		private var offsetX:Number	= 0;
 		private var offsetY:Number	= 0;	
+		private var fumbling:int    = 0;
+		
+		private var help:Help = new Help();
 		
 		private var clock:Messenger; // for testing
 		
@@ -66,12 +64,12 @@ package{
 			
 			// **** for testing:
 			var ver:Messenger = new Messenger("V .5",60,0x000000,12);
-			addChild(ver);
+//			addChild(ver);
 			
 			clock = new Messenger(String(idleTimer.idleTime),100);
 			clock.setAttribute("size",15);
 			clock.setAttribute("color",0xffffff);
-			addChild(clock);
+//			addChild(clock);
 			Positioner.topCenter(stage,clock);
 			idleTimer.addEventListener("tic",onTic,false,0,true);
 			
@@ -89,9 +87,8 @@ package{
 		}
 		/* ***************** */
 		
-		
 		private function init():void{
-						
+					
 //			stage.displayState = StageDisplayState.FULL_SCREEN;	
 //			stage.scaleMode = StageScaleMode.NO_SCALE;
 //			stage.align = StageAlign.TOP_LEFT;
@@ -102,7 +99,7 @@ package{
 			bg = new Background(screens);
 			addChild(bg);
 			
-			// ********* Dashboard Widget ********* 
+			// ********* Weather Widget ********* 
 			var dashboard:DashboardManager = new DashboardManager();
 			addChild(dashboard);
 			dashboard.scaleX = 1.5;
@@ -134,7 +131,7 @@ package{
 			n = new Navigator(screens);
 			addChild(n);
 			n.x = 0;
-			n.y = 900;
+			n.y = 902;
 			n.addEventListener("navSelected",onNavSelected,false,0,true);
 			n.setDefault();
 			
@@ -171,16 +168,19 @@ package{
 			// YouTube 		
 			ytManager = new YTManager(640,390);
 			slideContainer.addChild(ytManager);
-			ytManager.x = (stage.stageWidth*3);
-			ytManager.y = 100;					
+			ytManager.x = (stage.stageWidth*3+300);
+			ytManager.y = 240;					
 			
 			// ********* Timeout *********
 			idleTimer = new IdleTimer(stage, 20);
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
-			
-			
+						
 			stage.addEventListener(MouseEvent.CLICK, onClick);
-			addEventListener("clicked", onClicked);
+			addEventListener("UIClick", onUIClick,false,0,true);
+			
+			addChild(help);
+			help.x = 50;
+			help.y = 800;
 						
 		}		
 		
@@ -188,49 +188,62 @@ package{
 		/* EVENT HANDLERS */
 		
 		protected function onClick(event:MouseEvent):void{
-			trace("Main click");
+			helpBubble(true);
 		}		
 		
-		protected function onClicked(event:MouseEvent):void{
-			trace("Bubble click");
+		protected function onUIClick(event:Event):void{
+			// cancel help bubble
+			helpBubble(false);
 		}		
 
-		private function onNavSelected(e:ActionEvent):void{
+		protected function onNavSelected(e:ActionEvent):void{
 			moveSlide(e.msg);
 		}
 		
-		private function onMouse(e:MouseEvent):void{
+		protected function onMouse(e:MouseEvent):void{
 			Mouse.hide();
 		}
 		
-		private function handleInteractivity(e:Event):void{	// user interaction timeout, send home
+		protected function handleInteractivity(e:Event):void{	// user interaction timeout, send home
 			moveSlide("home");
+			n.setDefault();
 		}
 		
 
 		/* PRIVATE METHODS */
 		
+		private function helpBubble(bool:Boolean):void{
+			if(bool){
+				fumbling++;
+			} else {
+			    fumbling = 0;
+				TweenLite.to(help, 2, {alpha:0, ease:Sine.easeOut});
+			}	
+			if(fumbling > 3){
+				TweenLite.to(help, 2, {alpha:1, ease:Sine.easeOut});
+			}
+		}
+		
 		private function moveSlide(val:String):void{
-			trace("moveSlide: "+val);
 			currentSelection = val;
 			switch (val){
 				case "home":
-					TweenLite.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
+					TweenMax.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10*/});
 					ytManager.pauseMovie();
 					sspm.playMe();
 					break;
 				case "button1":
-					TweenLite.to(slideContainer, 1.5, {x:-stage.stageWidth, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
-					ytManager.pauseMovie();
+					TweenMax.to(slideContainer, 1.5, {x:-stage.stageWidth, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10*/});	
+					ytManager.pauseMovie();	
 					sspm.pauseMe();
 					break;
 				case "button2":
-					TweenLite.to(slideContainer, 1.5, {x:-stage.stageWidth *2, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
+					TweenMax.to(slideContainer, 1.5, {x:-stage.stageWidth *2, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10*/});	
 					ytManager.pauseMovie();
 					sspm.pauseMe();
 					break;
 				case "button3":
-					TweenLite.to(slideContainer, 1.5, {x:-stage.stageWidth*3, ease:Cubic.easeOut, onComplete: onSlideComplete,onCompleteParams:[val]});	
+					TweenMax.to(slideContainer, 1.5, {x:-stage.stageWidth*3, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10*/});	
 					sspm.pauseMe();
 					break;				
 			}	

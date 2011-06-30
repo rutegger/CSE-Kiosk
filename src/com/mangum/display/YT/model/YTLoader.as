@@ -6,7 +6,7 @@ package com.mangum.display.YT.model{
 	import com.greensock.*;
 	import com.greensock.easing.*;
 	import com.mangum.display.HitArea;
-	import com.mangum.events.ActionEvent;
+	import com.mangum.events.VidEvent;
 	import com.mangum.utils.EmailErrorAlerter;
 	
 	import flash.display.Loader;
@@ -22,6 +22,7 @@ package com.mangum.display.YT.model{
 		private var player:Object; // This will hold the API player instance once it is initialized.	
 		private var loader:Loader = new Loader();	
 		private var _id:String;
+		private var _description:String;
 		private var _w:Number;
 		private var _h:Number;
 		private var _thumb:Boolean;
@@ -30,9 +31,10 @@ package com.mangum.display.YT.model{
 		private var linkBlocker:YTLinkBlocker = new YTLinkBlocker();
 		private var attempts:int = 0;
 		
-		public function YTLoader(id:String, w:Number, h:Number, thumb:Boolean){
+		public function YTLoader(id:String, description:String, w:Number, h:Number, thumb:Boolean){
 			//		trace("YTLoader constructor id: "+id);
 			_id = id;
+			_description = description;
 			_w = w;
 			_h = h;
 			_thumb = thumb;
@@ -49,7 +51,6 @@ package com.mangum.display.YT.model{
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError,false,0,true);
 			
 		}
-
 		
 		private function onIOError(e:IOErrorEvent):void{
 			attempts ++;
@@ -103,9 +104,6 @@ package com.mangum.display.YT.model{
 				mkButton();	
 			} else {
 				player.cueVideoById(_id);
-//				addChild(blocker);
-//				blocker.x = _w - blocker.width;
-//				blocker.y = _h - blocker.height-1;
 				addChild(linkBlocker);
 				linkBlocker.x = _w - linkBlocker.width - 45;
 				linkBlocker.y = _h - linkBlocker.height - 25;
@@ -116,7 +114,7 @@ package com.mangum.display.YT.model{
 		}				
 		
 		private function onPlayerError(event:Event):void {
-			//			trace("player error:", Object(event).data);
+			trace("player error:", Object(event).data);
 		}
 		
 		private function onPlayerStateChange(event:Event):void {
@@ -133,10 +131,8 @@ package com.mangum.display.YT.model{
 		}				
 		
 		private function onClicked(e:Event):void{
-			//			var s:Sprite = Sprite(e.currentTarget)
-			//			s.alpha = .5;
-			//			trace("player.getDuration(): "+player.getVideoUrls());
-			dispatchEvent(new ActionEvent(_id, "selected", true));			
+			var vidObj:Object = {id:_id, title:"my title", description:"desc"};
+			dispatchEvent(new VidEvent(vidObj, "selected", true));			
 		}
 		
 		private function onEnter(e:Event):void{
@@ -171,9 +167,9 @@ package com.mangum.display.YT.model{
 		
 		public function highlight(bool:Boolean=true):void{
 			if(bool){
-				TweenMax.to(this, 2, {glowFilter:{color:0xff6600, alpha:1, blurX:30, blurY:30, strength:1}, ease:Quart.easeOut});
+//				TweenMax.to(this, 2, {glowFilter:{color:0xff6600, alpha:1, blurX:30, blurY:30, strength:1}, ease:Quart.easeOut});
 			}else{
-				TweenMax.to(this, .1, {glowFilter:{color:0xff6600, alpha:1, blurX:30, blurY:30, strength:0}});
+//				TweenMax.to(this, .1, {glowFilter:{color:0xff6600, alpha:1, blurX:30, blurY:30, strength:0}});
 			}			
 		}
 		

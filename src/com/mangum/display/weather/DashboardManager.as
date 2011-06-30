@@ -37,6 +37,10 @@ package com.mangum.display.weather{
 			addChild(output);
 
 		}
+		
+		public function setIcon(val:uint):void{
+			output.setIcon(val);
+		}
 	}
 }
 

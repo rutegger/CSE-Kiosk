@@ -115,7 +115,7 @@ package com.mangum.display.weather.view{
 //			}		
 		}
 		
-		private function setIcon(val:uint):void{
+		public function setIcon(val:uint):void{
 			if(_obj.temp > 89 && val == 34){ // set 'hot' sun icon
 				dashboard.icons.gotoAndStop(49);
 				dashboard.slider.value = 49;

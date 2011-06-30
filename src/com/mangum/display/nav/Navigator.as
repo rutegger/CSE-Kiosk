@@ -2,6 +2,7 @@ package com.mangum.display.nav{
 	
 	import com.greensock.*;
 	import com.greensock.plugins.*;
+	import com.greensock.easing.*;
 	import com.mangum.display.HitArea;
 	import com.mangum.events.ActionEvent;
 	
@@ -33,9 +34,8 @@ package com.mangum.display.nav{
 				hitArea.name = _screens[i].id;
 				hitArea.x = navButtons[_screens[i].id].x;
 				hitArea.addEventListener("clicked", onClick);
-				navButtons[_screens[i].id].topBar.visible = false;
-			}		
-
+				TweenMax.to(navButtons[_screens[i].id].arrowBg, 2, {glowFilter:{color:0xF2A300,alpha:1,blurX:10,blurY:10},repeat:-1,yoyo:true});
+			}			
 		}
 		
 		
@@ -62,7 +62,8 @@ package com.mangum.display.nav{
 		/* PRIVATE METHODS */
 		
 		private function showTopBar(mc:String,val:Boolean):void{
-			navButtons[mc].topBar.visible = (val) ? true : false;
+			var yVal:Number = (val) ? .5 : 17;
+			TweenMax.to(navButtons[mc].topBar, 1, {y:yVal, ease:Sine.easeOut,delay:1.5});
 		}
 		
 		private function highlight(mc:String,val:Boolean):void{
@@ -72,7 +73,7 @@ package com.mangum.display.nav{
 		
 		private function textGlow(mc:String,val:Boolean):void{
 			var col:Number = (val) ? 0xEEB111 : 0xffffff
-			TweenMax.to(navButtons[mc].navText, 1, {tint:col});
+			TweenMax.to(navButtons[mc].navText, .5, {tint:col});
 		}
 		
 		private function arrow(mc:String,val:Boolean):void{
@@ -83,7 +84,13 @@ package com.mangum.display.nav{
 		
 		/* PUBLIC METHODS */
 		
-		public function setDefault():void{
+		public function setDefault():void{	
+			for (var j:String in _screens){ // set all to off
+				showTopBar(_screens[j].id,false);
+				highlight(_screens[j].id,false);
+				textGlow(_screens[j].id,false);
+				arrow(_screens[j].id,false);
+			}			
 			arrow(_screens[0].id,true);
 			showTopBar(_screens[0].id,true);
 			highlight(_screens[0].id,true);

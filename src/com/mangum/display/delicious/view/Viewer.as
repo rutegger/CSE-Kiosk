@@ -61,7 +61,7 @@ package com.mangum.display.delicious.view{
 					break;
 			}
 			messageTitle.y = yVal;	
-			message.y = messageTitle.y - 1;
+			message.y = messageTitle.y;// - 1;
 		}
 		
 		private function randRange(min:Number, max:Number):Number{

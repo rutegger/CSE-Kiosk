@@ -1,8 +1,11 @@
 package com.mangum.display.YT.controller{
 		
+	import com.greensock.*;
+	import com.greensock.easing.*;
 	import com.mangum.display.YT.model.YTLoader;
-	import com.mangum.events.ActionEvent;
+	import com.mangum.events.VidEvent;
 	import com.mangum.text.Messenger;
+	import com.mangum.text.StringFX;
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -23,16 +26,6 @@ package com.mangum.display.YT.controller{
 			
 			var height:Number=thumbWidth * .5;
 			_width = columns * 180;
-			
-			boxShadow = new BoxShadow();
-			addChild(boxShadow);
-			boxShadow.x = 3;
-			boxShadow.y = 3;
-				
-			box = new Box();
-			addChild(box);
-			box.x = -2;
-			box.y = -2;
 
 			mkMenu(arr,thumbWidth,height,_width);
 			this.addEventListener("selected", onSelected);	
@@ -40,12 +33,11 @@ package com.mangum.display.YT.controller{
 		
 		/* EVENT HANDLERS */
 		
-		private function onSelected(e:ActionEvent):void{
-//			trace(e.msg);
-//			trace(movArr[0].id);
+		private function onSelected(e:VidEvent):void{
+//			trace(
 			var len:int = movArr.length;
 			for(var i:int = 0; i < len; i++){				
-				if(movArr[i].id != e.msg){					
+				if(movArr[i].id != e.args.id){					
 					movArr[i].highlight(false);
 				}else{
 					movArr[i].highlight();				
@@ -57,13 +49,11 @@ package com.mangum.display.YT.controller{
 		
 		private function mkMenu(arr:Array,thbWidth:Number,h:Number,boxWidth:Number):void{
 			cont = new MovieClip();
-			addChild(cont);
-//			cont.addChild(navBg);
-//			navBg.x = -gutter/2;
+			addChild(cont);		
 			createThumbs(arr,thbWidth,h,boxWidth);
 		}
 		
-		private function createThumbs(arr:Array,thbWidth:Number,h:Number,boxWidth:Number):void{		
+		private function createThumbs(arr:Array,thbWidth:Number,h:Number,boxWidth:Number):void{	
 			var xCount:Number = 0;
 			var xVal:Number = 0;
 			var yVal:Number = 12;
@@ -77,8 +67,14 @@ package com.mangum.display.YT.controller{
 			// **** might consider putting a cap on length
 			
 			for(var i:uint = 0; i < len; i++){
-				var yt:YTLoader = new YTLoader(arr[i].id,thbWidth,h,true); 
-				cont.addChild(yt);
+						
+				var yt:YTLoader = new YTLoader(arr[i].id,"decrip",thbWidth,h,true); 
+				
+				boxShadow = new BoxShadow();
+				cont.addChild(boxShadow);
+				box = new Box();
+				cont.addChild(box);
+						
 				//so we can access later
 				movArr[i] = yt;		
 				currWidth = xCount + thbWidth;	
@@ -89,32 +85,46 @@ package com.mangum.display.YT.controller{
 					rows++;
 					xCount = 0;	
 					xVal = 0;
-					yVal += h * 2;						
+					yVal += h * 1.75;						
 				}
 
 				yt.x = xVal;				
 				yt.y = yVal;
-				var msg:Messenger = new Messenger(arr[i].title,thbWidth,0xcc3333,13);
+				box.x =  xVal - 10;
+				box.y =  yVal - 12;
+				box.width = yt.w + 30;
+				box.height = yt.h + 60;
+				boxShadow.x = box.x + 5;
+				boxShadow.y = box.y + 5;			
+				boxShadow.width = box.width;
+				boxShadow.height = box.height;
 				
-				totalHeight = h+msg.height+(gutter*1.4);
-							
-//				msg.setAttribute("color",0xff00ff); //doesn't work ??
+				xCount += thbWidth + 45;
 				
-				addChild(msg);
-			
+				addChild(yt);
+				
+				var msgBg:Sprite = drawMsgBk();
+				addChild(msgBg);
+				msgBg.x = box.x + 10;
+				msgBg.y = box.y + 105;
+				msgBg.width = box.width - 30;
+				msgBg.height = 38;
+				TweenMax.to(msgBg, 0, {tint:0x736357});
+				
+				var msg:Messenger = new Messenger("--",thbWidth-5,0xffffff,13,true);	
+				msg.uppercase = true;
+				msg.setLabel(StringFX.truncate(arr[i].title,45,"..."));
 				msg.x = xVal;
-				msg.y = yVal + h;
-				xCount += thbWidth + 25;			
+				msg.y = yVal + h - 3;
+				addChild(msg);	
+	
+				totalHeight = h+msg.height+(gutter*1.4);
+
 			}			
 			
 			_height = (totalHeight * rows);
 			_width = _width - gutter/3;
-			
-			box.width = _width;
-			box.height = _height;
-			boxShadow.width = box.width;
-			boxShadow.height = box.height;
-			
+	
 			navBg.width = xCount+gutter/1.5;
 			navBg.height = 75 + gutter;
 				
@@ -124,7 +134,17 @@ package com.mangum.display.YT.controller{
 			
 			movArr[0].highlight();
 			
- 		}		
+ 		}	
+
+		
+		private function drawMsgBk():Sprite{
+			var box:Sprite = new Sprite();
+//			box.graphics.lineStyle(0,0x000000);
+			box.graphics.beginFill(0x736357,1);
+			box.graphics.drawRect(0,0,180,40);			
+			box.graphics.endFill();
+			return box;
+		}
 		
 		
 		/* GETTER SETTERS */

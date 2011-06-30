@@ -58,9 +58,7 @@ package com.mangum.display{
 			bg3.alpha = 0;
 		}
 		
-		
 		public function setImage(val:String):void{
-			trace("setImage: "+val,_screens[0]);
 			switch(val){
 				case _screens[0].id:	
 					TweenLite.to(bg0, TRANSITION_SPEED, {alpha:1, ease:Circ.easeOut}); // show
