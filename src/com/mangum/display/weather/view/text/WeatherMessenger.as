@@ -12,7 +12,7 @@ package com.mangum.display.weather.view.text {
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
-	public class Messenger extends Sprite {
+	public class WeatherMessenger extends Sprite {
 				
 		[Embed(source="/../assets/fonts/UniversCE65Bold.ttf", fontFamily="UniversCE65Bold", embedAsCFF="false")] 		
 		
@@ -24,8 +24,9 @@ package com.mangum.display.weather.view.text {
 		private var _size:Number; 
 		private var format:TextFormat;
 		private var container:MovieClip =  new MovieClip();
+		public var uppercase:Boolean;
 		
-		public function Messenger(msg:String,width:Number,color:Number=0x000000,size:Number=20,letterSpacing:Number=0) {
+		public function WeatherMessenger(msg:String,width:Number,color:Number=0x000000,size:Number=20,letterSpacing:Number=0) {
 			addChild(container);
 			_labelText = msg;
 			_color = color;

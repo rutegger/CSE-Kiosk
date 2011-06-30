@@ -73,7 +73,7 @@ package com.mangum.display.delicious.view{
 			messageTitle = new Messenger("In the News:", 420, 0xC7B299, 15,true);
 			message = new Messenger("--", 420, 0xC7B299, 15);
 			
-			message.setAttribute("leading", 2);			
+			message.setAttribute("leading", 2);		/* ignoring this */	
 			addChild(messageTitle);
 			addChild(message);
 			messageTitle.x = 22;	

@@ -9,7 +9,10 @@ package com.mangum.display.YT{
 	import com.greensock.easing.*;
 	import com.mangum.display.YT.controller.YTMenu;
 	import com.mangum.display.YT.model.YTLoader;
+	import com.mangum.display.YT.view.InfoBox;
 	import com.mangum.events.VidEvent;
+	import com.mangum.text.Messenger;
+	import com.mangum.text.StringFX;
 	import com.mangum.utils.EmailErrorAlerter;
 	
 	import flash.display.MovieClip;
@@ -26,7 +29,8 @@ package com.mangum.display.YT{
 		private var count:int = 0;
 		protected var _wsFeed:YouTubeFeedClient = YouTubeFeedClient.getInstance();	
 		private var _ytEnabled:Boolean = true;
-		private var _content:String;
+		private var _description:String;
+		private var _infoBox:InfoBox;
 		
 		public function YTManager(width:Number,height:Number){	
 			_width = width;
@@ -58,7 +62,7 @@ package com.mangum.display.YT{
 		
 		private function onSelected(e:VidEvent):void{
 			mov.playVideo(e.args.id);
-			trace("display description: ",e.args.discription);
+			_infoBox.updateText(e.args.title,e.args.description);
 		}
 
 		private function doFavoritesReady(evt:VideoFeedEvent):void{
@@ -68,10 +72,20 @@ package com.mangum.display.YT{
 			var videoFeed:VideoFeed = evt.feed;				
 			
 			while (video = videoFeed.next()){
-				vids.push({id:video.actualId,title:video.title,content:video.content}); // put id & title into 2D array
+				vids.push({id:video.actualId,title:video.title,description:video.content}); // put id & title into 2D array
 				//	_wsFeed.getVideoComments(video.actualId);
 			}	
 			build(vids);
+			
+			// Add Video Caption
+			_infoBox =  new InfoBox();
+			addChild(_infoBox);
+			_infoBox.y = 410;
+			_infoBox.x = 160;
+			
+			trace(vids[0].title);
+			_infoBox.updateText(vids[0].title, vids[0].description);
+			
 		}
 		
 		
@@ -99,20 +113,7 @@ package com.mangum.display.YT{
 			box.height = _height - 2;
 			TweenMax.to(box, 1, {tint:0x736357}); // set to brown
 			
-			var descriptionBox:Sprite = new Box();
-			descriptionBox.x = 150;
-			descriptionBox.y = 390;
-			descriptionBox.width = 515;
-			descriptionBox.height = 200;
 			
-			var descriptionBoxShadow:Sprite = new BoxShadow();
-			descriptionBoxShadow.x = descriptionBox.x + 5;
-			descriptionBoxShadow.y = descriptionBox.y + 5;
-			descriptionBoxShadow.width = descriptionBox.width;
-			descriptionBoxShadow.height = descriptionBox.height;
-			
-			addChild(descriptionBoxShadow);
-			addChild(descriptionBox);	
 			
 			if(vids.length > 0){
 				addChild(mkMovie(vids));
@@ -122,10 +123,9 @@ package com.mangum.display.YT{
 			}		
 		}
 		
-		private function mkMovie(arr:Array):MovieClip{		
-			mov = new YTLoader(arr[0].id,arr[0].content, _width,_height,false);  
+		private function mkMovie(arr:Array):MovieClip{	
+			mov = new YTLoader(arr[0].id, arr[0].title, arr[0].description, _width,_height,false);  
 			mov.mask = createMask();
-//			trace("***** "+arr[0].content);
 			return mov;
 		}
 		
@@ -143,7 +143,7 @@ package com.mangum.display.YT{
 			shape.graphics.lineStyle(1, 0);
 			shape.graphics.beginFill(0xFF00FF);
 			shape.graphics.drawRect(0,-70,1900,370); // since the mask wont follow the slide I just made the width 100%; 
-			                                                // also have to add gutter _hieght for some reason
+			                                         // also have to add gutter _hieght for some reason
 			shape.graphics.endFill();
 			shape.y = 300;
 			return shape;

@@ -6,6 +6,7 @@ package com.mangum.display.YT.controller{
 	import com.mangum.events.VidEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.text.StringFX;
+	import com.mangum.utils.Dumper;
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -28,32 +29,33 @@ package com.mangum.display.YT.controller{
 			_width = columns * 180;
 
 			mkMenu(arr,thumbWidth,height,_width);
-			this.addEventListener("selected", onSelected);	
+//			this.addEventListener("selected", onSelected);	
 		}
 		
 		/* EVENT HANDLERS */
 		
-		private function onSelected(e:VidEvent):void{
-//			trace(
-			var len:int = movArr.length;
-			for(var i:int = 0; i < len; i++){				
-				if(movArr[i].id != e.args.id){					
-					movArr[i].highlight(false);
-				}else{
-					movArr[i].highlight();				
-				}			
-			}			
-		}	
+//		private function onSelected(e:VidEvent):void{
+//			var len:int = movArr.length;
+//			for(var i:int = 0; i < len; i++){				
+//				if(movArr[i].id != e.args.id){					
+//					movArr[i].highlight(false);
+//				}else{
+//					movArr[i].highlight();				
+//				}			
+//			}			
+//		}	
 		
 		/* PRIVATE METHODS */
 		
 		private function mkMenu(arr:Array,thbWidth:Number,h:Number,boxWidth:Number):void{
 			cont = new MovieClip();
 			addChild(cont);		
+//			Dumper.dumpObject(arr[1]);
 			createThumbs(arr,thbWidth,h,boxWidth);
 		}
 		
 		private function createThumbs(arr:Array,thbWidth:Number,h:Number,boxWidth:Number):void{	
+			
 			var xCount:Number = 0;
 			var xVal:Number = 0;
 			var yVal:Number = 12;
@@ -68,8 +70,7 @@ package com.mangum.display.YT.controller{
 			
 			for(var i:uint = 0; i < len; i++){
 						
-				var yt:YTLoader = new YTLoader(arr[i].id,"decrip",thbWidth,h,true); 
-				
+				var yt:YTLoader = new YTLoader(arr[i].id,arr[i].title,arr[i].description,thbWidth,h,true); 
 				boxShadow = new BoxShadow();
 				cont.addChild(boxShadow);
 				box = new Box();
@@ -135,7 +136,6 @@ package com.mangum.display.YT.controller{
 			movArr[0].highlight();
 			
  		}	
-
 		
 		private function drawMsgBk():Sprite{
 			var box:Sprite = new Sprite();
@@ -155,8 +155,8 @@ package com.mangum.display.YT.controller{
 				
 		public function get h():Number {
 			return _height;
-		}			
-			
+		}		
+
 	}
 	
 }

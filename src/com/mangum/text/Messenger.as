@@ -33,10 +33,11 @@ package com.mangum.text {
 		private var format:TextFormat;
 		private var container:MovieClip =  new MovieClip();
 		private var _bold:Boolean = false;
+		private var _leftJustify:Boolean = false;
 		private var _uppercase:Boolean = false;
 		
 		
-		public function Messenger(msg:String,width:Number,color:Number=0x000000,size:Number=20,bold:Boolean=false) {
+		public function Messenger(msg:String,width:Number,color:Number=0x000000,size:Number=20,bold:Boolean=false,leftJustify:Boolean=true,letterSpacing:Number=0) {
 			
 			_bold = bold;
 			addChild(container);
@@ -44,6 +45,7 @@ package com.mangum.text {
 			_color = color;
 			_size = size;
 			_bold = bold;
+			_leftJustify = leftJustify;
 			configureLabel(width,color,size);
 			setLabel(_labelText);
 //			setShadow();			
@@ -61,9 +63,10 @@ package com.mangum.text {
 		}	
 		
 		public function setAttribute(attribute:String, value:Number):void {
+			trace("setAttribute",attribute,value );
 			format[attribute] = value;
+			_label.defaultTextFormat = format;
 		}
-
 		
 		/* PRIVATE METHODS */
 		private function configureLabel(width:Number,color:Number,size:Number):void {
@@ -87,6 +90,7 @@ package com.mangum.text {
 			format.underline = false;
 			format.kerning = true;
 			format.letterSpacing = 0;	
+			format.align = (_leftJustify) ? "left" : "right";
 
 			_label.defaultTextFormat = format;
 			_label.wordWrap = true;

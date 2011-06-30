@@ -67,8 +67,8 @@ package{
 //			addChild(ver);
 			
 			clock = new Messenger(String(idleTimer.idleTime),100);
-			clock.setAttribute("size",15);
-			clock.setAttribute("color",0xffffff);
+			clock.setAttribute("size",15);/* ignoring this */
+			clock.setAttribute("color",0xffffff); /* ignoring this */
 //			addChild(clock);
 			Positioner.topCenter(stage,clock);
 			idleTimer.addEventListener("tic",onTic,false,0,true);
@@ -112,7 +112,7 @@ package{
 			addChild(twitter);
 
 			twitter.x = 495;
-			twitter.y = 10;			
+			twitter.y = 15;			
 			
 			// ********* Delicious Widget ********* 
 			var dm:DeliciousManager = new DeliciousManager();

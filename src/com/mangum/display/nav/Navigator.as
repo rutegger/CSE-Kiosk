@@ -28,8 +28,8 @@ package com.mangum.display.nav{
 			addChild(navButtons);
 			
 			// assign buttons
-			for (var i:int = 0; i < _screens.length; i++) {
-				var hitArea:HitArea = new HitArea(0, 0, navButtons[_screens[i].id].width, navButtons[_screens[i].id].height);				
+			for (var i:int = 0; i < _screens.length; i++) {		
+				var hitArea:HitArea = new HitArea(0, 0, navButtons[_screens[i].id].width, navButtons[_screens[i].id].height+100);				
 				addChild(hitArea);	
 				hitArea.name = _screens[i].id;
 				hitArea.x = navButtons[_screens[i].id].x;

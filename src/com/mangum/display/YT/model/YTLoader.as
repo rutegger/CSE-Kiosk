@@ -11,6 +11,7 @@ package com.mangum.display.YT.model{
 	
 	import flash.display.Loader;
 	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
@@ -22,7 +23,8 @@ package com.mangum.display.YT.model{
 		private var player:Object; // This will hold the API player instance once it is initialized.	
 		private var loader:Loader = new Loader();	
 		private var _id:String;
-		private var _description:String;
+		private var _title:String;
+		private var _description:String = "--";
 		private var _w:Number;
 		private var _h:Number;
 		private var _thumb:Boolean;
@@ -31,9 +33,10 @@ package com.mangum.display.YT.model{
 		private var linkBlocker:YTLinkBlocker = new YTLinkBlocker();
 		private var attempts:int = 0;
 		
-		public function YTLoader(id:String, description:String, w:Number, h:Number, thumb:Boolean){
+		public function YTLoader(id:String, title:String, description:String, w:Number, h:Number, thumb:Boolean){
 			//		trace("YTLoader constructor id: "+id);
 			_id = id;
+			_title = title
 			_description = description;
 			_w = w;
 			_h = h;
@@ -84,6 +87,14 @@ package com.mangum.display.YT.model{
 			loader.content.addEventListener("onError", onPlayerError);
 			loader.content.addEventListener("onStateChange", onPlayerStateChange);
 			loader.content.addEventListener("onPlaybackQualityChange", onVideoPlaybackQualityChange);
+			
+			// add inv sprite to block YouTube link at top
+			if(!_thumb){
+				var sprite:Sprite = drawSprite(640,50);
+				sprite.alpha = 0;
+				addChild(sprite);
+			}
+
 		}
 		
 		private function onPlayerReady(event:Event):void {
@@ -111,7 +122,7 @@ package com.mangum.display.YT.model{
 				linkBlocker.height = 45;
 //				alpha = 0;
 			}
-		}				
+		}	
 		
 		private function onPlayerError(event:Event):void {
 			trace("player error:", Object(event).data);
@@ -131,7 +142,7 @@ package com.mangum.display.YT.model{
 		}				
 		
 		private function onClicked(e:Event):void{
-			var vidObj:Object = {id:_id, title:"my title", description:"desc"};
+			var vidObj:Object = {id:_id, title:_title, description:_description};
 			dispatchEvent(new VidEvent(vidObj, "selected", true));			
 		}
 		
@@ -146,6 +157,14 @@ package com.mangum.display.YT.model{
 		
 		
 		/* PRIVATE METHODS */
+		
+		private function drawSprite(w:Number,h:Number):Sprite{
+			var box:Sprite = new Sprite();
+			box.graphics.beginFill(0xfff000,1);
+			box.graphics.drawRect(0,0,w,h);			
+			box.graphics.endFill();
+			return box;
+		}
 		
 		private function setSize(_w:Number):void{
 			player.setSize(_w, _h);
@@ -219,6 +238,11 @@ package com.mangum.display.YT.model{
 		public function get id():String {
 			return _id;
 		}
+				
+		public function get description():String {
+			return _description;
+		}		
+		
 	}
 	
 	

@@ -3,7 +3,7 @@ package com.mangum.display.weather.view{
 	
 	import com.greensock.*;
 	import com.greensock.easing.*;
-	import com.mangum.display.weather.view.text.Messenger;
+	import com.mangum.display.weather.view.text.WeatherMessenger;
 	
 	import fl.events.SliderEvent;
 	
@@ -17,11 +17,11 @@ package com.mangum.display.weather.view{
 	public class Output extends Sprite{
 		
 		private var _obj:Object;
-		private var msg:Messenger;
+		private var msg:WeatherMessenger;
 		private var dashboard:Dashboard;
-		private var timeMsg:Messenger;
-		private var tempMsg:Messenger;
-		private var humidityMsg:Messenger;
+		private var timeMsg:WeatherMessenger;
+		private var tempMsg:WeatherMessenger;
+		private var humidityMsg:WeatherMessenger;
 		private var timer:Timer = new Timer(30000); // tick every 30sec
 //		private var glare:Sprite = new Glare();
 
@@ -59,7 +59,7 @@ package com.mangum.display.weather.view{
 		}
 		
 		private function setTextfields():void{
-			timeMsg = new Messenger("--:--:--", 300, 0xC7B299, 42, -1.5);
+			timeMsg = new WeatherMessenger("--:--:--", 300, 0xC7B299, 42, -1.5);
 			addChild(timeMsg);
 	
 			timeMsg.x = -90;
@@ -67,7 +67,7 @@ package com.mangum.display.weather.view{
 			timeMsg.setAttribute("align","right");
 			setTime();
 			
-			tempMsg = new Messenger("-- °F", 300, 0xC7B299, 42, -1);
+			tempMsg = new WeatherMessenger("-- °F", 300, 0xC7B299, 42, -1);
 			addChild(tempMsg);
 //			tempMsg.setAttribute("align","right");
 			tempMsg.x = 240;
