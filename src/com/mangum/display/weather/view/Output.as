@@ -85,10 +85,13 @@ package com.mangum.display.weather.view{
 				"Saturday");
 			
 			// Todaycast
-			var t:String = weekDays[new Date().getDay()].toUpperCase() + " " +
-						   new Date().getMonth().toString() + "." +
-				           new Date().getDate().toString()  + "." +
-						   new Date().getFullYear().toString().slice(2);
+			var day:String = weekDays[new Date().getDay()].toUpperCase();
+			var monthNumber:Number = new Date().getMonth() + 1;
+			var month:String = monthNumber.toString();
+			var date:String = new Date().getDate().toString();
+			var year:String = new Date().getFullYear().toString().slice(2);
+			var t:String = day + " " + month + "." + date  + "." + year;
+				
 //			dashboard.today.todayTxt.text = obj.weatherArr[0].day + ", " + obj.weatherArr[0].date  + ", " + year; 
 			dashboard.today.todayTxt.text = t;
 //			dashboard.sunrise.sunriseTxt.text = "sunrise: " + obj.sunrise;
@@ -116,7 +119,7 @@ package com.mangum.display.weather.view{
 		}
 		
 		public function setIcon(val:uint):void{
-			if(_obj.temp > 89 && val == 34){ // set 'hot' sun icon
+			if(_obj.temp > 94 && val == 34){ // set 'hot' sun icon
 				dashboard.icons.gotoAndStop(49);
 				dashboard.slider.value = 49;
 			} else if (_obj.temp == 72 && val == 34){

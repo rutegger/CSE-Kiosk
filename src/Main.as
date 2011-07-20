@@ -24,7 +24,8 @@ package{
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
-
+	import com.mangum.sounds.SoundManager;
+	import com.mangum.utils.UserEventLogger;
 	
 	[SWF(width='1866', height='1050', backgroundColor='#cccccc', frameRate='24')]
 	
@@ -53,9 +54,9 @@ package{
 		private var offsetX:Number	= 0;
 		private var offsetY:Number	= 0;	
 		private var fumbling:int    = 0;
-		
-		private var help:Help = new Help();
-		
+		private var sm:SoundManager = new SoundManager();	
+		private var userLogger:UserEventLogger = new UserEventLogger();
+		private var help:Help = new Help();	
 		private var clock:Messenger; // for testing
 		
 		public function Main(){	
@@ -181,7 +182,11 @@ package{
 			addChild(help);
 			help.x = 50;
 			help.y = 800;
-						
+			
+			// ********* Touch Animation *********
+//			var toucher:Toucher = new Toucher(stage);
+//			addChild(toucher);
+			
 		}		
 		
 		
@@ -194,6 +199,10 @@ package{
 		protected function onUIClick(event:Event):void{
 			// cancel help bubble
 			helpBubble(false);
+			// log click by sending event.target.name and timestamp to a log
+			userLogger.logIt(event.target.name);
+			// make sound
+			sm.beep();
 		}		
 
 		protected function onNavSelected(e:ActionEvent):void{
@@ -228,22 +237,22 @@ package{
 			currentSelection = val;
 			switch (val){
 				case "home":
-					TweenMax.to(slideContainer, 1.5, {x:0, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10*/});
+					TweenMax.to(slideContainer, .75, {x:0, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10}*/}); /* motion bluer takes too much processing */
 					ytManager.pauseMovie();
 					sspm.playMe();
 					break;
 				case "button1":
-					TweenMax.to(slideContainer, 1.5, {x:-stage.stageWidth, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10*/});	
+					TweenMax.to(slideContainer, .75, {x:-stage.stageWidth, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10}*/});	
 					ytManager.pauseMovie();	
 					sspm.pauseMe();
 					break;
 				case "button2":
-					TweenMax.to(slideContainer, 1.5, {x:-stage.stageWidth *2, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10*/});	
+					TweenMax.to(slideContainer, .75, {x:-stage.stageWidth *2, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10}*/});	
 					ytManager.pauseMovie();
 					sspm.pauseMe();
 					break;
 				case "button3":
-					TweenMax.to(slideContainer, 1.5, {x:-stage.stageWidth*3, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10*/});	
+					TweenMax.to(slideContainer, .75, {x:-stage.stageWidth*3, ease:Cubic.easeOut, onComplete:onSlideComplete,onCompleteParams:[val]/*, motionBlur:{strength:1, fastMode:true, padding:10}*/});	
 					sspm.pauseMe();
 					break;				
 			}	

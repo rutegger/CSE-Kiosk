@@ -1,70 +1,28 @@
-package com.mangum.display.YT.controller{
+package com.mangum.display.YT.view{
 	
 	import com.greensock.*;
 	import com.greensock.easing.*;
 	import com.mangum.display.YT.model.YTLoader;
-	import com.mangum.events.VidEvent;
 	import com.mangum.text.Messenger;
 	import com.mangum.text.StringFX;
-	import com.mangum.utils.Dumper;
 	
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	
-	
-	public class YTMenu extends MovieClip{		
+	public class Thumbs extends Sprite{
 		
 		private var cont:Sprite;
-		private var movArr:Array = new Array();
-		private var _width:Number;
-		private var _height:Number;
-		private var navBg:Sprite = new NavBg();
-		private var gutter:Number = 30;	
 		private var box:Sprite;
 		private var boxShadow:Sprite;
-		private var nowPlaying:Sprite;
 		private var msgBgArr:Array;
+		private var nowPlaying:Sprite;
+		private var gutter:Number = 30;	
+//		private var movArr:Array = new Array();
+		private var _height:Number;
+		private var _width:Number;
+		private var movArr:Array = new Array();
+		private var navBg:Sprite = new NavBg();
 		
-		public function YTMenu(arr:Array, thumbWidth:Number, columns:uint){	
-			
-			var height:Number=thumbWidth * .5;
-			_width = columns * 180;
-			
-			mkMenu(arr,thumbWidth,height,_width);
-			this.addEventListener("selected", onSelected);	
-			
-			
-			
-			
-		}
-		
-		/* EVENT HANDLERS */
-		
-		private function onSelected(e:VidEvent):void{
-			var len:int = movArr.length;
-			
-						for(var i:int = 0; i < len; i++){	
-//							trace(msgBgArr[i].id, e.args.id);
-							if(movArr[i].id == e.args.id){
-								TweenMax.to(movArr[i].mc, 1, {tint:0xEEB111}); // highlight
-								TweenLite.to(movArr[i].np, 1, {alpha:1});
-							}else{					
-								TweenMax.to(movArr[i].mc, 1, {tint:0x736357}); // set to brown
-								TweenLite.to(movArr[i].np, 1, {alpha:0});
-							}
-						}	
-			
-		}	
-		
-		/* PRIVATE METHODS */
-		
-		private function mkMenu(arr:Array,thbWidth:Number,h:Number,boxWidth:Number):void{
-			cont = new MovieClip();
-			addChild(cont);		
-			createThumbs(arr,thbWidth,h,boxWidth);
-		}
-		
-		private function createThumbs(arr:Array,thbWidth:Number,h:Number,boxWidth:Number):void{	
+		public function Thumbs(arr:Array,thbWidth:Number,h:Number,boxWidth:Number){	
 			
 			var xCount:Number = 0;
 			var xVal:Number = 0;
@@ -84,11 +42,10 @@ package com.mangum.display.YT.controller{
 				
 				var yt:YTLoader = new YTLoader(arr[i].id,arr[i].title,arr[i].description,thbWidth,h,true); 
 				boxShadow = new BoxShadow();
-				cont.addChild(boxShadow);
+				addChild(boxShadow);
 				box = new Box();
-				cont.addChild(box);
+				addChild(box);
 				
-					
 				currWidth = xCount + thbWidth;	
 				
 				if((boxWidth-currWidth) > 0){								
@@ -123,7 +80,7 @@ package com.mangum.display.YT.controller{
 				nowPlaying.x = yt.x;
 				nowPlaying.y = yt.y;
 				nowPlaying.alpha = 0;
-			
+				
 				msgBg.x = box.x + 10;
 				msgBg.y = box.y + 105;
 				msgBg.width = box.width - 30;
@@ -133,7 +90,7 @@ package com.mangum.display.YT.controller{
 				var msg:Messenger = new Messenger("--",thbWidth-5,0xffffff,13,true);	
 				msg.uppercase = true;
 				msg.setLabel(StringFX.truncate(arr[i].title,45,"..."));
-				msg.x = xVal+3;
+				msg.x = xVal;
 				msg.y = yVal + h - 3;
 				addChild(msg);	
 				
@@ -167,18 +124,5 @@ package com.mangum.display.YT.controller{
 			box.graphics.endFill();
 			return box;
 		}
-		
-		
-		/* GETTER SETTERS */
-		
-		public function get w():Number {
-			return _width;
-		}		
-		
-		public function get h():Number {
-			return _height;
-		}		
-		
 	}
-	
 }
