@@ -4,6 +4,8 @@ package{
 	import com.greensock.easing.*;
 	import com.greensock.plugins.*; 
 	TweenPlugin.activate([MotionBlurPlugin]);
+	import net.slideshowpro.thumbgrid.*;
+	
 	
 	import com.mangum.display.*;
 	import com.mangum.display.SSP.SSPManager;
@@ -158,7 +160,9 @@ package{
 			var slide1:Slide1 = new Slide1();
 			slideContainer.addChild(slide1);
 			slide1.x = stage.stageWidth; 
+//			addEventListener("thumbClicked",onUIClick,false,0,true);
 //			slide1.y = 100;	
+			slide1.tg.addEventListener(TGThumbEvent.CLICK_THUMB, onThumbClick);
 
 			// Water Research
 			cancerSlide = new CancerSlide();
@@ -172,7 +176,7 @@ package{
 			ytManager.x = (stage.stageWidth*3+300);
 			ytManager.y = 240;					
 			
-			// ********* Timeout *********
+			// ********* Timeout *********	
 			idleTimer = new IdleTimer(stage, 20);
 			idleTimer.addEventListener("handleInteractivity", handleInteractivity);	
 						
@@ -189,6 +193,12 @@ package{
 			
 		}		
 		
+		protected function onThumbClick(event:Event):void
+		{
+			// TODO Auto-generated method stub
+			helpBubble(false);
+			sm.beep();
+		}		
 		
 		/* EVENT HANDLERS */
 		

@@ -1,7 +1,5 @@
 package com.mangum.utils{
-	
 
-	
 	public class UserEventLogger{
 		
 		public function UserEventLogger(){
