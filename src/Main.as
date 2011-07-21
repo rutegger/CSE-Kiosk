@@ -37,6 +37,7 @@ package{
 											  {id:"button1", bg:"/../assets/bg1.jpg"},
 											  {id:"button2", bg:"/../assets/bg2.jpg"},
 											  {id:"button3", bg:"/../assets/bg3.jpg"});
+		
 		private var bg:Background;		
 		private var sspm:SSPManager; 
 		private var ytManager:YTManager;
